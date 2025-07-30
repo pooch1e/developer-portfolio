@@ -7,23 +7,26 @@ export class ThreeService {
     this.scene = null;
     this.renderer = null;
     this.loader = new GLTFLoader();
-    this.container = null;
+    this.canvas = null;
     this.geometry = null;
     this.mesh = null;
     this.material = null;
     this.lights = [];
   }
 
-  init(container) {
-    this.container = container;
+  init(canvas) {
+    this.canvas = canvas;
+    console.log(this.canvas, 'canvas in class');
+    const height = this.canvas.height || 400;
+    const width = this.canvas.width || 400;
     // set viewport
-    this.renderer = new THREE.WebGLRenderer();
+    this.renderer = new THREE.WebGLRenderer({ canvas });
 
-    this.renderer.setSize(container.innerHeight / 2, container.innerWidth / 2);
-
+    this.renderer.setSize(width, height);
+    // this.canvas.appendChild(this.renderer.domElement);
     // add camera
-    this.camera = this.addCamera();
-    this.camera.position.z = 1;
+    this.camera = this.addCamera(width, height);
+    this.camera.position.z = 2;
 
     // create scene
     this.scene = new THREE.Scene();
@@ -40,6 +43,8 @@ export class ThreeService {
 
     // add lights
     this.addLights();
+
+    this.runAnimation();
   }
 
   addCamera(width, height) {
@@ -70,6 +75,11 @@ export class ThreeService {
   }
 
   runAnimation() {
+    
+    if (this.mesh) {
+      this.mesh.rotation.x += 0.01;
+      this.mesh.rotation.y += 0.01;
+    }
     this.renderer.render(this.scene, this.camera);
   }
 }

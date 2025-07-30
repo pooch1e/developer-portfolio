@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { ThreeService } from '../src/utils/threeService.js';
 
 export default function HomeSplash() {
-  const canvasRef: any = useRef(null);
-  const [animation, setAnimation] = useState();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [animation, setAnimation] = useState(null);
 
   // on mount hook
   useEffect(() => {
@@ -17,9 +17,13 @@ export default function HomeSplash() {
   // animation.sendClick()
 
   return (
-    <div>
-      <p>3d image thing here...</p>
-      <canvas ref={canvasRef}></canvas>
+    <div className="flex flex-col justify-center content-center">
+      <p>3D image thing here...</p>
+      <canvas
+        className="border-2"
+        ref={canvasRef}
+        width={800}
+        height={800}></canvas>
     </div>
   );
 }
