@@ -10,17 +10,21 @@ export default function HomeSplash() {
     const animationInstance = new ThreeService();
     animationInstance.init(canvasRef.current);
     setAnimation(animation);
-    animationInstance.runAnimation();
+    animationInstance.runLoop();
+
+    return () => {
+      animationInstance.stopLoop(); 
+      window.removeEventListener('resize', animationInstance.handleResize);
+    };
   }, []);
 
   // useEffect when mouse is clicked
   // animation.sendClick()
 
   return (
-    <div className="flex flex-col justify-center content-center">
-      <p>3D image thing here...</p>
+    <div className="w-screen h-screen overflow-hidden flex justify-center items-center border-2">
       <canvas
-        className="border-2"
+        className="w-full h-full block"
         ref={canvasRef}
         width={800}
         height={800}></canvas>

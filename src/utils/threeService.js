@@ -12,24 +12,27 @@ export class ThreeService {
     this.mesh = null;
     this.material = null;
     this.lights = [];
+    this.animationId = null;
   }
 
   init(canvas) {
     this.canvas = canvas;
     console.log(this.canvas, 'canvas in class');
-    const height = this.canvas.height || 400;
-    const width = this.canvas.width || 400;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
     // set viewport
     this.renderer = new THREE.WebGLRenderer({ canvas });
 
     this.renderer.setSize(width, height);
-    // this.canvas.appendChild(this.renderer.domElement);
+
     // add camera
     this.camera = this.addCamera(width, height);
     this.camera.position.z = 2;
 
     // create scene
     this.scene = new THREE.Scene();
+    // handle sizing
+    window.addEventListener('resize', this.handleResize.bind(this));
 
     // create geometry
     this.geometry = this.addGeometry();
@@ -44,7 +47,8 @@ export class ThreeService {
     // add lights
     this.addLights();
 
-    this.runAnimation();
+    // animation loop
+    this.runLoop();
   }
 
   addCamera(width, height) {
@@ -74,13 +78,37 @@ export class ThreeService {
     return cube;
   }
 
+  handleResize() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+
+    this.renderer.setSize(width, height);
+  }
+
   runAnimation() {
     if (this.mesh) {
       this.mesh.rotation.x += 0.01;
       this.mesh.rotation.y += 0.01;
     }
-    this.renderer.render(this.scene, this.camera);
+  }
 
-    requestAnimationFrame(this.runAnimation.bind(this));
+  runLoop() {
+    this.animationId = requestAnimationFrame(this.runLoop.bind(this));
+
+    // update animation state
+    this.runAnimation();
+
+    // render updated scene
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  stopLoop() {
+    if (this.animationId !== null) {
+      cancelAnimationFrame(this.animationId);
+      this.animationId = null;
+    }
   }
 }
