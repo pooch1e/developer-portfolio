@@ -57,9 +57,13 @@ export class ThreeService {
   }
 
   addLights() {
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+    const ambientLight = new THREE.AmbientLight(0x404040, 3);
     this.scene.add(ambientLight);
     this.lights.push(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0x404040, 2);
+    this.scene.add(directionalLight);
+    this.lights.push(directionalLight);
     return this.lights;
   }
 
@@ -69,7 +73,8 @@ export class ThreeService {
   }
 
   addMaterial() {
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const material = new THREE.MeshPhongMaterial({ color: 'white' });
+    material.shininess = 80;
     return material;
   }
 
