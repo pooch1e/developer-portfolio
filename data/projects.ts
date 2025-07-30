@@ -1,3 +1,10 @@
+export interface ncNewsProjectType {
+  title: string;
+  description: string;
+  technologies: [{ name: string; icon: string }];
+  links: [{ label: string; url: string }];
+}
+
 export const ncNewsProject = {
   title: 'NC News',
   description:
