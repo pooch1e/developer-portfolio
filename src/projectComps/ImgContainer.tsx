@@ -4,7 +4,7 @@ export function ImgContainer({ imageUrl }: { imageUrl: string }) {
       <img
         src={imageUrl}
         alt="screenshot of nc news website"
-        className="w-50 h-100 object-cover"
+        className="w-100 h-100 object-resize"
       />
     </div>
   );
