@@ -202,6 +202,12 @@ export class ThreeService {
       this.mesh.rotation.x += 0.01;
       this.mesh.rotation.y += 0.01;
     }
+
+    const time = performance.now() * 0.001; // time in seconds
+    const amplitude = 1; // half the distance you want to oscillate
+    const baseZ = 3; // middle point between min and max (e.g. (2 + 4) / 2)
+
+    this.camera.position.z = baseZ + Math.sin(time) * amplitude;
   }
 
   runLoop() {
