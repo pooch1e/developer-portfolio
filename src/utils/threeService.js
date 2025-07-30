@@ -75,11 +75,12 @@ export class ThreeService {
   }
 
   runAnimation() {
-    
     if (this.mesh) {
       this.mesh.rotation.x += 0.01;
       this.mesh.rotation.y += 0.01;
     }
     this.renderer.render(this.scene, this.camera);
+
+    requestAnimationFrame(this.runAnimation.bind(this));
   }
 }
