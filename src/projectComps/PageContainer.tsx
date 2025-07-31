@@ -1,9 +1,12 @@
-import ProjectContainer from './ProjectContainer'
+import ProjectContainerWithProps from './ProjectContainerWithProps';
+import { ncNewsProjectFrontEnd } from '../../data/projects.js';
+import { ncNewsProjectBackEnd } from '../../data/projects.js';
 export default function PageContainer() {
-  //add styles here 
+  //add styles here
   return (
     <div>
-      <ProjectContainer />
+      <ProjectContainerWithProps {...ncNewsProjectFrontEnd} />
+      <ProjectContainerWithProps {...ncNewsProjectBackEnd} />
     </div>
-  )
+  );
 }

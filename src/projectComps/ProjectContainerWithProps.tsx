@@ -1,9 +1,10 @@
 import { ImgContainer } from './ImgContainer';
-import image from '../assets/ncnews.png';
-import { getIcon } from '../utils/getIcons';
+
+
 import type { ncNewsProjectType } from '../../data/projects';
 export default function ProjectContainerWithProps({
   title,
+  image,
   description,
   technologies,
   links,
@@ -28,7 +29,10 @@ export default function ProjectContainerWithProps({
               <div className="flex items-center space-x-4">
                 {technologies.map((tech, index: number) => (
                   <div key={index} className="flex items-center space-x-1">
-                    {getIcon(tech.icon)}
+                    <img
+                      src={tech.icon}
+                      alt={tech.name}
+                      className='w-5 h-5'></img>
                     <span>{tech.name}</span>
                   </div>
                 ))}
