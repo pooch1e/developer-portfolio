@@ -35,7 +35,13 @@ export const sparkTables = {
     { name: 'Drizzle', icon: drizzleIcon },
     { name: 'Three.js', icon: threeDIcon },
   ],
-  links: [{ label: 'GitHub', url: 'https://github.com/pooch1e/spark-tables' }],
+  links: [
+    { label: 'GitHub', url: 'https://github.com/pooch1e/spark-tables' },
+    {
+      label: 'Trello',
+      url: 'https://trello.com/invite/b/6875061d3da65b5293154355/ATTI758768a3fb4c7b2a2af6d814be55739e080A0370/spark-table-dev-board',
+    },
+  ],
 };
 
 export const ncNewsProjectFrontEnd = {
