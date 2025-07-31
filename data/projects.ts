@@ -5,8 +5,14 @@ import viteIcon from '../src/assets/SVG/vite-svgrepo-com.svg';
 import nodeIcon from '../src/assets/SVG/node-js-svgrepo-com.svg';
 import expressIcon from '../src/assets/SVG/express-svgrepo-com.svg';
 import jestIcon from '../src/assets/SVG/jest-svgrepo-com.svg';
-import postgresIcon from '../src/assets/SVG/postgresql-svgrepo-com.svg';
+import postGresIcon from '../src/assets/SVG/postgresql-svgrepo-com.svg';
+import nextJsIcon from '../src/assets/SVG/next-js-svgrepo-com.svg';
+import tailwindIcon from '../src/assets/SVG/tailwind-svgrepo-com.svg';
+import drizzleIcon from '../src/assets/SVG/drizzle-drizzling-rain-svgrepo-com.svg';
+import threeDIcon from '../src/assets/SVG/3d-secure-svgrepo-com.svg';
+import typeScriptIcon from '../src/assets/SVG/typescript-svgrepo-com.svg';
 
+import dungeons from '../src/assets/dungeons.png';
 import ncNewsFrontendImage from '../src/assets/ncnews.png';
 import ncNewsBackendImage from '../src/assets/ncnewsbackend.png';
 export interface ncNewsProjectType {
@@ -16,6 +22,21 @@ export interface ncNewsProjectType {
   technologies: [{ name: string; icon: string }];
   links: [{ label: string; url: string }];
 }
+
+export const sparkTables = {
+  title: 'SparkForge - WIP',
+  image: dungeons,
+  description:
+    'An inspiration application for creating random prompts to improve creative writing and role playing games. Built with Next.js, Typescript, Drizzle, Three.js, Tailwind and including a fully unit and intergration tested API. Future features planned are more CRUD capabilities, a 3d dice rolling function and tailwind polish',
+  technologies: [
+    { name: 'Next.Js', icon: nextJsIcon },
+    { name: 'TailwindCss', icon: tailwindIcon },
+    { name: 'TypeScript', icon: typeScriptIcon },
+    { name: 'Drizzle', icon: drizzleIcon },
+    { name: 'Three.js', icon: threeDIcon },
+  ],
+  links: [{ label: 'GitHub', url: 'https://github.com/pooch1e/spark-tables' }],
+};
 
 export const ncNewsProjectFrontEnd = {
   title: 'NC News',
@@ -41,7 +62,7 @@ export const ncNewsProjectBackEnd = {
   technologies: [
     { name: 'Node.JS', icon: nodeIcon },
     { name: 'Express', icon: expressIcon },
-    { name: 'PostGresql', icon: postgresIcon },
+    { name: 'PostGresql', icon: postGresIcon },
     { name: 'Jest', icon: jestIcon },
   ],
   links: [
