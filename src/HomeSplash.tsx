@@ -10,10 +10,11 @@ export default function HomeSplash() {
     const animationInstance = new ThreeService();
     animationInstance.init(canvasRef.current);
     setAnimation(animation);
+    
     animationInstance.runLoop();
 
     return () => {
-      animationInstance.stopLoop(); 
+      animationInstance.stopLoop();
       window.removeEventListener('resize', animationInstance.handleResize);
     };
   }, []);
@@ -22,7 +23,7 @@ export default function HomeSplash() {
   // animation.sendClick()
 
   return (
-    <div className="w-screen h-screen overflow-hidden flex justify-center items-center border-2">
+    <div className="w-screen h-screen overflow-hidden flex justify-center items-center mt-2">
       <canvas
         className="w-full h-full block"
         ref={canvasRef}

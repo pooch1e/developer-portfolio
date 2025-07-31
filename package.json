@@ -12,8 +12,11 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
     "amqplib": "^0.10.8",
+    "lucide-react": "^0.534.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-router": "^7.7.1",
+    "react-router-dom": "^7.7.1",
     "tailwind": "^2.3.1",
     "tailwindcss": "^4.1.11",
     "three": "^0.178.0"
