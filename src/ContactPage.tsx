@@ -2,11 +2,10 @@ import resume from '../src/assets/docs/JoelKram_2025.pdf';
 import { Headshot } from '../src/threejs/Headshot';
 export default function ContactPage() {
   return (
-    <div className="grid-cols-2 gap-1 ml-1 mt-40 text-black text-[11pt] font-['Neue'] tracking-[-0.3px]">
+    <section className=" space-y-4 px-4 grid-cols-2 gap-1 ml-1 mt-40 text-black text-[11pt] font-['Neue'] tracking-[-0.3px]  mx-auto">
       <div className="mb-4 flex w-50">
         <Headshot />
         <div className="flex gap-4">
-          
           <p>
             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⣤⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
             ⠀⠀⠀⠀⠀⠀⠀⠀⣸⡇⠀⠀⠀⠀⠀⠙⢿⣦⡀⠀⠀⢀⣀⣀⣠⣤⣀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⢠⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇
@@ -37,6 +36,6 @@ export default function ContactPage() {
           View Resume
         </a>
       </div>
-    </div>
+    </section>
   );
 }
