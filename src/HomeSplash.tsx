@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ThreeService } from '../src/utils/threeService.js';
+import { ThreeService } from './utils/threeService.js';
 
 export default function HomeSplash() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -8,10 +8,11 @@ export default function HomeSplash() {
   // on mount hook
   useEffect(() => {
     const animationInstance = new ThreeService();
-    animationInstance.init(canvasRef.current);
-    setAnimation(animation);
-    
-    animationInstance.runLoop();
+    if (canvasRef.current) {
+      animationInstance.init(canvasRef.current);
+      setAnimation(animation);
+      animationInstance.runLoop();
+    }
 
     return () => {
       animationInstance.stopLoop();

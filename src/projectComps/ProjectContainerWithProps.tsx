@@ -19,7 +19,7 @@ export default function ProjectContainerWithProps({
         <h4 className="text mb-2 w-[800px] text-black text-[11pt] font-['Neue'] tracking-[-0.3px]">
           {title}
         </h4>
-        <p className="text-black text-[11pt] font-['Neue'] leading-relaxed">
+        <p className="text-black text-[11pt] font-['Neue'] leading-relaxed mr-1">
           {description}
         </p>
         <div className="flex justify-between items-end">

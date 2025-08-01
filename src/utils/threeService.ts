@@ -10,69 +10,62 @@ import {
 } from 'three';
 
 export class ThreeService {
-  constructor() {
-    this.camera = null;
-    this.scene = null;
-    this.renderer = null;
-    this.loader = new GLTFLoader();
-    this.canvas = null;
-    this.geometry = null;
-    this.mesh = null;
-    this.material = null;
-    this.lights = [];
-    this.animationId = null;
+  public camera: THREE.OrthographicCamera | null = null;
+  public scene: THREE.Scene | null = null;
+  public renderer: THREE.WebGLRenderer | null = null;
+  private loader: GLTFLoader = new GLTFLoader();
+  private canvas: HTMLCanvasElement | null = null;
+  private geometry: THREE.BoxGeometry | null = null;
+  private mesh: THREE.Mesh | null = null;
+  private material: THREE.Material | null = null;
+  private lights: THREE.Light[] = [];
+  private animationId: number | null = null;
 
-    //custom shader attempt
-    this.customGlitchShader = null;
-  }
+  // Custom shader attempt
+  private customGlitchShader: THREE.ShaderMaterial | null = null;
 
-  init(canvas) {
+  public init(canvas: HTMLCanvasElement): void {
     this.canvas = canvas;
     console.log(this.canvas, 'canvas in class');
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    // set viewport
-    this.renderer = new THREE.WebGLRenderer({ canvas });
+    const width: number = window.innerWidth;
+    const height: number = window.innerHeight;
 
+    // Set viewport
+    this.renderer = new THREE.WebGLRenderer({ canvas });
     this.renderer.setSize(width, height);
 
-    // add camera
+    // Add camera
     this.camera = this.addCamera(width, height);
     this.camera.position.z = 2;
 
-    // create scene
+    // Create scene
     this.scene = new THREE.Scene();
-    // handle sizing
+
+    // Handle sizing
     window.addEventListener('resize', this.handleResize.bind(this));
 
-    // create geometry
+    // Create geometry
     this.geometry = this.addGeometry();
 
-    //create material
-    // this.material = this.addMaterial();
+    // Create material
     this.addCustomShader();
-    this.material = this.customGlitchShader; // colourful
+    this.material = this.customGlitchShader;
 
-    //create mesh
-    this.mesh = this.addMesh(this.geometry, this.material);
+    // Create mesh
+    this.mesh = this.addMesh(this.geometry, this.material!);
     this.scene.add(this.mesh);
     this.addDebugHelpers(this.mesh);
 
-    //create + add helpers
-    // const helper = this.addHelpers();
-    // this.scene.add(helper.gridHelper);
-    // this.scene.add(helper.polarGridHelper);
-
-    // add lights
+    // Add lights
     this.addLights();
 
-    // animation loop
+    // Animation loop
     this.runLoop();
   }
 
-  addCamera(width, height) {
-    const aspect = width / height;
-    const zoom = 1; // lower = more zoomed out
+  private addCamera(width: number, height: number): THREE.OrthographicCamera {
+    const aspect: number = width / height;
+    const zoom: number = 1; // Lower = more zoomed out
     this.camera = new THREE.OrthographicCamera(
       -aspect * zoom,
       aspect * zoom,
@@ -84,31 +77,42 @@ export class ThreeService {
     return this.camera;
   }
 
-  addLights() {
-    const ambientLight = new THREE.AmbientLight(0x404040, 3);
-    this.scene.add(ambientLight);
+  private addLights(): THREE.Light[] {
+    const ambientLight: THREE.AmbientLight = new THREE.AmbientLight(
+      0x404040,
+      3
+    );
+    this.scene!.add(ambientLight);
     this.lights.push(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0x404040, 2);
-    this.scene.add(directionalLight);
+    const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(
+      0x404040,
+      2
+    );
+    this.scene!.add(directionalLight);
     this.lights.push(directionalLight);
     return this.lights;
   }
 
-  addGeometry() {
-    const box = new THREE.BoxGeometry(1, 1, 1);
+  private addGeometry(): THREE.BoxGeometry {
+    const box: THREE.BoxGeometry = new THREE.BoxGeometry(1, 1, 1);
     return box;
   }
 
-  addMaterial() {
-    const material = new THREE.MeshPhongMaterial({ color: 'white' });
+  private addMaterial(): THREE.MeshPhongMaterial {
+    const material: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({
+      color: 'white',
+    });
     material.shininess = 80;
     return material;
   }
 
-  addDebugHelpers(mesh) {
+  private addDebugHelpers(mesh: THREE.Mesh): void {
     // Recompute tangents if needed (optional, only for loaded geometry)
-    if (mesh.geometry.computeTangents) {
+    if (
+      'computeTangents' in mesh.geometry &&
+      typeof mesh.geometry.computeTangents === 'function'
+    ) {
       try {
         mesh.geometry.computeTangents();
       } catch (err) {
@@ -117,9 +121,9 @@ export class ThreeService {
     }
 
     // Create a group to scale and position debug helpers
-    const group = new THREE.Group();
+    const group: THREE.Group = new THREE.Group();
     group.scale.multiplyScalar(1); // Adjust as needed
-    this.scene.add(group);
+    this.scene!.add(group);
 
     group.add(mesh);
 
@@ -127,52 +131,63 @@ export class ThreeService {
     group.updateMatrixWorld(true);
 
     // Normals Helper
-    const vnh = new VertexNormalsHelper(mesh, 0.1, 0x00ff00);
-    this.scene.add(vnh);
+    const vnh: VertexNormalsHelper = new VertexNormalsHelper(
+      mesh,
+      0.1,
+      0x00ff00
+    );
+    this.scene!.add(vnh);
 
     // Tangents Helper
-    const vth = new VertexTangentsHelper(mesh, 0.1, 0xff0000);
-    this.scene.add(vth);
+    const vth: VertexTangentsHelper = new VertexTangentsHelper(
+      mesh,
+      0.1,
+      0xff0000
+    );
+    this.scene!.add(vth);
 
     // Box Helper
-    const boxHelper = new THREE.BoxHelper(mesh);
-    this.scene.add(boxHelper);
+    const boxHelper: BoxHelper = new THREE.BoxHelper(mesh);
+    this.scene!.add(boxHelper);
 
     // Wireframe
-    const wireframe = new WireframeGeometry(mesh.geometry);
-    const wireLine = new LineSegments(wireframe);
+    const wireframe: WireframeGeometry = new WireframeGeometry(mesh.geometry);
+    const wireLine: LineSegments = new LineSegments(wireframe);
     wireLine.material.depthTest = false;
     wireLine.material.opacity = 0.25;
     wireLine.material.transparent = true;
     wireLine.position.x = 1.5;
     group.add(wireLine);
-    this.scene.add(new THREE.BoxHelper(wireLine));
+    this.scene!.add(new THREE.BoxHelper(wireLine));
 
     // Edges
-    const edges = new EdgesGeometry(mesh.geometry);
-    const edgeLine = new LineSegments(edges);
+    const edges: EdgesGeometry = new EdgesGeometry(mesh.geometry);
+    const edgeLine: LineSegments = new LineSegments(edges);
     edgeLine.material.depthTest = false;
     edgeLine.material.opacity = 0.25;
     edgeLine.material.transparent = true;
     edgeLine.position.x = -1.5;
     group.add(edgeLine);
-    this.scene.add(new THREE.BoxHelper(edgeLine));
+    this.scene!.add(new THREE.BoxHelper(edgeLine));
 
     // Group box
-    this.scene.add(new THREE.BoxHelper(group));
+    this.scene!.add(new THREE.BoxHelper(group));
   }
 
-  addMesh(geometry, material) {
-    const flatMaterial = new THREE.MeshBasicMaterial({
+  private addMesh(
+    geometry: THREE.BufferGeometry,
+    material: THREE.Material
+  ): THREE.Mesh {
+    const flatMaterial: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({
       color: 0x00ffcc,
       wireframe: true,
       flatShading: true,
     });
-    const cube = new THREE.Mesh(geometry, flatMaterial);
+    const cube: THREE.Mesh = new THREE.Mesh(geometry, flatMaterial);
     return cube;
   }
 
-  addCustomShader() {
+  private addCustomShader(): void {
     this.customGlitchShader = new THREE.ShaderMaterial({
       uniforms: {
         time: { value: 0 },
@@ -283,64 +298,104 @@ void main() {
     });
   }
 
-  handleResize() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+  public handleResize(): void {
+    const width: number = window.innerWidth;
+    const height: number = window.innerHeight;
 
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
+    if (this.camera) {
+      // For orthographic camera, we need to update the frustum
+      const aspect: number = width / height;
+      const zoom: number = 1;
 
-    this.renderer.setSize(width, height);
+      this.camera.left = -aspect * zoom;
+      this.camera.right = aspect * zoom;
+      this.camera.top = zoom;
+      this.camera.bottom = -zoom;
+
+      this.camera.updateProjectionMatrix();
+    }
+
+    if (this.renderer) {
+      this.renderer.setSize(width, height);
+    }
+
+    // Update shader resolution uniform
+    if (this.customGlitchShader) {
+      this.customGlitchShader.uniforms.resolution.value.set(width, height);
+    }
   }
 
-  runAnimation() {
+  private runAnimation(): void {
     if (this.mesh) {
       this.mesh.rotation.x += 0.01;
       this.mesh.rotation.y += 0.01;
     }
 
-    const time = performance.now() * 0.001; // time in seconds
-    const amplitude = 1; // half the distance you want to oscillate
-    const baseZ = 3; // middle point between min and max (e.g. (2 + 4) / 2)
+    const time: number = performance.now() * 0.001; // time in seconds
+    const radius: number = 3; // distance from target
+    const speed: number = 0.5; // how fast to orbit
 
     // === Orbital Camera Movement ===
-    const radius = 3; // distance from target
-    const speed = 0.5; // how fast to orbit
+    if (this.camera) {
+      this.camera.position.x = Math.sin(time * speed) * radius;
+      this.camera.position.z = Math.cos(time * speed) * radius;
+      this.camera.position.y = 1.5; // optional: some height
+      this.camera.lookAt(0, 0, 0); // look at the centre of the scene
+    }
 
-    this.camera.position.x = Math.sin(time * speed) * radius;
-    this.camera.position.z = Math.cos(time * speed) * radius;
-    this.camera.position.y = 1.5; // optional: some height
-
-    this.camera.lookAt(0, 0, 0); // look at the centre of the scene
-
-    // this.camera.position.z = baseZ + Math.sin(time) * amplitude;
     // === UPDATE UNIFORMS ===
-    const t = performance.now() * 0.001;
-    this.customGlitchShader.uniforms.time.value = t;
+    const t: number = performance.now() * 0.001;
+    if (this.customGlitchShader) {
+      this.customGlitchShader.uniforms.time.value = t;
+    }
 
     // Optional: add live mouse movement
-    this.canvas.addEventListener('mousemove', (e) => {
-      this.customGlitchShader.uniforms.mouse.value.set(
-        e.clientX / window.innerWidth,
-        1 - e.clientY / window.innerHeight // Flip Y for gl-style coords
-      );
-    });
+    if (this.canvas && this.customGlitchShader) {
+      this.canvas.addEventListener('mousemove', (e: MouseEvent) => {
+        this.customGlitchShader!.uniforms.mouse.value.set(
+          e.clientX / window.innerWidth,
+          1 - e.clientY / window.innerHeight // Flip Y for gl-style coords
+        );
+      });
+    }
   }
 
-  runLoop() {
+  public runLoop(): void {
     this.animationId = requestAnimationFrame(this.runLoop.bind(this));
 
-    // update animation state
+    // Update animation state
     this.runAnimation();
 
-    // render updated scene
-    this.renderer.render(this.scene, this.camera);
+    // Render updated scene
+    if (this.renderer && this.scene && this.camera) {
+      this.renderer.render(this.scene, this.camera);
+    }
   }
 
-  stopLoop() {
+  public stopLoop(): void {
     if (this.animationId !== null) {
       cancelAnimationFrame(this.animationId);
       this.animationId = null;
+    }
+  }
+
+  public dispose(): void {
+    this.stopLoop();
+
+    if (this.renderer) {
+      this.renderer.dispose();
+    }
+
+    if (this.geometry) {
+      this.geometry.dispose();
+    }
+
+    if (this.material) {
+      this.material.dispose();
+    }
+
+    if (this.customGlitchShader) {
+      this.customGlitchShader.dispose();
     }
   }
 }
