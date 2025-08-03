@@ -13,6 +13,12 @@ export class HeadshotThreeService {
     this.animationId = null;
     this.mixer = null;
     this.manualControl = false;
+
+    // New properties for point cloud/wireframe
+    this.renderMode = 'normal'; // 'normal', 'wireframe', 'pointcloud'
+    this.pointCloudMaterial = null;
+    this.wireframeMaterial = null;
+    this.originalMaterials = new Map();
   }
 
   init(canvas, glbPath) {
@@ -25,22 +31,25 @@ export class HeadshotThreeService {
     this.renderer = new THREE.WebGLRenderer({
       canvas,
       antialias: true,
-      alpha: true, // Transparent background
+      alpha: true,
     });
     this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    // Set up camera - portrait orientation for headshot
+    // Set up camera
     this.camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
     this.camera.position.set(-0.3, 0, 4);
 
     // Create scene
     this.scene = new THREE.Scene();
 
-    // Add lights optimized for portrait
+    // Add lights
     this.addPortraitLights();
+
+    // Create special materials
+    this.createSpecialMaterials();
 
     // Load the GLB model
     this.loadModel(glbPath);
@@ -52,8 +61,28 @@ export class HeadshotThreeService {
     this.runLoop();
   }
 
+  createSpecialMaterials() {
+    // Point cloud material
+    this.pointCloudMaterial = new THREE.PointsMaterial({
+      color: 0x00ff88,
+      size: 0.02,
+      sizeAttenuation: true,
+      transparent: true,
+      opacity: 0.8,
+      vertexColors: true, // This will use vertex colors if available
+    });
+
+    // Wireframe material
+    this.wireframeMaterial = new THREE.MeshBasicMaterial({
+      color: 0x00ff88,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.7,
+    });
+  }
+
   addPortraitLights() {
-    // Key light (main light from front-left)
+    // Key light
     const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
     keyLight.position.set(-2, 2, 3);
     keyLight.castShadow = true;
@@ -62,19 +91,19 @@ export class HeadshotThreeService {
     this.scene.add(keyLight);
     this.lights.push(keyLight);
 
-    // Fill light (softer light from right)
+    // Fill light
     const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
     fillLight.position.set(2, 1, 2);
     this.scene.add(fillLight);
     this.lights.push(fillLight);
 
-    // Rim light (from behind to create edge lighting)
+    // Rim light
     const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
     rimLight.position.set(0, 3, -2);
     this.scene.add(rimLight);
     this.lights.push(rimLight);
 
-    // Ambient light for overall softness
+    // Ambient light
     const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
     this.scene.add(ambientLight);
     this.lights.push(ambientLight);
@@ -86,24 +115,26 @@ export class HeadshotThreeService {
       (gltf) => {
         this.model = gltf.scene;
 
-        // Scale and position the model appropriately for headshot
+        // Scale and position
         this.model.scale.setScalar(5);
-        this.model.position.set(0, -2.5, 0); // Adjust as needed
+        this.model.position.set(0, -2.5, 0);
 
-        // Enable shadows
+        // Store original materials and set up meshes
         this.model.traverse((child) => {
           if (child.isMesh) {
             child.castShadow = true;
             child.receiveShadow = true;
+
+            // Store original material
+            this.originalMaterials.set(child, child.material);
           }
         });
 
         this.scene.add(this.model);
 
-        // Set up animations if they exist
+        // Set up animations
         if (gltf.animations && gltf.animations.length > 0) {
           this.mixer = new THREE.AnimationMixer(this.model);
-          // Play first animation (you can modify this logic)
           const action = this.mixer.clipAction(gltf.animations[0]);
           action.play();
         }
@@ -122,9 +153,128 @@ export class HeadshotThreeService {
     );
   }
 
+  // New method to switch render modes
+  setRenderMode(mode) {
+    if (!this.model) {
+      console.warn('Model not loaded yet');
+      return;
+    }
+
+    this.renderMode = mode;
+
+    this.model.traverse((child) => {
+      if (child.isMesh) {
+        const geometry = child.geometry;
+        const originalMaterial = this.originalMaterials.get(child);
+
+        // Remove existing point cloud or wireframe objects
+        const parent = child.parent;
+        const objectsToRemove = [];
+        parent.children.forEach((obj) => {
+          if (
+            obj.isPoints ||
+            (obj.isMesh && obj !== child && obj.userData.isWireframe)
+          ) {
+            objectsToRemove.push(obj);
+          }
+        });
+        objectsToRemove.forEach((obj) => parent.remove(obj));
+
+        switch (mode) {
+          case 'normal':
+            child.material = originalMaterial;
+            child.visible = true;
+            break;
+
+          case 'wireframe':
+            child.material = this.wireframeMaterial.clone();
+            child.visible = true;
+            break;
+
+          case 'pointcloud':
+            // Hide the original mesh
+            child.visible = false;
+
+            // Create point cloud
+            const points = new THREE.Points(
+              geometry,
+              this.pointCloudMaterial.clone()
+            );
+            points.position.copy(child.position);
+            points.rotation.copy(child.rotation);
+            points.scale.copy(child.scale);
+            points.userData.isPointCloud = true;
+            parent.add(points);
+            break;
+
+          case 'hybrid':
+            // Show both wireframe and points
+            child.material = this.wireframeMaterial.clone();
+            child.material.opacity = 0.3;
+            child.visible = true;
+
+            const hybridPoints = new THREE.Points(
+              geometry,
+              this.pointCloudMaterial.clone()
+            );
+            hybridPoints.material.size = 0.01;
+            hybridPoints.position.copy(child.position);
+            hybridPoints.rotation.copy(child.rotation);
+            hybridPoints.scale.copy(child.scale);
+            hybridPoints.userData.isPointCloud = true;
+            parent.add(hybridPoints);
+            break;
+        }
+      }
+    });
+  }
+
+  // Method to customize point cloud appearance
+  setPointCloudStyle(options = {}) {
+    const { color = 0x00ff88, size = 0.02, opacity = 0.8 } = options;
+
+    if (this.pointCloudMaterial) {
+      this.pointCloudMaterial.color.setHex(color);
+      this.pointCloudMaterial.size = size;
+      this.pointCloudMaterial.opacity = opacity;
+    }
+
+    // Update existing point clouds in the scene
+    if (this.model) {
+      this.model.traverse((child) => {
+        if (child.isPoints) {
+          child.material.color.setHex(color);
+          child.material.size = size;
+          child.material.opacity = opacity;
+        }
+      });
+    }
+  }
+
+  // Method to customize wireframe appearance
+  setWireframeStyle(options = {}) {
+    const { color = 0x00ff88, opacity = 0.7 } = options;
+
+    if (this.wireframeMaterial) {
+      this.wireframeMaterial.color.setHex(color);
+      this.wireframeMaterial.opacity = opacity;
+    }
+
+    // Update existing wireframes in the scene
+    if (this.model && this.renderMode === 'wireframe') {
+      this.model.traverse((child) => {
+        if (child.isMesh && child.material.wireframe) {
+          child.material.color.setHex(color);
+          child.material.opacity = opacity;
+        }
+      });
+    }
+  }
+
   enableManualControl() {
     this.manualControl = true;
   }
+
   handleResize() {
     if (!this.canvas) return;
 
@@ -136,6 +286,7 @@ export class HeadshotThreeService {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
   }
+
   setManualRotation(rotationY) {
     if (this.model) {
       this.model.rotation.y = rotationY;
@@ -145,12 +296,12 @@ export class HeadshotThreeService {
   runAnimation() {
     const time = performance.now() * 0.001;
 
-    // Only auto-rotate if not under manual control
+    // Auto-rotate if not under manual control
     if (this.model && !this.manualControl) {
       this.model.rotation.y = Math.sin(time * 4) * 0.6;
     }
 
-    // animation follows mouse
+    // Update animations
     if (this.mixer) {
       this.mixer.update(0.016);
     }
@@ -172,7 +323,6 @@ export class HeadshotThreeService {
   dispose() {
     this.stopLoop();
 
-    // Clean up resources
     if (this.renderer) {
       this.renderer.dispose();
     }
@@ -181,7 +331,10 @@ export class HeadshotThreeService {
       this.scene.remove(this.model);
     }
 
-    // Remove event listeners
+    // Clean up materials
+    if (this.pointCloudMaterial) this.pointCloudMaterial.dispose();
+    if (this.wireframeMaterial) this.wireframeMaterial.dispose();
+
     window.removeEventListener('resize', this.handleResize.bind(this));
   }
 }

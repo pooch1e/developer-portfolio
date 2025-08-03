@@ -6,7 +6,7 @@ export default function Header() {
         <Link to="/">
           <h1 className="underline text-[14pt]">Joel Kram</h1>
         </Link>
-        <h2>Fullstack Software Developer</h2>
+        <h2>Junior Fullstack Software Developer</h2>
       </div>
       <nav className="nav text-[11pt] font-['Neue'] flex gap-4">
         <Link to="/work">

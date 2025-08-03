@@ -5,11 +5,21 @@ export function Headshot({ glbPath = '../src/assets/draco/joelkscan2.glb' }) {
   const canvasRef = useRef(null);
   const threeServiceRef = useRef(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isModelLoaded, setIsModelLoaded] = useState(false);
 
   useEffect(() => {
     if (canvasRef.current) {
       threeServiceRef.current = new HeadshotThreeService();
       threeServiceRef.current.init(canvasRef.current, glbPath);
+
+      const checkModelLoaded = setInterval(() => {
+        if (threeServiceRef.current && threeServiceRef.current.model) {
+          setIsModelLoaded(true);
+          // Automatically set to point cloud mode when model loads
+          threeServiceRef.current.setRenderMode('pointcloud');
+          clearInterval(checkModelLoaded);
+        }
+      }, 100);
     }
 
     return () => {
@@ -22,11 +32,8 @@ export function Headshot({ glbPath = '../src/assets/draco/joelkscan2.glb' }) {
   // Update model rotation based on mouse position
   useEffect(() => {
     if (threeServiceRef.current && threeServiceRef.current.model) {
-      // Convert mouse position to rotation values
-      // X position controls Y rotation (left/right head turn)
-      // Y position controls X rotation (up/down head tilt)
-      const rotationY = mousePosition.x * 0.5; // Adjust sensitivity
-      const rotationX = -mousePosition.y * 0.3; // Negative for natural movement
+      const rotationY = mousePosition.x * 0.5;
+      const rotationX = -mousePosition.y * 0.3;
 
       threeServiceRef.current.model.rotation.y = rotationY;
       threeServiceRef.current.model.rotation.x = rotationX;
@@ -40,11 +47,9 @@ export function Headshot({ glbPath = '../src/assets/draco/joelkscan2.glb' }) {
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
-    // Calculate normalized position (-1 to 1) relative to canvas center
     const x = (e.clientX - centerX) / (rect.width / 2);
     const y = (e.clientY - centerY) / (rect.height / 2);
 
-    // Clamp values to prevent extreme rotations
     const clampedX = Math.max(-1, Math.min(1, x));
     const clampedY = Math.max(-1, Math.min(1, y));
 
@@ -52,7 +57,6 @@ export function Headshot({ glbPath = '../src/assets/draco/joelkscan2.glb' }) {
   };
 
   const handleMouseLeave = () => {
-    // Smoothly return to center when mouse leaves
     setMousePosition({ x: 0, y: 0 });
   };
 

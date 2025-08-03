@@ -1,6 +1,5 @@
 import { ImgContainer } from './ImgContainer';
 
-
 import type { ncNewsProjectType } from '../../data/projects';
 export default function ProjectContainerWithProps({
   title,
@@ -32,7 +31,7 @@ export default function ProjectContainerWithProps({
                     <img
                       src={tech.icon}
                       alt={tech.name}
-                      className='w-5 h-5'></img>
+                      className="w-5 h-5"></img>
                     <span>{tech.name}</span>
                   </div>
                 ))}
