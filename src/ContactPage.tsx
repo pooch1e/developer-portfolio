@@ -2,8 +2,8 @@ import resume from '../src/assets/docs/JoelKram_2025.pdf';
 import { Headshot } from '../src/threejs/Headshot';
 export default function ContactPage() {
   return (
-    <section className=" space-y-4 px-4 grid-cols-2 gap-1 ml-1 mt-40 text-black text-[11pt] font-['Neue'] tracking-[-0.3px]  mx-auto">
-      <div className="mb-4 flex w-50">
+    <section className="space-y-4 px-4 grid-cols-2 gap-1 ml-1 text-black text-[11pt] font-['Neue'] tracking-[-0.3px]  mx-auto">
+      <div className="mb-4 flex w-50 align-middle">
         <Headshot />
         <div className="flex gap-4">
           <p>
@@ -24,7 +24,7 @@ export default function ContactPage() {
           currently open to freelance and contract work.
         </p>
       </div>
-      <div className="flex gap-4 mt-4 ml-1">
+      <div className="flex gap-4 mt-18 ml-1">
         {' '}
         <p>London</p>
         <p>joelnskram@gmail.com</p>
