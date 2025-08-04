@@ -31,7 +31,7 @@ export class ThreeService {
     const height: number = window.innerHeight;
 
     // Set viewport
-    this.renderer = new THREE.WebGLRenderer({ canvas });
+    this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
     this.renderer.setSize(width, height);
 
     // Add camera
@@ -151,24 +151,24 @@ export class ThreeService {
     this.scene!.add(boxHelper);
 
     // Wireframe
-    const wireframe: WireframeGeometry = new WireframeGeometry(mesh.geometry);
-    const wireLine: LineSegments = new LineSegments(wireframe);
-    wireLine.material.depthTest = false;
-    wireLine.material.opacity = 0.25;
-    wireLine.material.transparent = true;
-    wireLine.position.x = 1.5;
-    group.add(wireLine);
-    this.scene!.add(new THREE.BoxHelper(wireLine));
+    // const wireframe: WireframeGeometry = new WireframeGeometry(mesh.geometry);
+    // const wireLine: LineSegments = new LineSegments(wireframe);
+    // wireLine.material.depthTest = false;
+    // wireLine.material.opacity = 0.25;
+    // wireLine.material.transparent = true;
+    // wireLine.position.x = 1.5;
+    // group.add(wireLine);
+    // this.scene!.add(new THREE.BoxHelper(wireLine));
 
     // Edges
-    const edges: EdgesGeometry = new EdgesGeometry(mesh.geometry);
-    const edgeLine: LineSegments = new LineSegments(edges);
-    edgeLine.material.depthTest = false;
-    edgeLine.material.opacity = 0.25;
-    edgeLine.material.transparent = true;
-    edgeLine.position.x = -1.5;
-    group.add(edgeLine);
-    this.scene!.add(new THREE.BoxHelper(edgeLine));
+    // const edges: EdgesGeometry = new EdgesGeometry(mesh.geometry);
+    // const edgeLine: LineSegments = new LineSegments(edges);
+    // edgeLine.material.depthTest = false;
+    // edgeLine.material.opacity = 0.25;
+    // edgeLine.material.transparent = true;
+    // edgeLine.position.x = -1.5;
+    // group.add(edgeLine);
+    // this.scene!.add(new THREE.BoxHelper(edgeLine));
 
     // Group box
     this.scene!.add(new THREE.BoxHelper(group));
