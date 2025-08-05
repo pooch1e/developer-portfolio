@@ -20,13 +20,14 @@ export class ThreeService {
   private material: THREE.Material | null = null;
   private lights: THREE.Light[] = [];
   private animationId: number | null = null;
+  private currentIsDarkMode: boolean = false;
 
   // Custom shader attempt
   private customGlitchShader: THREE.ShaderMaterial | null = null;
 
-  public init(canvas: HTMLCanvasElement, isDarkMode = false): void {
+  public init(canvas: HTMLCanvasElement, isDarkMode: boolean): void {
     this.canvas = canvas;
-    console.log(this.canvas, 'canvas in class');
+    this.currentIsDarkMode = isDarkMode;
     const width: number = window.innerWidth;
     const height: number = window.innerHeight;
 
@@ -37,7 +38,7 @@ export class ThreeService {
       alpha: false,
       antialias: true,
     });
-    // this.setBackgroundColor(isDarkMode); // Use the method we already have
+    this.setBackgroundColor(isDarkMode); // Use the method we already have
     this.renderer.setSize(width, height);
 
     // dark mode
@@ -262,12 +263,13 @@ export class ThreeService {
   }
 
   public setBackgroundColor(isDarkMode: boolean): void {
+    console.log('setBackgroundColor called with:', isDarkMode);
+    this.currentIsDarkMode = isDarkMode; // Store the current mode
+
     if (this.renderer) {
       const bgColor = isDarkMode ? 0x3f3f46 : 0xffffff;
+      console.log('Setting background color to:', bgColor.toString(16));
       this.renderer.setClearColor(bgColor, 1);
-      if (this.customGlitchShader) {
-        this.customGlitchShader.uniforms.themeBg.value.set(bgColor);
-      }
     }
   }
 
@@ -280,15 +282,18 @@ export class ThreeService {
   public runLoop(): void {
     this.animationId = requestAnimationFrame(this.runLoop.bind(this));
 
-    // Always clear with current background color
-    // this.renderer?.clear();
-
-    // Then render scene
     if (this.renderer && this.scene && this.camera) {
+      // Explicitly clear with the current background color
+      const bgColor = this.currentIsDarkMode ? 0x3f3f46 : 0xffffff;
+      this.renderer.setClearColor(bgColor, 1);
+
+      // Force clear the buffers
+      this.renderer.clear(true, true, true); // clear color, depth, stencil
+
+      // Then render scene
       this.renderer.render(this.scene, this.camera);
     }
 
-    // Your existing animation code
     this.runAnimation();
   }
 

@@ -11,15 +11,16 @@ function App() {
     <>
       <ThemeProvider>
         <Header />
-        <ThemeToggle />
-        <Routes>
-          <Route path="/" element={<HomeSplash />} />
-          <Route path="/work" element={<WorkPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Routes>
+        <ThemeToggle>
+          <Routes>
+            <Route path="/" element={<HomeSplash />} />
+            <Route path="/work" element={<WorkPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Routes>
+        </ThemeToggle>
       </ThemeProvider>
     </>
-  );
+  ); 
 }
 
 export default App;

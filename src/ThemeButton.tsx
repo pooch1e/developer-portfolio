@@ -1,5 +1,5 @@
 // components/ThemeToggle.jsx
-import { useTheme } from '../src/hooks/useTheme';
+import { useTheme } from '../src/providor/ThemeContext';
 
 export default function ThemeToggle({ children }) {
   const { isDark, toggleTheme } = useTheme();
