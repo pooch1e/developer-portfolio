@@ -1,5 +1,10 @@
-// Your config should look like this:
-const config = {
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+
+  darkMode: 'class', 
+
   theme: {
     extend: {
       fontFamily: {
@@ -7,8 +12,8 @@ const config = {
       },
     },
   },
-  
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+
   plugins: [],
 };
+
 export default config;

@@ -1,6 +1,6 @@
 import { ImgContainer } from './ImgContainer';
-
 import type { ncNewsProjectType } from '../../data/projects';
+
 export default function ProjectContainerWithProps({
   title,
   image,
@@ -8,22 +8,22 @@ export default function ProjectContainerWithProps({
   technologies,
   links,
 }: ncNewsProjectType) {
+
   return (
-    // container
     <div className=" p-4 grid grid-cols-1 lg:grid-cols-3 gap-12 py-8 border-b-1">
       {/* Image */}
       <div>
         <ImgContainer imageUrl={image} />
       </div>
-      <div className="lg:col-span-2 space-y-8  p-2">
-        <h4 className="text mb-2 w-[800px] text-black text-[11pt] font-['Arial'] tracking-[-0.3px]">
+      <div className="lg:col-span-2 space-y-8 mt-2">
+        <h4 className="text mb-2 w-[800px] text-black text-[11pt] font-['Neue'] dark:text-white tracking-[-0.3px]">
           {title}
         </h4>
-        <p className="text-black text-[11pt] font-['Neue'] leading-relaxed mr-1">
+        <p className="text-black text-[11pt] font-['Neue'] dark:text-white leading-relaxed mr-1">
           {description}
         </p>
         <div className="flex justify-between items-end">
-          <div className="text-sm text-gray-400 space-y-1">
+          <div className="text-sm text-gray-400 dark:text-white space-y-1">
             {/* icons */}
             {technologies.length > 0 && (
               <div className="flex items-center space-x-4">
@@ -48,7 +48,7 @@ export default function ProjectContainerWithProps({
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-black hover:text-gray-600 transition-colors border-b border-black hover:border-gray-600">
+              className="text-sm text-black hover:text-gray-600 dark:text-white transition-colors border-b border-black hover:border-gray-600">
               {link.label} →
             </a>
           ))}
