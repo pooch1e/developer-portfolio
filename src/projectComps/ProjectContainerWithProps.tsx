@@ -10,13 +10,14 @@ export default function ProjectContainerWithProps({
 }: ncNewsProjectType) {
 
   return (
+    // container
     <div className=" p-4 grid grid-cols-1 lg:grid-cols-3 gap-12 py-8 border-b-1 dark:bg-zinc-700 ">
       {/* Image */}
       <div>
         <ImgContainer imageUrl={image} />
       </div>
       <div className="lg:col-span-2 space-y-8 mt-2">
-        <h4 className="text mb-2 w-[800px] text-black text-[11pt] font-['Neue'] dark:text-white tracking-[-0.3px]">
+        <h4 className="text mb-2 w-[800px] text-black text-[11pt] font-['Neue'] tracking-[-0.3px]">
           {title}
         </h4>
         <p className="text-black text-[11pt] font-['Neue'] dark:text-white leading-relaxed mr-1">
@@ -28,12 +29,12 @@ export default function ProjectContainerWithProps({
             {technologies.length > 0 && (
               <div className="flex items-center space-x-4">
                 {technologies.map((tech, index: number) => (
-                  <div key={index} className="flex items-center space-x-1">
+                  <div key={index} className="flex items-center mt-1 space-x-1">
                     <img
                       src={tech.icon}
                       alt={tech.name}
                       className="w-5 h-5"></img>
-                    <span>{tech.name}</span>
+                    {/* <span>{tech.name}</span> */}
                   </div>
                 ))}
               </div>
