@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { HeadshotThreeService } from '../utils/headshotThreeService';
+import { HeadshotThreeService } from '../utils/services/headshotThreeService';
 
 export function Headshot({ glbPath = '../src/assets/draco/joelkscan2.glb' }) {
   const canvasRef = useRef(null);

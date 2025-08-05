@@ -24,7 +24,7 @@ export class ThreeService {
   // Custom shader attempt
   private customGlitchShader: THREE.ShaderMaterial | null = null;
 
-  public init(canvas: HTMLCanvasElement): void {
+  public init(canvas: HTMLCanvasElement, isDarkMode = false): void {
     this.canvas = canvas;
     console.log(this.canvas, 'canvas in class');
     const width: number = window.innerWidth;
@@ -33,6 +33,12 @@ export class ThreeService {
     // Set viewport
     this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
     this.renderer.setSize(width, height);
+    
+    // dark mode
+    // isDarkMode = true;
+    console.log('Setting dark mode:', isDarkMode); // Debug log
+    const bgColor = isDarkMode ? 0x3f3f46 : 0xffffff; // zinc-700 vs white
+    this.renderer.setClearColor(bgColor, 1);
 
     // Add camera
     this.camera = this.addCamera(width, height);
