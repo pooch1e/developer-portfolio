@@ -21,6 +21,10 @@ export class ThreeService {
   private lights: THREE.Light[] = [];
   private animationId: number | null = null;
   private currentIsDarkMode: boolean = false;
+  //transition colours
+  private targetBackgroundColor: THREE.Color = new THREE.Color(0xffffff);
+  private currentBackgroundColor: THREE.Color = new THREE.Color(0xffffff);
+  private transitionSpeed: number = 0.05; // Adjust for faster/slower transition
 
   // Custom shader attempt
   private customGlitchShader: THREE.ShaderMaterial | null = null;
@@ -41,11 +45,12 @@ export class ThreeService {
     this.setBackgroundColor(isDarkMode); // Use the method we already have
     this.renderer.setSize(width, height);
 
-    // dark mode
-    // isDarkMode = true;
-    console.log('Setting dark mode:', isDarkMode); // Debug log
-    // const bgColor = isDarkMode ? 0x3f3f46 : 0xffffff; // zinc-700 vs white
-    // this.renderer.setClearColor(bgColor, 1);
+    this.currentIsDarkMode = isDarkMode;
+
+    // Set initial colors
+    const initialColor = isDarkMode ? 0x3f3f46 : 0xffffff;
+    this.currentBackgroundColor.setHex(initialColor);
+    this.targetBackgroundColor.setHex(initialColor);
 
     // Add camera
     this.camera = this.addCamera(width, height);
@@ -264,13 +269,11 @@ export class ThreeService {
 
   public setBackgroundColor(isDarkMode: boolean): void {
     console.log('setBackgroundColor called with:', isDarkMode);
-    this.currentIsDarkMode = isDarkMode; // Store the current mode
+    this.currentIsDarkMode = isDarkMode;
 
-    if (this.renderer) {
-      const bgColor = isDarkMode ? 0x3f3f46 : 0xffffff;
-      console.log('Setting background color to:', bgColor.toString(16));
-      this.renderer.setClearColor(bgColor, 1);
-    }
+    // Set the target color instead of immediately changing
+    const targetColor = isDarkMode ? 0x3f3f46 : 0xffffff;
+    this.targetBackgroundColor.setHex(targetColor);
   }
 
   public forceRender(): void {
@@ -282,15 +285,18 @@ export class ThreeService {
   public runLoop(): void {
     this.animationId = requestAnimationFrame(this.runLoop.bind(this));
 
+    // Smoothly interpolate background color
+    this.currentBackgroundColor.lerp(
+      this.targetBackgroundColor,
+      this.transitionSpeed
+    );
+
+    if (this.renderer) {
+      this.renderer.setClearColor(this.currentBackgroundColor, 1);
+    }
+
+    // Then render scene
     if (this.renderer && this.scene && this.camera) {
-      // Explicitly clear with the current background color
-      const bgColor = this.currentIsDarkMode ? 0x3f3f46 : 0xffffff;
-      this.renderer.setClearColor(bgColor, 1);
-
-      // Force clear the buffers
-      this.renderer.clear(true, true, true); // clear color, depth, stencil
-
-      // Then render scene
       this.renderer.render(this.scene, this.camera);
     }
 
