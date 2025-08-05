@@ -1,6 +1,5 @@
 import { ImgContainer } from './ImgContainer';
 
-
 import type { ncNewsProjectType } from '../../data/projects';
 export default function ProjectContainerWithProps({
   title,
@@ -10,7 +9,7 @@ export default function ProjectContainerWithProps({
   links,
 }: ncNewsProjectType) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 py-8 border-b-1">
+    <div className=" p-4 grid grid-cols-1 lg:grid-cols-3 gap-12 py-8 border-b-1">
       {/* Image */}
       <div>
         <ImgContainer imageUrl={image} />
@@ -19,7 +18,7 @@ export default function ProjectContainerWithProps({
         <h4 className="text mb-2 w-[800px] text-black text-[11pt] font-['Neue'] tracking-[-0.3px]">
           {title}
         </h4>
-        <p className="text-black text-[11pt] font-['Neue'] leading-relaxed">
+        <p className="text-black text-[11pt] font-['Neue'] leading-relaxed mr-1">
           {description}
         </p>
         <div className="flex justify-between items-end">
@@ -32,7 +31,7 @@ export default function ProjectContainerWithProps({
                     <img
                       src={tech.icon}
                       alt={tech.name}
-                      className='w-5 h-5'></img>
+                      className="w-5 h-5"></img>
                     <span>{tech.name}</span>
                   </div>
                 ))}

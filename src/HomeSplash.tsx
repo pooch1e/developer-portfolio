@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ThreeService } from '../src/utils/threeService.js';
+import { ThreeService } from './utils/threeService.js';
 
 export default function HomeSplash() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -8,10 +8,11 @@ export default function HomeSplash() {
   // on mount hook
   useEffect(() => {
     const animationInstance = new ThreeService();
-    animationInstance.init(canvasRef.current);
-    setAnimation(animation);
-    
-    animationInstance.runLoop();
+    if (canvasRef.current) {
+      animationInstance.init(canvasRef.current);
+      setAnimation(animation);
+      animationInstance.runLoop();
+    }
 
     return () => {
       animationInstance.stopLoop();
@@ -23,9 +24,9 @@ export default function HomeSplash() {
   // animation.sendClick()
 
   return (
-    <div className="w-screen h-screen overflow-hidden flex justify-center items-center mt-2">
+    <div className="fixed top-0 left-0 w-full h-full -z-10 block">
       <canvas
-        className="w-full h-full block"
+        className="ml-4 w-full h-full block"
         ref={canvasRef}
         width={800}
         height={800}></canvas>

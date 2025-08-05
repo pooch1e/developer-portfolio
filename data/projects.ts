@@ -27,7 +27,7 @@ export const sparkTables = {
   title: 'SparkForge - WIP',
   image: dungeons,
   description:
-    'An inspiration application for creating random prompts to improve creative writing and role playing games. Built with Next.js, Typescript, Drizzle, Three.js, Tailwind and including a fully unit and intergration tested API. Future features planned are more CRUD capabilities, a 3d dice rolling function and tailwind polish',
+    'An inspiration application for creating random prompts to improve creative writing and role playing games. Roll on tables of multiple prompts to create improvisational scenes. Built with Next.js, Typescript, Drizzle, Three.js, Tailwind and including a fully unit and intergration tested API. Future features planned are more CRUD capabilities, a 3d dice rolling function and tailwind polish.',
   technologies: [
     { name: 'Next.Js', icon: nextJsIcon },
     { name: 'TailwindCss', icon: tailwindIcon },
@@ -35,7 +35,13 @@ export const sparkTables = {
     { name: 'Drizzle', icon: drizzleIcon },
     { name: 'Three.js', icon: threeDIcon },
   ],
-  links: [{ label: 'GitHub', url: 'https://github.com/pooch1e/spark-tables' }],
+  links: [
+    { label: 'GitHub', url: 'https://github.com/pooch1e/spark-tables' },
+    {
+      label: 'Trello',
+      url: 'https://trello.com/invite/b/6875061d3da65b5293154355/ATTI758768a3fb4c7b2a2af6d814be55739e080A0370/spark-table-dev-board',
+    },
+  ],
 };
 
 export const ncNewsProjectFrontEnd = {
