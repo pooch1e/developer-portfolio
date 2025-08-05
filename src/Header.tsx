@@ -5,12 +5,12 @@ export default function Header() {
   const isHomePage = location.pathname === '/';
 
   const headerClasses = isHomePage
-    ? 'p-4 bg-gradient-to-b from-white via-white/50 to-transparent dark:from-zinc-700 dark:via-zinc-700/50 dark:to-transparent z-40 dark w-full relative'
-    : 'p-4 bg-white dark:bg-zinc-700 z-40 dark w-full relative';
+    ? 'p-4 bg-transparent dark:bg-gradient-to-b dark:from-zinc-700 dark:via-zinc-700/50 dark:to-transparent z-40 w-full relative'
+    : 'p-4 bg-white dark:bg-zinc-800 z-40 w-full relative';
 
   return (
     <div className={headerClasses}>
-      <div className="text mb-2 text-black text-[11pt] dark:text-white dark font-sixtyfour tracking-[-0.3px]">
+      <div className="text mb-2 text-black text-[11px] dark:text-white  font-sixtyfour tracking-[-0.3px]">
         <h1 className="underline text-[14pt]">
           <Link to="/">Joel Kram</Link>
         </h1>

@@ -33,7 +33,7 @@ export class ThreeService {
     // Set viewport
     this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
     this.renderer.setSize(width, height);
-    
+
     // dark mode
     // isDarkMode = true;
     console.log('Setting dark mode:', isDarkMode); // Debug log
@@ -363,6 +363,13 @@ void main() {
           1 - e.clientY / window.innerHeight // Flip Y for gl-style coords
         );
       });
+    }
+  }
+
+  public setBackgroundColor(isDarkMode: boolean): void {
+    if (this.renderer) {
+      const bgColor = isDarkMode ? 0x3f3f46 : 0xffffff;
+      this.renderer.setClearColor(bgColor, 1);
     }
   }
 
