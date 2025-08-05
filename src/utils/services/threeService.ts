@@ -31,14 +31,20 @@ export class ThreeService {
     const height: number = window.innerHeight;
 
     // Set viewport
-    this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    // Set viewport
+    this.renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: false,
+      antialias: true,
+    });
+    // this.setBackgroundColor(isDarkMode); // Use the method we already have
     this.renderer.setSize(width, height);
 
     // dark mode
     // isDarkMode = true;
     console.log('Setting dark mode:', isDarkMode); // Debug log
-    const bgColor = isDarkMode ? 0x3f3f46 : 0xffffff; // zinc-700 vs white
-    this.renderer.setClearColor(bgColor, 1);
+    // const bgColor = isDarkMode ? 0x3f3f46 : 0xffffff; // zinc-700 vs white
+    // this.renderer.setClearColor(bgColor, 1);
 
     // Add camera
     this.camera = this.addCamera(width, height);
@@ -54,8 +60,8 @@ export class ThreeService {
     this.geometry = this.addGeometry();
 
     // Create material
-    this.addCustomShader();
-    this.material = this.customGlitchShader;
+    // this.addCustomShader();
+    // this.material = this.customGlitchShader;
 
     // Create mesh
     this.mesh = this.addMesh(this.geometry, this.material!);
@@ -193,117 +199,6 @@ export class ThreeService {
     return cube;
   }
 
-  private addCustomShader(): void {
-    this.customGlitchShader = new THREE.ShaderMaterial({
-      uniforms: {
-        time: { value: 0 },
-        glitchIntensity: { value: 1 }, // Set to 1 to see effects!
-        resolution: {
-          value: new THREE.Vector2(window.innerWidth, window.innerHeight),
-        },
-        mouse: { value: new THREE.Vector2(0.5, 0.5) }, // Initial neutral value
-      },
-      vertexShader: `
-        uniform float time;
-        uniform float glitchIntensity;
-        uniform vec2 mouse;
-        
-        varying vec3 vPosition;
-        varying vec3 vNormal;
-        varying vec2 vUv;
-        
-        // Noise function
-        float random(vec2 st) {
-          return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
-        }
-        
-        void main() {
-          vPosition = position;
-          vNormal = normal;
-          vUv = uv;
-          
-          vec3 pos = position;
-          
-          // Glitch displacement
-          float glitch = random(vec2(time * 0.1, pos.y * 10.0)) * glitchIntensity;
-          pos.x += sin(time * 2.0 + pos.y * 5.0) * glitch * 0.1;
-          pos.y += cos(time * 3.0 + pos.x * 8.0) * glitch * 0.1;
-          pos.z += sin(time * 1.5 + pos.x * pos.y) * glitch * 0.05;
-          
-          // Mouse interaction
-          vec2 mouseInfluence = mouse * 2.0 - 1.0;
-          pos.xy += mouseInfluence * 0.1 * sin(time);
-          
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-        }
-      `,
-      fragmentShader: `uniform float time;
-uniform float glitchIntensity;
-uniform vec2 resolution;
-
-varying vec3 vPosition;
-varying vec3 vNormal;
-varying vec2 vUv;
-
-// Noise function
-float random(vec2 st) {
-  return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
-}
-
-// HSV to RGB conversion
-vec3 hsv2rgb(vec3 c) {
-  vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-  vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-  return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-}
-
-void main() {
-  vec2 st = gl_FragCoord.xy / resolution.xy;
-
-  // --- CRT screen curvature distortion ---
-  vec2 uv = (st - 0.5) * 2.0;
-  uv *= 1.1 + 0.2 * uv.yx * uv.yx;
-  st = (uv * 0.5) + 0.5;
-
-  // --- Base colour cycling ---
-  float hue = time * 0.1 + vPosition.x * 0.5 + vPosition.y * 0.3;
-  vec3 baseColor = hsv2rgb(vec3(fract(hue), 0.8, 0.9));
-
-  // --- Color banding (quantisation) ---
-  baseColor = floor(baseColor * 6.0) / 6.0;
-
-  // --- RGB split/glitch ---
-  float offset = 0.003 * glitchIntensity;
-  float r = baseColor.r;
-  float g = hsv2rgb(vec3(fract(hue + offset), 0.8, 0.9)).g;
-  float b = hsv2rgb(vec3(fract(hue - offset), 0.8, 0.9)).b;
-
-  vec3 finalColor = vec3(r, g, b);
-
-  // --- Digital noise ---
-  float noise = random(st + time) * 0.05 * glitchIntensity;
-  finalColor += noise;
-
-  // --- Scanlines ---
-  float scanline = sin(st.y * 800.0) * 0.2 * glitchIntensity;
-  finalColor -= scanline;
-
-  // --- Vignette ---
-  float dist = distance(st, vec2(0.5));
-  finalColor *= smoothstep(0.8, 0.4, dist);
-
-  // --- Fresnel effect ---
-  float fresnel = pow(1.0 - dot(normalize(vNormal), vec3(0, 0, 1.0)), 2.0);
-  finalColor += fresnel * 0.3;
-
-  gl_FragColor = vec4(finalColor, 1.0);
-}
-      `,
-      transparent: true,
-      side: THREE.DoubleSide,
-    });
-  }
-
   public handleResize(): void {
     const width: number = window.innerWidth;
     const height: number = window.innerHeight;
@@ -325,10 +220,10 @@ void main() {
       this.renderer.setSize(width, height);
     }
 
-    // Update shader resolution uniform
-    if (this.customGlitchShader) {
-      this.customGlitchShader.uniforms.resolution.value.set(width, height);
-    }
+    // // Update shader resolution uniform
+    // if (this.customGlitchShader) {
+    //   this.customGlitchShader.uniforms.resolution.value.set(width, height);
+    // }
   }
 
   private runAnimation(): void {
@@ -370,19 +265,31 @@ void main() {
     if (this.renderer) {
       const bgColor = isDarkMode ? 0x3f3f46 : 0xffffff;
       this.renderer.setClearColor(bgColor, 1);
+      if (this.customGlitchShader) {
+        this.customGlitchShader.uniforms.themeBg.value.set(bgColor);
+      }
+    }
+  }
+
+  public forceRender(): void {
+    if (this.renderer && this.scene && this.camera) {
+      this.renderer.render(this.scene, this.camera);
     }
   }
 
   public runLoop(): void {
     this.animationId = requestAnimationFrame(this.runLoop.bind(this));
 
-    // Update animation state
-    this.runAnimation();
+    // Always clear with current background color
+    // this.renderer?.clear();
 
-    // Render updated scene
+    // Then render scene
     if (this.renderer && this.scene && this.camera) {
       this.renderer.render(this.scene, this.camera);
     }
+
+    // Your existing animation code
+    this.runAnimation();
   }
 
   public stopLoop(): void {
