@@ -9,7 +9,7 @@ export default function ProjectContainerWithProps({
   links,
 }: ncNewsProjectType) {
   return (
-    <div className=" p-4 grid grid-cols-1 lg:grid-cols-3 gap-12 py-8 border-b-1 dark:bg-zinc-700">
+    <div className=" p-4 grid grid-cols-1 lg:grid-cols-3 gap-12 py-8 border-b-1 transition-colors duration-300 ease-linear dark:bg-zinc-700">
       {/* Image */}
       <div>
         <ImgContainer imageUrl={image} />

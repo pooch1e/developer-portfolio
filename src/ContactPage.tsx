@@ -2,7 +2,7 @@ import resume from '../src/assets/docs/JoelKram_2025.pdf';
 import { Headshot } from '../src/threejs/Headshot';
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-700 ">
+    <div className="min-h-screen bg-white dark:bg-zinc-700 transition-colors duration-300 ease-linear">
       <section className="space-y-4 px-4 grid-cols-2 gap-1 ml-1 text-black dark:text-white text-[11pt] font-['Neue'] tracking-[-0.3px] mx-auto">
         <div className="mb-4 flex w-50 align-middle">
           <Headshot />
