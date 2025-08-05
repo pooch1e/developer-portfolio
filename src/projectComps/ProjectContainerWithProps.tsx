@@ -1,6 +1,6 @@
 import { ImgContainer } from './ImgContainer';
-
 import type { ncNewsProjectType } from '../../data/projects';
+
 export default function ProjectContainerWithProps({
   title,
   image,
@@ -8,8 +8,9 @@ export default function ProjectContainerWithProps({
   technologies,
   links,
 }: ncNewsProjectType) {
+
   return (
-    <div className=" p-4 grid grid-cols-1 lg:grid-cols-3 gap-12 py-8 border-b-1 dark:bg-zinc-700 dark">
+    <div className=" p-4 grid grid-cols-1 lg:grid-cols-3 gap-12 py-8 border-b-1 dark:bg-zinc-700 ">
       {/* Image */}
       <div>
         <ImgContainer imageUrl={image} />

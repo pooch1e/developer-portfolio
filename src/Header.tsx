@@ -6,7 +6,7 @@ export default function Header() {
 
   const headerClasses = isHomePage
     ? 'p-4 bg-transparent dark:bg-gradient-to-b dark:from-zinc-700 dark:via-zinc-700/50 dark:to-transparent z-40 w-full relative'
-    : 'p-4 bg-white dark:bg-zinc-800 z-40 w-full relative';
+    : 'p-4 bg-white dark:bg-zinc-700 z-40 w-full relative';
 
   return (
     <div className={headerClasses}>
