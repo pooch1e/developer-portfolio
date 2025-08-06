@@ -12,7 +12,7 @@ import drizzleIcon from '../src/assets/SVG/drizzle-drizzling-rain-svgrepo-com.sv
 import threeDIcon from '../src/assets/SVG/3d-secure-svgrepo-com.svg';
 import typeScriptIcon from '../src/assets/SVG/typescript-svgrepo-com.svg';
 
-import dungeons from '../src/assets/dungeons.png';
+import civ from '../src/assets/sparkTables.png';
 import ncNewsFrontendImage from '../src/assets/ncnews.png';
 import ncNewsBackendImage from '../src/assets/ncnewsbackend.png';
 import madgeWebsite from '../src/assets/madgeWebsite.png';
@@ -26,7 +26,7 @@ export interface ncNewsProjectType {
 
 export const sparkTables = {
   title: 'SparkForge - WIP',
-  image: dungeons,
+  image: civ,
   description:
     'An inspiration application for creating random prompts to improve creative writing and role playing games. Roll on tables of multiple prompts to create improvisational scenes. Built with Next.js, Typescript, Drizzle, Three.js, Tailwind and including a fully unit and intergration tested API. Future features planned are more CRUD capabilities, a 3d dice rolling function and tailwind polish.',
   technologies: [
