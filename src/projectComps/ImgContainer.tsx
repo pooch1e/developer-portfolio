@@ -1,6 +1,6 @@
 export function ImgContainer({ imageUrl }: { imageUrl: string }) {
   return (
-    <div className="w-full border-1 border-blue-300 rounded-t-lg h-full ml-1">
+    <div className="w-full border-1 rounded-t-lg h-full ml-1">
       <img
         src={imageUrl}
         alt="screenshot of nc news website"

@@ -2,6 +2,7 @@ import ProjectContainerWithProps from './ProjectContainerWithProps';
 import { ncNewsProjectFrontEnd } from '../../data/projects.js';
 import { ncNewsProjectBackEnd } from '../../data/projects.js';
 import { sparkTables } from '../../data/projects.js';
+import { madgeSplashPage } from '../../data/projects.js';
 export default function PageContainer() {
   //add styles here
   return (
@@ -9,6 +10,7 @@ export default function PageContainer() {
       <ProjectContainerWithProps {...sparkTables} />
       <ProjectContainerWithProps {...ncNewsProjectFrontEnd} />
       <ProjectContainerWithProps {...ncNewsProjectBackEnd} />
+      <ProjectContainerWithProps {...madgeSplashPage} />
     </div>
   );
 }

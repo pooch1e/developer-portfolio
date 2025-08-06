@@ -15,6 +15,7 @@ import typeScriptIcon from '../src/assets/SVG/typescript-svgrepo-com.svg';
 import dungeons from '../src/assets/dungeons.png';
 import ncNewsFrontendImage from '../src/assets/ncnews.png';
 import ncNewsBackendImage from '../src/assets/ncnewsbackend.png';
+import madgeWebsite from '../src/assets/madgeWebsite.png';
 export interface ncNewsProjectType {
   title: string;
   image: string;
@@ -74,5 +75,19 @@ export const ncNewsProjectBackEnd = {
   links: [
     { label: 'GitHub', url: 'https://github.com/pooch1e/NC-News-Project' },
     { label: 'Deployed', url: 'https://nc-news-api-qa14.onrender.com/' },
+  ],
+};
+export const madgeSplashPage = {
+  title: 'Splash Page',
+  image: madgeWebsite,
+  description:
+    'Custom splash page for artist website, built as a simple React application with Tailwind for styling.',
+  technologies: [
+    { name: 'React 18', icon: reactIcon },
+    { name: 'TailwindCss', icon: tailwindIcon },
+  ],
+  links: [
+    { label: 'GitHub', url: 'https://github.com/pooch1e/madge-website' },
+    { label: 'Deployed', url: 'https://www.madzoo.lol/' },
   ],
 };
