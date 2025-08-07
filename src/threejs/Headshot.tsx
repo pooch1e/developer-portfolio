@@ -1,11 +1,20 @@
 import { useRef, useEffect, useState } from 'react';
 import { HeadshotThreeService } from '../utils/services/headshotThreeService';
 
-export function Headshot({ glbPath = '../src/assets/draco/joelkscan2.glb' }) {
-  const canvasRef = useRef(null);
-  const threeServiceRef = useRef(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isModelLoaded, setIsModelLoaded] = useState(false);
+interface HeadshotProps {
+  glbPath?: string;
+}
+
+export function Headshot({
+  glbPath = '../src/assets/draco/joelkscan2.glb',
+}: HeadshotProps) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const threeServiceRef = useRef<HeadshotThreeService | null>(null);
+  const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
+  const [isModelLoaded, setIsModelLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -13,9 +22,9 @@ export function Headshot({ glbPath = '../src/assets/draco/joelkscan2.glb' }) {
       threeServiceRef.current.init(canvasRef.current, glbPath);
 
       const checkModelLoaded = setInterval(() => {
-        if (threeServiceRef.current && threeServiceRef.current.model) {
+        if (threeServiceRef.current?.model) {
           setIsModelLoaded(true);
-          // Automatically set to point cloud mode when model loads
+          console.log(isModelLoaded, 'model loaded');
           threeServiceRef.current.setRenderMode('pointcloud');
           clearInterval(checkModelLoaded);
         }
@@ -23,15 +32,12 @@ export function Headshot({ glbPath = '../src/assets/draco/joelkscan2.glb' }) {
     }
 
     return () => {
-      if (threeServiceRef.current) {
-        threeServiceRef.current.dispose();
-      }
+      threeServiceRef.current?.dispose();
     };
   }, [glbPath]);
 
-  // Update model rotation based on mouse position
   useEffect(() => {
-    if (threeServiceRef.current && threeServiceRef.current.model) {
+    if (threeServiceRef.current?.model) {
       const rotationY = mousePosition.x * 0.5;
       const rotationX = -mousePosition.y * 0.3;
 
@@ -40,7 +46,9 @@ export function Headshot({ glbPath = '../src/assets/draco/joelkscan2.glb' }) {
     }
   }, [mousePosition]);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (
+    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>
+  ) => {
     if (!canvasRef.current) return;
 
     const rect = canvasRef.current.getBoundingClientRect();

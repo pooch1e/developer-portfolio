@@ -1,26 +1,19 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { VertexNormalsHelper } from 'three/addons/helpers/VertexNormalsHelper.js';
 import { VertexTangentsHelper } from 'three/addons/helpers/VertexTangentsHelper.js';
-import {
-  BoxHelper,
-  EdgesGeometry,
-  WireframeGeometry,
-  LineSegments,
-} from 'three';
+import { BoxHelper } from 'three';
 
 export class ThreeService {
   public camera: THREE.OrthographicCamera | null = null;
   public scene: THREE.Scene | null = null;
   public renderer: THREE.WebGLRenderer | null = null;
-  private loader: GLTFLoader = new GLTFLoader();
   private canvas: HTMLCanvasElement | null = null;
   private geometry: THREE.BoxGeometry | null = null;
   private mesh: THREE.Mesh | null = null;
   private material: THREE.Material | null = null;
   private lights: THREE.Light[] = [];
   private animationId: number | null = null;
-  private currentIsDarkMode: boolean = false;
+  public currentIsDarkMode: boolean = false;
   //transition colours
   private targetBackgroundColor: THREE.Color = new THREE.Color(0xffffff);
   private currentBackgroundColor: THREE.Color = new THREE.Color(0xffffff);
@@ -117,13 +110,13 @@ export class ThreeService {
     return box;
   }
 
-  private addMaterial(): THREE.MeshPhongMaterial {
-    const material: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({
-      color: 'white',
-    });
-    material.shininess = 80;
-    return material;
-  }
+  // private addMaterial(): THREE.MeshPhongMaterial {
+  //   const material: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({
+  //     color: 'white',
+  //   });
+  //   material.shininess = 80;
+  //   return material;
+  // }
 
   private addDebugHelpers(mesh: THREE.Mesh): void {
     // Recompute tangents if needed (optional, only for loaded geometry)
@@ -193,13 +186,12 @@ export class ThreeService {
   }
 
   private addMesh(
-    geometry: THREE.BufferGeometry,
-    material: THREE.Material
+    geometry: THREE.BufferGeometry
+    // material: THREE.Material
   ): THREE.Mesh {
     const flatMaterial: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({
       color: 0x00ffcc,
       wireframe: true,
-      flatShading: true,
     });
     const cube: THREE.Mesh = new THREE.Mesh(geometry, flatMaterial);
     return cube;

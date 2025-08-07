@@ -18,7 +18,8 @@ export class HeadshotThreeService {
   renderMode: RenderMode = 'normal';
   pointCloudMaterial: THREE.PointsMaterial | null = null;
   wireframeMaterial: THREE.MeshBasicMaterial | null = null;
-  originalMaterials: Map<THREE.Mesh, THREE.Material> = new Map();
+  originalMaterials: Map<THREE.Mesh, THREE.Material | THREE.Material[]> =
+    new Map();
 
   constructor() {
     this.loader = new GLTFLoader();
@@ -246,11 +247,21 @@ export class HeadshotThreeService {
       this.model.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
           const mesh = child as THREE.Mesh;
-          if (mesh.material && (mesh.material as THREE.Material).wireframe) {
-            const mat = mesh.material as THREE.MeshBasicMaterial;
-            mat.color.setHex(color);
-            mat.opacity = opacity;
-          }
+
+          const materials = Array.isArray(mesh.material)
+            ? mesh.material
+            : [mesh.material];
+
+          materials.forEach((mat) => {
+            if (
+              (mat as THREE.MeshBasicMaterial).wireframe !== undefined &&
+              (mat as THREE.MeshBasicMaterial).wireframe
+            ) {
+              const m = mat as THREE.MeshBasicMaterial;
+              m.color.setHex(color);
+              m.opacity = opacity;
+            }
+          });
         }
       });
     }
