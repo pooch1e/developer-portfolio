@@ -6,7 +6,7 @@ interface HeadshotProps {
 }
 
 export function Headshot({
-  glbPath = '../src/assets/draco/joelkscan2.glb',
+  glbPath = '../../public/draco/joelkscan2.glb',
 }: HeadshotProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const threeServiceRef = useRef<HeadshotThreeService | null>(null);
