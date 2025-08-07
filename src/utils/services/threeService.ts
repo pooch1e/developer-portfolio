@@ -63,7 +63,7 @@ export class ThreeService {
     // this.material = this.customGlitchShader;
 
     // Create mesh
-    this.mesh = this.addMesh(this.geometry, this.material!);
+    this.mesh = this.addMesh(this.geometry); //remv this.material
     this.scene.add(this.mesh);
     this.addDebugHelpers(this.mesh);
 
