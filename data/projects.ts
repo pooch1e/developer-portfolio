@@ -16,15 +16,27 @@ import civ from '../src/assets/sparkTables.png';
 import ncNewsFrontendImage from '../src/assets/ncnews.png';
 import ncNewsBackendImage from '../src/assets/ncnewsbackend.png';
 import madgeWebsite from '../src/assets/madgeWebsite.png';
-export interface ncNewsProjectType {
+
+// Define interfaces for the data structure
+export interface Technology {
+  name: string;
+  icon: string;
+}
+
+export interface ProjectLink {
+  label: string;
+  url: string;
+}
+
+export interface ProjectType {
   title: string;
   image: string;
   description: string;
-  technologies: [{ name: string; icon: string }];
-  links: [{ label: string; url: string }];
+  technologies: Technology[];
+  links: ProjectLink[];
 }
 
-export const sparkTables = {
+export const sparkTables: ProjectType = {
   title: 'SparkForge - WIP',
   image: civ,
   description:
@@ -45,7 +57,7 @@ export const sparkTables = {
   ],
 };
 
-export const ncNewsProjectFrontEnd = {
+export const ncNewsProjectFrontEnd: ProjectType = {
   title: 'NC News',
   image: ncNewsFrontendImage,
   description:
@@ -61,7 +73,8 @@ export const ncNewsProjectFrontEnd = {
     { label: 'Deployed', url: 'https://nc-news-jkram.netlify.app/' },
   ],
 };
-export const ncNewsProjectBackEnd = {
+
+export const ncNewsProjectBackEnd: ProjectType = {
   title: 'NC News Express API Application',
   image: ncNewsBackendImage,
   description:
@@ -77,7 +90,8 @@ export const ncNewsProjectBackEnd = {
     { label: 'Deployed', url: 'https://nc-news-api-qa14.onrender.com/' },
   ],
 };
-export const madgeSplashPage = {
+
+export const madgeSplashPage: ProjectType = {
   title: 'Splash Page',
   image: madgeWebsite,
   description:
@@ -91,3 +105,12 @@ export const madgeSplashPage = {
     { label: 'Deployed', url: 'https://www.madzoo.lol/' },
   ],
 };
+
+export const allProjects: ProjectType[] = [
+  sparkTables,
+  ncNewsProjectFrontEnd,
+  ncNewsProjectBackEnd,
+  madgeSplashPage,
+];
+
+export type ncNewsProjectType = ProjectType;

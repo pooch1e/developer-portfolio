@@ -1,7 +1,11 @@
 // components/ThemeToggle.jsx
 import { useTheme } from '../src/providor/ThemeContext';
+import type { ReactNode } from 'react';
+interface ThemeToggleProps {
+  children?: ReactNode;
+}
 
-export default function ThemeToggle({ children }) {
+export default function ThemeToggle({ children }: ThemeToggleProps) {
   const { isDark, toggleTheme } = useTheme();
 
   return (
