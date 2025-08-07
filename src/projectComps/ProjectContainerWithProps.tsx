@@ -9,19 +9,19 @@ export default function ProjectContainerWithProps({
   links,
 }: ncNewsProjectType) {
   return (
-    <div className=" p-4 grid grid-cols-1 lg:grid-cols-3 gap-12 py-8 border-b-1 dark:bg-zinc-700">
+    <div className=" p-4 grid grid-cols-1 lg:grid-cols-3 gap-12 py-8 border-b-1 transition-colors duration-300 ease-linear dark:bg-zinc-700 ">
       {/* Image */}
       <div>
         <ImgContainer imageUrl={image} />
       </div>
-      <div className="lg:col-span-2 space-y-8 mt-2">
-        <h4 className="text mb-2 w-[800px] text-black text-[11pt] font-['Neue'] dark:text-white tracking-[-0.3px]">
+      <div className="lg:col-span-2 space-y-8 mt-2 ">
+        <h4 className="text mb-2 w-[800px] text-black text-2xl font-['Arial'] dark:text-white tracking-[-0.3px]">
           {title}
         </h4>
-        <p className="text-black text-[11pt] font-['Neue'] dark:text-white leading-relaxed mr-1">
+        <p className="text-black text-1xl font-['Neue'] dark:text-white leading-relaxed mr-1">
           {description}
         </p>
-        <div className="flex justify-between items-end">
+        <div className="flex justify-between items-end ">
           <div className="text-sm text-gray-400 dark:text-white space-y-1">
             {/* icons */}
             {technologies.length > 0 && (
@@ -40,7 +40,7 @@ export default function ProjectContainerWithProps({
           </div>
         </div>
 
-        <div className="flex gap-1.5">
+        <div className="flex gap-1.5 mt-50">
           {links.map((link, index: number) => (
             <a
               key={index}
