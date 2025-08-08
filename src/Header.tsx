@@ -10,8 +10,8 @@ export default function Header() {
 
   return (
     <div className={headerClasses}>
-      <div className="text mb-2 text-black text-[11px] dark:text-white  font-sixtyfour tracking-[-0.3px]">
-        <h1 className="underline text-[14pt]">
+      <div className="text mb-2 text-black text-1xl dark:text-white  font-sixtyfour tracking-[-0.3px]">
+        <h1 className="underline text-2xl">
           <Link to="/">Joel Kram</Link>
         </h1>
 
@@ -19,7 +19,7 @@ export default function Header() {
       </div>
       <nav className="nav text-[11pt] dark:text-white font-sixtyfour flex flex-col mt-4 gap-4">
         <p className="underline">
-          <Link to="/work">Work</Link>
+          <Link to="/work">Projects</Link>
         </p>
 
         <p className="underline">

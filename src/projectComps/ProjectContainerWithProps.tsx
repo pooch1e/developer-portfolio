@@ -15,10 +15,10 @@ export default function ProjectContainerWithProps({
         <ImgContainer imageUrl={image} />
       </div>
       <div className="lg:col-span-2 space-y-8 mt-2 ">
-        <h4 className="text mb-2 w-[800px] text-black text-2xl font-['Arial'] dark:text-white tracking-[-0.3px]">
+        <h4 className="text mb-2 text-black text-2xl font-['Arial'] dark:text-white tracking-[-0.3px]">
           {title}
         </h4>
-        <p className="text-black text-1xl font-['Neue'] dark:text-white leading-relaxed mr-1">
+        <p className="text-black text-1xl font-['Neue'] dark:text-white leading-relaxed mr-1 text-justify">
           {description}
         </p>
         <div className="flex justify-between items-end ">
@@ -31,7 +31,7 @@ export default function ProjectContainerWithProps({
                     <img
                       src={tech.icon}
                       alt={tech.name}
-                      className="w-5 h-5"></img>
+                      className="w-10 h-10"></img>
                     {/* <span>{tech.name}</span> */}
                   </div>
                 ))}
@@ -40,14 +40,14 @@ export default function ProjectContainerWithProps({
           </div>
         </div>
 
-        <div className="flex gap-1.5 mt-50">
+        <div className="flex gap-5 mt-50 ">
           {links.map((link, index: number) => (
             <a
               key={index}
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-black hover:text-gray-600 dark:text-white transition-colors border-b border-black hover:border-gray-600">
+              className="text-md text-black  hover:text-gray-600 dark:text-white transition-colors border-b border-black hover:border-gray-600">
               {link.label} →
             </a>
           ))}

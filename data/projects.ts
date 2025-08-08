@@ -40,7 +40,7 @@ export const sparkTables: ProjectType = {
   title: 'SparkForge - WIP',
   image: civ,
   description:
-    'An inspiration application for creating random prompts to improve creative writing and role playing games. Roll on tables of multiple prompts to create improvisational scenes. Built with Next.js, Typescript, Drizzle, Three.js, Tailwind and including a fully unit and intergration tested API. Future features planned are more CRUD capabilities, a 3d dice rolling function and tailwind polish.',
+    'An inspiration application for creating random prompts to improve creative writing and role playing games. Roll on tables of multiple prompts to create improvisational scenes. Built with Next.js, Typescript, Drizzle, Three.js, Tailwind and including a fully unit and intergration tested API. Future features planned are more CRUD capabilities, a 3d dice rolling function and Tailwind polish.',
   technologies: [
     { name: 'Next.Js', icon: nextJsIcon },
     { name: 'TailwindCss', icon: tailwindIcon },
@@ -92,10 +92,10 @@ export const ncNewsProjectBackEnd: ProjectType = {
 };
 
 export const madgeSplashPage: ProjectType = {
-  title: 'Splash Page',
+  title: 'Artist Website',
   image: madgeWebsite,
   description:
-    'Custom splash page for artist website, built as a simple React application with Tailwind for styling.',
+    'Built a custom splash page and incoming website (WIP) for artist Madge Zhou. Page is built using React with Tailwind for styling and features some basic CSS animations.',
   technologies: [
     { name: 'React 18', icon: reactIcon },
     { name: 'TailwindCss', icon: tailwindIcon },
