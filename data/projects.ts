@@ -14,7 +14,7 @@ import typeScriptIcon from '../src/assets/SVG/typescript-svgrepo-com.svg';
 
 import civ from '../src/assets/sparkforge.png';
 import ncNewsFrontendImage from '../src/assets/ncnews3.png';
-import ncNewsBackendImage from '../src/assets/ncnewsbackend.png';
+import ncNewsBackendImage from '../src/assets/ncnewsbackend1.png';
 import madgeWebsite from '../src/assets/madgeWebsite.png';
 
 // Define interfaces for the data structure
