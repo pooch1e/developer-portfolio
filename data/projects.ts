@@ -12,8 +12,8 @@ import drizzleIcon from '../src/assets/SVG/drizzle-drizzling-rain-svgrepo-com.sv
 import threeDIcon from '../src/assets/SVG/3d-secure-svgrepo-com.svg';
 import typeScriptIcon from '../src/assets/SVG/typescript-svgrepo-com.svg';
 
-import civ from '../src/assets/sparkTables.png';
-import ncNewsFrontendImage from '../src/assets/ncnews.png';
+import civ from '../src/assets/sparkforge.png';
+import ncNewsFrontendImage from '../src/assets/ncnews3.png';
 import ncNewsBackendImage from '../src/assets/ncnewsbackend.png';
 import madgeWebsite from '../src/assets/madgeWebsite.png';
 
