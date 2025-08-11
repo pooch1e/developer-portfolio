@@ -1,4 +1,4 @@
-import resume from '../src/assets/docs/JoelKram_2025.pdf';
+import resume from '../src/assets/docs/JoelKram_Frontend Dev.pdf';
 import { Headshot } from '../src/threejs/Headshot';
 export default function ContactPage() {
   return (
