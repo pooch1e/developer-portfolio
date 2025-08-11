@@ -36,8 +36,8 @@ export default function HomeSplash() {
   }, [isDark]);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full z-20">
+    <section className="fixed top-0 left-0 w-full h-full z-20">
       <canvas className="w-full h-full block" ref={canvasRef} />
-    </div>
+    </section>
   );
 }
