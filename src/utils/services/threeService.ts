@@ -3,6 +3,11 @@ import { VertexNormalsHelper } from 'three/addons/helpers/VertexNormalsHelper.js
 import { VertexTangentsHelper } from 'three/addons/helpers/VertexTangentsHelper.js';
 import { BoxHelper } from 'three';
 
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { AfterimagePass } from 'three/addons/postprocessing/AfterimagePass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
 export class ThreeService {
   public camera: THREE.OrthographicCamera | null = null;
   public scene: THREE.Scene | null = null;
@@ -14,6 +19,11 @@ export class ThreeService {
   private lights: THREE.Light[] = [];
   private animationId: number | null = null;
   public currentIsDarkMode: boolean = false;
+
+  private composer: EffectComposer | null;
+  private afterImagePass: AfterimagePass | null;
+  private params: any | null;
+
   //transition colours
   private targetBackgroundColor: THREE.Color = new THREE.Color(0xffffff);
   private currentBackgroundColor: THREE.Color = new THREE.Color(0xffffff);
@@ -35,7 +45,7 @@ export class ThreeService {
       alpha: false,
       antialias: true,
     });
-    this.setBackgroundColor(isDarkMode); // Use the method we already have
+    this.setBackgroundColor(isDarkMode);
     this.renderer.setSize(width, height);
 
     this.currentIsDarkMode = isDarkMode;
@@ -69,6 +79,21 @@ export class ThreeService {
 
     // Add lights
     this.addLights();
+
+    //post processing
+
+    this.params = {
+      enable: true,
+    };
+
+    this.composer = new EffectComposer(this.renderer);
+    this.composer.addPass(new RenderPass(this.scene, this.camera));
+
+    this.afterImagePass = new AfterimagePass();
+    this.composer.addPass(this.afterImagePass);
+
+    const outputPass = new OutputPass();
+    this.composer.addPass(outputPass);
 
     // Animation loop
     this.runLoop();
@@ -287,10 +312,10 @@ export class ThreeService {
       this.renderer.setClearColor(this.currentBackgroundColor, 1);
     }
 
-    // Then render scene
-    if (this.renderer && this.scene && this.camera) {
-      this.renderer.render(this.scene, this.camera);
-    }
+    this.afterImagePass.enabled = this.params.enable;
+
+    // Only use composer.render() - remove the direct renderer.render()
+    this.composer.render();
 
     this.runAnimation();
   }
