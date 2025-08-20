@@ -210,15 +210,21 @@ export class ThreeService {
     this.scene!.add(new THREE.BoxHelper(group));
   }
 
-  private addMesh(
-    geometry: THREE.BufferGeometry
-    // material: THREE.Material
-  ): THREE.Mesh {
-    const flatMaterial: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({
-      color: 0x00ffcc,
-      wireframe: true,
-    });
+  private addMesh(geometry: THREE.BufferGeometry): THREE.Mesh {
+    
+    const materialColor = 0x003333; // Dark teal
+
+    const flatMaterial: THREE.MeshStandardMaterial =
+      new THREE.MeshStandardMaterial({
+        color: materialColor,
+        wireframe: true,
+      });
+
+    flatMaterial.emissive = new THREE.Color(materialColor);
+    flatMaterial.emissiveIntensity = 0.5; // Fixed intensity
+
     const cube: THREE.Mesh = new THREE.Mesh(geometry, flatMaterial);
+    this.material = flatMaterial;
     return cube;
   }
 
@@ -291,7 +297,21 @@ export class ThreeService {
     // Set the target color instead of immediately changing
     const targetColor = isDarkMode ? 0x3f3f46 : 0xffffff;
     this.targetBackgroundColor.setHex(targetColor);
+
+    // // Update material colors too
+    // this.updateMaterialForTheme(isDarkMode);
   }
+
+  // private updateMaterialForTheme(isDarkMode: boolean): void {
+  //   if (this.mesh && this.mesh.material instanceof THREE.MeshStandardMaterial) {
+  //     // Match the colors from addMesh method
+  //     const materialColor = isDarkMode ? 0x00ffcc : 0xff0080;
+
+  //     this.mesh.material.color.setHex(materialColor);
+  //     this.mesh.material.emissive.setHex(materialColor);
+  //     this.mesh.material.emissiveIntensity = isDarkMode ? 0.2 : 1.5;
+  //   }
+  // }
 
   public forceRender(): void {
     if (this.renderer && this.scene && this.camera) {
