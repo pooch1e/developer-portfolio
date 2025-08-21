@@ -1,107 +1,81 @@
 import * as THREE from 'three';
-import { VertexNormalsHelper } from 'three/addons/helpers/VertexNormalsHelper.js';
-import { VertexTangentsHelper } from 'three/addons/helpers/VertexTangentsHelper.js';
-import { BoxHelper } from 'three';
-
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { AfterimagePass } from 'three/addons/postprocessing/AfterimagePass.js';
+import { VertexNormalsHelper } from 'three/examples/jsm/Addons.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 export class ThreeService {
+  // Core Three.js components
   public camera: THREE.OrthographicCamera | null = null;
   public scene: THREE.Scene | null = null;
   public renderer: THREE.WebGLRenderer | null = null;
+
+  // Geometry and materials
   private canvas: HTMLCanvasElement | null = null;
   private geometry: THREE.BoxGeometry | null = null;
-  private mesh: THREE.Mesh | null = null;
-  private material: THREE.Material | null = null;
+  private cubeGroup: THREE.Group | null = null;
+  private solidCube: THREE.Mesh | null = null;
+  private wireframeCube: THREE.LineSegments | null = null;
+  private solidMaterial: THREE.MeshStandardMaterial | null = null;
+  private lineMaterial: THREE.LineBasicMaterial | null = null;
+
+  // Lighting
   private lights: THREE.Light[] = [];
+
+  // Animation
   private animationId: number | null = null;
+
+  // Theme and colors
   public currentIsDarkMode: boolean = false;
-
-  private composer: EffectComposer | null;
-  private afterImagePass: AfterimagePass | null;
-  private params: any | null;
-
-  //transition colours
   private targetBackgroundColor: THREE.Color = new THREE.Color(0xffffff);
   private currentBackgroundColor: THREE.Color = new THREE.Color(0xffffff);
-  private transitionSpeed: number = 0.05; // Adjust for faster/slower transition
+  private transitionSpeed: number = 0.05;
 
-  // Custom shader attempt
-  private customGlitchShader: THREE.ShaderMaterial | null = null;
+  // Post-processing
+  private composer: EffectComposer | null = null;
+  private afterImagePass: AfterimagePass | null = null;
+  private unrealBloomPass: UnrealBloomPass | null = null;
+  private params = { enable: true };
 
   public init(canvas: HTMLCanvasElement, isDarkMode: boolean): void {
     this.canvas = canvas;
     this.currentIsDarkMode = isDarkMode;
-    const width: number = window.innerWidth;
-    const height: number = window.innerHeight;
 
-    // Set viewport
-    // Set viewport
+    this.initRenderer(canvas, isDarkMode);
+    this.initCamera();
+    this.initScene();
+    this.setupEventListeners();
+    this.createGeometry();
+    this.createCube();
+    this.setupLighting();
+    this.setupPostProcessing();
+    this.startAnimationLoop();
+  }
+
+  private initRenderer(canvas: HTMLCanvasElement, isDarkMode: boolean): void {
     this.renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: false,
       antialias: true,
     });
-    this.setBackgroundColor(isDarkMode);
-    this.renderer.setSize(width, height);
 
-    this.currentIsDarkMode = isDarkMode;
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // Set initial colors
+    // Set initial background colors
     const initialColor = isDarkMode ? 0x3f3f46 : 0xffffff;
     this.currentBackgroundColor.setHex(initialColor);
     this.targetBackgroundColor.setHex(initialColor);
-
-    // Add camera
-    this.camera = this.addCamera(width, height);
-    this.camera.position.z = 2;
-
-    // Create scene
-    this.scene = new THREE.Scene();
-
-    // Handle sizing
-    window.addEventListener('resize', this.handleResize.bind(this));
-
-    // Create geometry
-    this.geometry = this.addGeometry();
-
-    // Create material
-    // this.addCustomShader();
-    // this.material = this.customGlitchShader;
-
-    // Create mesh
-    this.mesh = this.addMesh(this.geometry); //remv this.material
-    this.scene.add(this.mesh);
-    this.addDebugHelpers(this.mesh);
-
-    // Add lights
-    this.addLights();
-
-    //post processing
-
-    this.params = {
-      enable: true,
-    };
-
-    this.composer = new EffectComposer(this.renderer);
-    this.composer.addPass(new RenderPass(this.scene, this.camera));
-
-    this.afterImagePass = new AfterimagePass();
-    this.composer.addPass(this.afterImagePass);
-
-    const outputPass = new OutputPass();
-    this.composer.addPass(outputPass);
-
-    // Animation loop
-    this.runLoop();
+    this.renderer.setClearColor(this.currentBackgroundColor, 1);
   }
 
-  private addCamera(width: number, height: number): THREE.OrthographicCamera {
-    const aspect: number = width / height;
-    const zoom: number = 1; // Lower = more zoomed out
+  private initCamera(): void {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const aspect = width / height;
+    const zoom = 1;
+
     this.camera = new THREE.OrthographicCamera(
       -aspect * zoom,
       aspect * zoom,
@@ -110,132 +84,118 @@ export class ThreeService {
       0.1,
       1000
     );
-    return this.camera;
+
+    this.camera.position.z = 2;
   }
 
-  private addLights(): THREE.Light[] {
-    const ambientLight: THREE.AmbientLight = new THREE.AmbientLight(
-      0x404040,
-      3
-    );
-    this.scene!.add(ambientLight);
+  private initScene(): void {
+    this.scene = new THREE.Scene();
+  }
+
+  private setupEventListeners(): void {
+    window.addEventListener('resize', this.handleResize.bind(this));
+  }
+
+  private createGeometry(): void {
+    this.geometry = new THREE.BoxGeometry(1, 1, 1);
+  }
+
+  private createCube(): void {
+    if (!this.geometry || !this.scene) return;
+
+    // Create group to hold both solid and wireframe
+    this.cubeGroup = new THREE.Group();
+
+    // Get theme-appropriate color
+    const materialColor = this.getMaterialColor();
+
+    // Create solid cube with higher opacity for light mode
+    const solidOpacity = this.currentIsDarkMode ? 0.2 : 0.6;
+    this.solidMaterial = new THREE.MeshStandardMaterial({
+      color: materialColor,
+      opacity: solidOpacity,
+      transparent: true,
+      emissive: new THREE.Color(materialColor),
+      emissiveIntensity: this.currentIsDarkMode ? 0.1 : 0.3,
+    });
+    this.solidCube = new THREE.Mesh(this.geometry, this.solidMaterial);
+
+    // Create wireframe lines using EdgesGeometry for clean edges
+    const edges = new THREE.EdgesGeometry(this.geometry);
+    this.lineMaterial = new THREE.LineBasicMaterial({
+      color: materialColor,
+    });
+    this.wireframeCube = new THREE.LineSegments(edges, this.lineMaterial);
+
+    //create normals helper
+    const helper = new VertexNormalsHelper(this.solidCube, 0.5, 0xff0000);
+
+    // Add both to group
+    this.cubeGroup.add(this.solidCube);
+
+    this.cubeGroup.add(helper);
+    this.cubeGroup.add(this.wireframeCube);
+
+    // Add group to scene
+    this.scene.add(this.cubeGroup);
+  }
+
+  private getMaterialColor(): number {
+    return this.currentIsDarkMode ? 0x00ffcc : 0x0066ff; // Cyan for dark, bright blue for light
+  }
+
+  private setupLighting(): void {
+    if (!this.scene) return;
+
+    // Ambient light
+    const ambientLight = new THREE.AmbientLight(0x404040, 3);
+    this.scene.add(ambientLight);
     this.lights.push(ambientLight);
 
-    const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(
-      0x404040,
-      2
-    );
-    this.scene!.add(directionalLight);
+    // Directional light
+    const directionalLight = new THREE.DirectionalLight(0x404040, 2);
+    this.scene.add(directionalLight);
     this.lights.push(directionalLight);
-    return this.lights;
   }
 
-  private addGeometry(): THREE.BoxGeometry {
-    const box: THREE.BoxGeometry = new THREE.BoxGeometry(1, 1, 1);
-    return box;
-  }
+  private setupPostProcessing(): void {
+    if (!this.renderer || !this.scene || !this.camera) return;
 
-  // private addMaterial(): THREE.MeshPhongMaterial {
-  //   const material: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({
-  //     color: 'white',
-  //   });
-  //   material.shininess = 80;
-  //   return material;
-  // }
+    this.composer = new EffectComposer(this.renderer);
 
-  private addDebugHelpers(mesh: THREE.Mesh): void {
-    // Recompute tangents if needed (optional, only for loaded geometry)
-    if (
-      'computeTangents' in mesh.geometry &&
-      typeof mesh.geometry.computeTangents === 'function'
-    ) {
-      try {
-        mesh.geometry.computeTangents();
-      } catch (err) {
-        console.warn('computeTangents failed:', err);
-      }
-    }
+    // Render pass
+    const renderPass = new RenderPass(this.scene, this.camera);
+    this.composer.addPass(renderPass);
 
-    // Create a group to scale and position debug helpers
-    const group: THREE.Group = new THREE.Group();
-    group.scale.multiplyScalar(1); // Adjust as needed
-    this.scene!.add(group);
+    // Afterimage effect
+    this.afterImagePass = new AfterimagePass();
+    this.composer.addPass(this.afterImagePass);
 
-    group.add(mesh);
-
-    // Update matrices
-    group.updateMatrixWorld(true);
-
-    // Normals Helper
-    const vnh: VertexNormalsHelper = new VertexNormalsHelper(
-      mesh,
+    this.unrealBloomPass = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
       0.1,
-      0x00ff00
-    );
-    this.scene!.add(vnh);
-
-    // Tangents Helper
-    const vth: VertexTangentsHelper = new VertexTangentsHelper(
-      mesh,
       0.1,
-      0xff0000
+      0.1
     );
-    this.scene!.add(vth);
 
-    // Box Helper
-    const boxHelper: BoxHelper = new THREE.BoxHelper(mesh);
-    this.scene!.add(boxHelper);
 
-    // Wireframe
-    // const wireframe: WireframeGeometry = new WireframeGeometry(mesh.geometry);
-    // const wireLine: LineSegments = new LineSegments(wireframe);
-    // wireLine.material.depthTest = false;
-    // wireLine.material.opacity = 0.25;
-    // wireLine.material.transparent = true;
-    // wireLine.position.x = 1.5;
-    // group.add(wireLine);
-    // this.scene!.add(new THREE.BoxHelper(wireLine));
-
-    // Edges
-    // const edges: EdgesGeometry = new EdgesGeometry(mesh.geometry);
-    // const edgeLine: LineSegments = new LineSegments(edges);
-    // edgeLine.material.depthTest = false;
-    // edgeLine.material.opacity = 0.25;
-    // edgeLine.material.transparent = true;
-    // edgeLine.position.x = -1.5;
-    // group.add(edgeLine);
-    // this.scene!.add(new THREE.BoxHelper(edgeLine));
-
-    // Group box
-    this.scene!.add(new THREE.BoxHelper(group));
+    // Output pass
+    const outputPass = new OutputPass();
+    this.composer.addPass(outputPass);
+    this.composer.addPass(this.unrealBloomPass)
   }
 
-  private addMesh(geometry: THREE.BufferGeometry): THREE.Mesh {
-    
-    const materialColor = 0x003333; // Dark teal
-
-    const flatMaterial: THREE.MeshStandardMaterial =
-      new THREE.MeshStandardMaterial({
-        color: materialColor,
-        wireframe: true,
-      });
-
-    flatMaterial.emissive = new THREE.Color(materialColor);
-    flatMaterial.emissiveIntensity = 0.5; // Fixed intensity
-
-    const cube: THREE.Mesh = new THREE.Mesh(geometry, flatMaterial);
-    this.material = flatMaterial;
-    return cube;
+  private startAnimationLoop(): void {
+    this.runLoop();
   }
 
   public handleResize(): void {
-    const width: number = window.innerWidth;
-    const height: number = window.innerHeight;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
     if (this.camera) {
-      // For orthographic camera, we need to update the frustum
-      const aspect: number = width / height;
-      const zoom: number = 1;
+      const aspect = width / height;
+      const zoom = 1;
 
       this.camera.left = -aspect * zoom;
       this.camera.right = aspect * zoom;
@@ -249,79 +209,33 @@ export class ThreeService {
       this.renderer.setSize(width, height);
     }
 
-    // // Update shader resolution uniform
-    // if (this.customGlitchShader) {
-    //   this.customGlitchShader.uniforms.resolution.value.set(width, height);
-    // }
+    if (this.composer) {
+      this.composer.setSize(width, height);
+    }
   }
 
-  private runAnimation(): void {
-    if (this.mesh) {
-      this.mesh.rotation.x += 0.01;
-      this.mesh.rotation.y += 0.01;
+  private updateAnimation(): void {
+    const time = performance.now() * 0.001;
+
+    // Rotate the cube group
+    if (this.cubeGroup) {
+      this.cubeGroup.rotation.x += 0.01;
+      this.cubeGroup.rotation.y += 0.01;
     }
 
-    const time: number = performance.now() * 0.001; // time in seconds
-    const radius: number = 3; // distance from target
-    const speed: number = 0.5; // how fast to orbit
-
-    // === Orbital Camera Movement ===
+    // Orbital camera movement
     if (this.camera) {
+      const radius = 3;
+      const speed = 0.5;
+
       this.camera.position.x = Math.sin(time * speed) * radius;
       this.camera.position.z = Math.cos(time * speed) * radius;
-      this.camera.position.y = 1.5; // optional: some height
-      this.camera.lookAt(0, 0, 0); // look at the centre of the scene
-    }
-
-    // === UPDATE UNIFORMS ===
-    const t: number = performance.now() * 0.001;
-    if (this.customGlitchShader) {
-      this.customGlitchShader.uniforms.time.value = t;
-    }
-
-    // Optional: add live mouse movement
-    if (this.canvas && this.customGlitchShader) {
-      this.canvas.addEventListener('mousemove', (e: MouseEvent) => {
-        this.customGlitchShader!.uniforms.mouse.value.set(
-          e.clientX / window.innerWidth,
-          1 - e.clientY / window.innerHeight // Flip Y for gl-style coords
-        );
-      });
+      this.camera.position.y = 1.5;
+      this.camera.lookAt(0, 0, 0);
     }
   }
 
-  public setBackgroundColor(isDarkMode: boolean): void {
-    console.log('setBackgroundColor called with:', isDarkMode);
-    this.currentIsDarkMode = isDarkMode;
-
-    // Set the target color instead of immediately changing
-    const targetColor = isDarkMode ? 0x3f3f46 : 0xffffff;
-    this.targetBackgroundColor.setHex(targetColor);
-
-    // // Update material colors too
-    // this.updateMaterialForTheme(isDarkMode);
-  }
-
-  // private updateMaterialForTheme(isDarkMode: boolean): void {
-  //   if (this.mesh && this.mesh.material instanceof THREE.MeshStandardMaterial) {
-  //     // Match the colors from addMesh method
-  //     const materialColor = isDarkMode ? 0x00ffcc : 0xff0080;
-
-  //     this.mesh.material.color.setHex(materialColor);
-  //     this.mesh.material.emissive.setHex(materialColor);
-  //     this.mesh.material.emissiveIntensity = isDarkMode ? 0.2 : 1.5;
-  //   }
-  // }
-
-  public forceRender(): void {
-    if (this.renderer && this.scene && this.camera) {
-      this.renderer.render(this.scene, this.camera);
-    }
-  }
-
-  public runLoop(): void {
-    this.animationId = requestAnimationFrame(this.runLoop.bind(this));
-
+  private updateThemeTransition(): void {
     // Smoothly interpolate background color
     this.currentBackgroundColor.lerp(
       this.targetBackgroundColor,
@@ -331,13 +245,66 @@ export class ThreeService {
     if (this.renderer) {
       this.renderer.setClearColor(this.currentBackgroundColor, 1);
     }
+  }
 
-    this.afterImagePass.enabled = this.params.enable;
+  private updatePostProcessing(): void {
+    if (this.afterImagePass) {
+      // Adjust afterimage damping based on theme for better visibility
+      // More aggressive damping in light mode to make trails more visible
+      this.afterImagePass.uniforms.damp.value = this.currentIsDarkMode
+        ? 0.96
+        : 0.92;
+      this.afterImagePass.enabled = this.params.enable;
+    }
+  }
 
-    // Only use composer.render() - remove the direct renderer.render()
-    this.composer.render();
+  public runLoop(): void {
+    this.animationId = requestAnimationFrame(this.runLoop.bind(this));
 
-    this.runAnimation();
+    this.updateAnimation();
+    this.updateThemeTransition();
+    this.updatePostProcessing();
+
+    if (this.composer) {
+      this.composer.render();
+    }
+  }
+
+  public setBackgroundColor(isDarkMode: boolean): void {
+    console.log('Theme changed to:', isDarkMode ? 'dark' : 'light');
+    this.currentIsDarkMode = isDarkMode;
+
+    // Set target background color for smooth transition
+    const targetColor = isDarkMode ? 0x3f3f46 : 0xffffff;
+    this.targetBackgroundColor.setHex(targetColor);
+
+    // Update cube materials
+    this.updateMaterialForTheme();
+  }
+
+  private updateMaterialForTheme(): void {
+    const materialColor = this.getMaterialColor();
+    const solidOpacity = this.currentIsDarkMode ? 0.2 : 0.6;
+    const emissiveIntensity = this.currentIsDarkMode ? 0.1 : 0.3;
+
+    if (this.solidMaterial) {
+      this.solidMaterial.color.setHex(materialColor);
+      this.solidMaterial.opacity = solidOpacity;
+      this.solidMaterial.emissive.setHex(materialColor);
+      this.solidMaterial.emissiveIntensity = emissiveIntensity;
+      this.solidMaterial.needsUpdate = true;
+    }
+
+    if (this.lineMaterial) {
+      this.lineMaterial.color.setHex(materialColor);
+      this.lineMaterial.needsUpdate = true;
+    }
+  }
+
+  public forceRender(): void {
+    if (this.composer) {
+      this.composer.render();
+    }
   }
 
   public stopLoop(): void {
@@ -350,20 +317,36 @@ export class ThreeService {
   public dispose(): void {
     this.stopLoop();
 
-    if (this.renderer) {
-      this.renderer.dispose();
+    // Remove event listeners
+    window.removeEventListener('resize', this.handleResize.bind(this));
+
+    // Dispose of materials
+    if (this.solidMaterial) {
+      this.solidMaterial.dispose();
     }
 
+    if (this.lineMaterial) {
+      this.lineMaterial.dispose();
+    }
+
+    // Dispose of geometry
     if (this.geometry) {
       this.geometry.dispose();
     }
 
-    if (this.material) {
-      this.material.dispose();
+    // Dispose of renderer
+    if (this.renderer) {
+      this.renderer.dispose();
     }
 
-    if (this.customGlitchShader) {
-      this.customGlitchShader.dispose();
+    // Dispose of composer
+    if (this.composer) {
+      this.composer.dispose();
+    }
+
+    // Clear scene
+    if (this.scene) {
+      this.scene.clear();
     }
   }
 }
