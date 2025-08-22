@@ -1,39 +1,69 @@
 // HomeSplash.tsx
 import { useEffect, useRef } from 'react';
-import { ThreeService } from './utils/services/threeService.js';
-import { useTheme } from '../src/providor/ThemeContext.tsx';
 
+import { useTheme } from '../src/providor/ThemeContext.tsx';
+import { World } from '../World/World.ts';
 export default function HomeSplash() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationRef = useRef<ThreeService | null>(null);
+  const worldRef = useRef<World | null>(null);
+
   const { isDark } = useTheme();
-  console.log('HomeSplash render - isDark:', isDark);
 
-  // Initialize once on mount
   useEffect(() => {
-    const animationInstance = new ThreeService();
     if (canvasRef.current) {
-      animationInstance.init(canvasRef.current, isDark); // Pass initial theme
-      animationRef.current = animationInstance;
+      const worldInstance = new World(canvasRef.current, isDark);
+      worldRef.current = worldInstance;
+      worldInstance.start();
     }
+
+    // Cleanup function
     return () => {
-      animationRef.current?.dispose();
+      if (worldRef.current) {
+        worldRef.current.stop();
+        worldRef.current = null;
+      }
     };
-  }, []);
+  }, [isDark]);
 
-  // Handle theme changes
+  // Handle theme changes after initial mount
   useEffect(() => {
-    console.log('Theme changed to isDark:', isDark);
-    console.log('animationRef.current exists:', !!animationRef.current);
-
-    if (animationRef.current) {
-      console.log('Calling setBackgroundColor');
-      // Add a small delay to ensure everything is ready
-      setTimeout(() => {
-        animationRef.current!.setBackgroundColor(isDark);
-      }, 10);
+    if (worldRef.current) {
+      worldRef.current.setBackgroundColor(isDark);
     }
   }, [isDark]);
+
+  // Initialize once on mount
+  // useEffect(() => {
+  // const animationInstance = new ThreeService();
+
+  //refactored attempt
+  // if (canvasRef.current) {
+  //   const animationInstance = new World(canvasRef.current);
+  // animationInstance.start();
+  // }
+
+  // if (canvasRef.current) {
+  //   animationInstance.init(canvasRef.current, isDark); // Pass initial theme
+  //   animationRef.current = animationInstance;
+  // }
+  // return () => {
+  //   animationRef.current?.dispose();
+  // };
+  // }, []);
+
+  // Handle theme changes
+  // useEffect(() => {
+  // console.log('Theme changed to isDark:', isDark);
+  // console.log('animationRef.current exists:', !!animationRef.current);
+
+  // if (animationRef.current) {
+  // console.log('Calling setBackgroundColor');
+  // Add a small delay to ensure everything is ready
+  // setTimeout(() => {
+  //   animationRef.current!.setBackgroundColor(isDark);
+  // }, 10);
+  //   }
+  // }, [isDark]);
 
   return (
     <section className="fixed top-0 left-0 w-full h-full z-20">
