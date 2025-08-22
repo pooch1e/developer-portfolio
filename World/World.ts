@@ -8,6 +8,7 @@ import { createLights } from '../World/components/light';
 import { createBoxHelper } from './components/helpers/boxHelper';
 import { createAxesHelper } from './components/helpers/axesHelper';
 import { createVertexHelper } from '../World/components/helpers/vertexHelper';
+import { BackgroundColour } from '../World/services/BackgroundColourTheme';
 export class World {
   private camera: THREE.PerspectiveCamera | THREE.OrthographicCamera;
   private scene: THREE.Scene;
@@ -19,8 +20,9 @@ export class World {
   private boxHelper;
   private axesHelper;
   private vertexHelper;
+  private background;
 
-  constructor(container: HTMLCanvasElement) {
+  constructor(container: HTMLCanvasElement, isDarkMode: boolean) {
     //canvas ref
     this.container = container;
     //init variables
@@ -28,6 +30,9 @@ export class World {
     this.scene = createScene();
     this.renderer = createRenderer(this.container);
     this.lights = createLights();
+
+    //init bg
+    this.background = new BackgroundColour(this.renderer, isDarkMode);
 
     if (this.container) {
       this.resizer = new Resizer(this.container, this.camera, this.renderer);
@@ -54,4 +59,8 @@ export class World {
   }
 
   init() {}
+  //set background colour
+  public setBackgroundColor(isDarkMode: boolean) {
+    this.background.setBackgroundColor(isDarkMode);
+  }
 }
