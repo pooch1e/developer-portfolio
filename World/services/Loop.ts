@@ -6,14 +6,23 @@ interface Updatable {
   tick(delta: number): void;
 }
 export class Loop {
-  
   private postProcessor: PostProcesser;
   public updatables: Updatable[] = [];
+  private camera: Camera;
+  private scene: Scene;
   constructor(camera: Camera, scene: Scene, postProcessor: PostProcesser) {
     this.camera = camera;
     this.scene = scene;
     this.postProcessor = postProcessor;
     this.updatables = [];
+  }
+
+  public getCamera(): Camera {
+    return this.camera;
+  }
+
+  public getScene(): Scene {
+    return this.scene;
   }
 
   start() {

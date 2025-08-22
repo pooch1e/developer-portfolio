@@ -86,6 +86,10 @@ export class World {
   }
   init() {}
 
+  getResizer() {
+    return this.resizer;
+  }
+
   //set background colour
   public setBackgroundColor(isDarkMode: boolean) {
     console.log('called background colour');
