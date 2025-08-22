@@ -2,32 +2,37 @@
 import { useEffect, useRef } from 'react';
 import { ThreeService } from './utils/services/threeService.js';
 import { useTheme } from '../src/providor/ThemeContext.tsx';
-
+import { World } from '../World/World.ts';
 export default function HomeSplash() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<ThreeService | null>(null);
   const { isDark } = useTheme();
-  console.log('HomeSplash render - isDark:', isDark);
 
   // Initialize once on mount
   useEffect(() => {
-    const animationInstance = new ThreeService();
+    // const animationInstance = new ThreeService();
+
+    //refactored attempt
     if (canvasRef.current) {
-      animationInstance.init(canvasRef.current, isDark); // Pass initial theme
-      animationRef.current = animationInstance;
+      const animationInstance = new World(canvasRef.current);
     }
-    return () => {
-      animationRef.current?.dispose();
-    };
+
+    // if (canvasRef.current) {
+    //   animationInstance.init(canvasRef.current, isDark); // Pass initial theme
+    //   animationRef.current = animationInstance;
+    // }
+    // return () => {
+    //   animationRef.current?.dispose();
+    // };
   }, []);
 
   // Handle theme changes
   useEffect(() => {
-    console.log('Theme changed to isDark:', isDark);
-    console.log('animationRef.current exists:', !!animationRef.current);
+    // console.log('Theme changed to isDark:', isDark);
+    // console.log('animationRef.current exists:', !!animationRef.current);
 
     if (animationRef.current) {
-      console.log('Calling setBackgroundColor');
+      // console.log('Calling setBackgroundColor');
       // Add a small delay to ensure everything is ready
       setTimeout(() => {
         animationRef.current!.setBackgroundColor(isDark);

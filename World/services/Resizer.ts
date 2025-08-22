@@ -29,14 +29,13 @@ export class Resizer {
   }
 
   private setSize() {
-    const { clientWidth, clientHeight } = this.container;
+    const width = this.container.offsetWidth || window.innerWidth;
+    const height = this.container.offsetHeight || window.innerHeight;
 
-    // update camera aspect
-    this.camera.aspect = clientWidth / clientHeight;
+    this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
 
-    // update renderer
-    this.renderer.setSize(clientWidth, clientHeight);
+    this.renderer.setSize(width, height, false);
     this.renderer.setPixelRatio(window.devicePixelRatio);
   }
 

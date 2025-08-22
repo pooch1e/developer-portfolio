@@ -1,9 +1,12 @@
 import { WebGLRenderer } from 'three';
+export const createRenderer = (canvas: HTMLCanvasElement) => {
+  const renderer = new WebGLRenderer({
+    antialias: true,
+    canvas: canvas,
+  });
 
-export const createRenderer = (canvas?: HTMLCanvasElement) => {
-  const renderer = new WebGLRenderer({ antialias: true, canvas }) as any;
+  renderer.setSize(window.innerWidth, window.innerHeight);
 
-  // turn on the physically correct lighting model
-  renderer.phyiscallCorrectLights = true;
+  renderer.physicallyCorrectLights = true;
   return renderer;
 };
