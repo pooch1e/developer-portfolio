@@ -5,10 +5,12 @@ import { createRenderer } from './components/render';
 import { Resizer } from './services/Resizer';
 import { createCube } from './components/cube';
 import { createLights } from '../World/components/light';
+import { Loop } from '../World/services/Loop';
 import { createBoxHelper } from './components/helpers/boxHelper';
 import { createAxesHelper } from './components/helpers/axesHelper';
 import { createVertexHelper } from '../World/components/helpers/vertexHelper';
 import { BackgroundColour } from '../World/services/BackgroundColourTheme';
+
 export class World {
   private camera: THREE.PerspectiveCamera | THREE.OrthographicCamera;
   private scene: THREE.Scene;
@@ -21,6 +23,7 @@ export class World {
   private axesHelper;
   private vertexHelper;
   private background;
+  private loop;
 
   constructor(container: HTMLCanvasElement, isDarkMode: boolean) {
     //canvas ref
@@ -30,6 +33,8 @@ export class World {
     this.scene = createScene();
     this.renderer = createRenderer(this.container);
     this.lights = createLights();
+
+    this.loop = new Loop(this.camera, this.scene, this.renderer);
 
     //init bg
     this.background = new BackgroundColour(this.renderer, isDarkMode);
@@ -55,12 +60,25 @@ export class World {
       this.lights[1]
     );
 
-    this.renderer.render(this.scene, this.camera);
+    this.loop.updatables.push(this.camera as any, this.cube);
   }
 
   init() {}
   //set background colour
   public setBackgroundColor(isDarkMode: boolean) {
     this.background.setBackgroundColor(isDarkMode);
+  }
+
+  //produce single frame
+  render() {
+    this.renderer.render(this.scene, this.camera);
+  }
+  // animated loop
+  start() {
+    this.loop.start();
+  }
+
+  stop() {
+    this.loop.stop();
   }
 }
