@@ -1,6 +1,6 @@
 // HomeSplash.tsx
 import { useEffect, useRef } from 'react';
-import { ThreeService } from './utils/services/threeService.js';
+
 import { useTheme } from '../src/providor/ThemeContext.tsx';
 import { World } from '../World/World.ts';
 export default function HomeSplash() {

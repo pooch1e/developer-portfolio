@@ -27,7 +27,7 @@ export class BackgroundColour {
     console.log('Target color set to:', isDarkMode ? 'dark' : 'light');
   }
 
-  public tick(delta: number) {
+  public tick() {
     this.currentBackgroundColor.lerp(
       this.targetBackgroundColor,
       this.lerpSpeed

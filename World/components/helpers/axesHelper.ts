@@ -1,6 +1,6 @@
-import { AxesHelper } from "three";
+import { AxesHelper } from 'three';
 
 export const createAxesHelper = () => {
-  const axes = new AxesHelper(3)
+  const axes = new AxesHelper(3);
   return axes;
-}
+};

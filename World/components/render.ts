@@ -1,5 +1,9 @@
-import { WebGLRenderer } from 'three';
-export const createRenderer = (canvas: HTMLCanvasElement) => {
+import { WebGLRenderer, Camera, Scene } from 'three';
+export const createRenderer = (
+  canvas: HTMLCanvasElement,
+  scene: Scene,
+  camera: Camera
+) => {
   const renderer = new WebGLRenderer({
     antialias: true,
     canvas: canvas,
@@ -8,7 +12,7 @@ export const createRenderer = (canvas: HTMLCanvasElement) => {
 
   // renderer.setSize(window.innerWidth, window.innerHeight);
 
-  renderer.physicallyCorrectLights = true;
+  // renderer.useLegacyLights = false;
 
   // start the loop
   renderer.setAnimationLoop(() => {

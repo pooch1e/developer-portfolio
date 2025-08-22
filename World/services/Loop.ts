@@ -1,13 +1,15 @@
-import { Clock } from 'three';
+import { Clock, Camera, Scene } from 'three';
+import { PostProcesser } from './PostProcessing';
 
 const clock = new Clock();
-
+interface Updatable {
+  tick(delta: number): void;
+}
 export class Loop {
-  private camera;
-  private scene;
-  private postProcessor;
-  public updatables: any;
-  constructor(camera, scene, postProcessor) {
+  
+  private postProcessor: PostProcesser;
+  public updatables: Updatable[] = [];
+  constructor(camera: Camera, scene: Scene, postProcessor: PostProcesser) {
     this.camera = camera;
     this.scene = scene;
     this.postProcessor = postProcessor;

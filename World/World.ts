@@ -7,7 +7,6 @@ import { createCube } from './components/cube';
 import { createLights } from '../World/components/light';
 import { Loop } from '../World/services/Loop';
 import { createBoxHelper } from './components/helpers/boxHelper';
-import { createAxesHelper } from './components/helpers/axesHelper';
 import { createVertexHelper } from '../World/components/helpers/vertexHelper';
 import { BackgroundColour } from '../World/services/BackgroundColourTheme';
 
@@ -18,11 +17,10 @@ export class World {
   private scene: THREE.Scene;
   private renderer: THREE.WebGLRenderer;
   private container: HTMLCanvasElement;
-  private resizer: Resizer;
+  private resizer: Resizer | null = null;
   private cube;
   private lights;
   private boxHelper;
-  private axesHelper;
   private vertexHelper;
   private background;
   private loop;

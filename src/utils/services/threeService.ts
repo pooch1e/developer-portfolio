@@ -1,3 +1,5 @@
+/*
+commented out as refactored... will keep for now
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
@@ -13,7 +15,7 @@ export class ThreeService {
   public renderer: THREE.WebGLRenderer | null = null;
 
   // Geometry and materials
-  private canvas: HTMLCanvasElement | null = null;
+  
   private geometry: THREE.BoxGeometry | null = null;
   private cubeGroup: THREE.Group | null = null;
   private solidCube: THREE.Mesh | null = null;
@@ -349,4 +351,4 @@ export class ThreeService {
       this.scene.clear();
     }
   }
-}
+}*/

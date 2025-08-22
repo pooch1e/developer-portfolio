@@ -2,15 +2,19 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { AfterimagePass } from 'three/addons/postprocessing/AfterimagePass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import * as THREE from 'three';
 export class PostProcesser {
   public composer: EffectComposer;
-  private renderPass: RenderPass;
   private outputPass: OutputPass;
   private scene;
   private camera;
-  public afterImage: AfterimagePass;
+  public afterImage!: AfterimagePass;
 
-  constructor(renderer, scene, camera) {
+  constructor(
+    renderer: THREE.WebGLRenderer,
+    scene: THREE.Scene,
+    camera: THREE.Camera
+  ) {
     this.composer = new EffectComposer(renderer);
     this.outputPass = new OutputPass();
 
