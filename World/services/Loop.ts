@@ -5,24 +5,24 @@ const clock = new Clock();
 export class Loop {
   private camera;
   private scene;
-  private renderer;
+  private postProcessor;
   public updatables: any;
-  constructor(camera, scene, renderer) {
+  constructor(camera, scene, postProcessor) {
     this.camera = camera;
     this.scene = scene;
-    this.renderer = renderer;
+    this.postProcessor = postProcessor;
     this.updatables = [];
   }
 
   start() {
-    this.renderer.setAnimationLoop(() => {
+    this.postProcessor.composer.renderer.setAnimationLoop(() => {
       this.tick();
-      // render a frame
-      this.renderer.render(this.scene, this.camera);
+      // render through post processor instead of direct renderer
+      this.postProcessor.composer.render();
     });
   }
   stop() {
-    this.renderer.setAnimationLoop(null);
+    this.postProcessor.composer.renderer.setAnimationLoop(null);
   }
   // tick clock instead of fps
   tick() {

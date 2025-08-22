@@ -5,7 +5,7 @@ export class BackgroundColour {
   private currentIsDarkMode: boolean;
   private targetBackgroundColor: Color = new Color(0xffffff);
   private currentBackgroundColor: Color = new Color(0xffffff);
-  private transitionSpeed: number = 0.05;
+  private lerpSpeed: number = 0.02;
 
   constructor(renderer: WebGLRenderer, isDarkMode: boolean) {
     this.renderer = renderer;
@@ -14,7 +14,6 @@ export class BackgroundColour {
   }
 
   private init() {
-    // Set initial background color based on theme
     const initialColor = this.currentIsDarkMode ? 0x3f3f46 : 0xffffff;
     this.currentBackgroundColor.setHex(initialColor);
     this.targetBackgroundColor.setHex(initialColor);
@@ -25,14 +24,18 @@ export class BackgroundColour {
     this.currentIsDarkMode = isDarkMode;
     const targetColor = isDarkMode ? 0x3f3f46 : 0xffffff;
     this.targetBackgroundColor.setHex(targetColor);
+    console.log('Target color set to:', isDarkMode ? 'dark' : 'light');
   }
 
-  public update() {
-    
+  public tick(delta: number) {
     this.currentBackgroundColor.lerp(
       this.targetBackgroundColor,
-      this.transitionSpeed
+      this.lerpSpeed
     );
     this.renderer.setClearColor(this.currentBackgroundColor, 1);
+  }
+
+  public setTransitionSpeed(speed: number) {
+    this.lerpSpeed = speed;
   }
 }

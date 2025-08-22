@@ -11,6 +11,8 @@ import { createAxesHelper } from './components/helpers/axesHelper';
 import { createVertexHelper } from '../World/components/helpers/vertexHelper';
 import { BackgroundColour } from '../World/services/BackgroundColourTheme';
 
+import { PostProcesser } from './services/PostProcessing';
+
 export class World {
   private camera: THREE.PerspectiveCamera | THREE.OrthographicCamera;
   private scene: THREE.Scene;
@@ -24,6 +26,7 @@ export class World {
   private vertexHelper;
   private background;
   private loop;
+  private postProcessor: PostProcesser;
 
   constructor(container: HTMLCanvasElement, isDarkMode: boolean) {
     //canvas ref
@@ -34,10 +37,18 @@ export class World {
     this.renderer = createRenderer(this.container);
     this.lights = createLights();
 
-    this.loop = new Loop(this.camera, this.scene, this.renderer);
+    this.postProcessor = new PostProcesser(
+      this.renderer,
+      this.scene,
+      this.camera
+    );
+    this.setupPostProcessing();
+
+    this.loop = new Loop(this.camera, this.scene, this.postProcessor);
 
     //init bg
     this.background = new BackgroundColour(this.renderer, isDarkMode);
+    // this.background.setTransitionDuration(3.0);
 
     if (this.container) {
       this.resizer = new Resizer(this.container, this.camera, this.renderer);
@@ -47,25 +58,39 @@ export class World {
 
     //create box + axes helper
     this.boxHelper = createBoxHelper(this.cube);
-    this.axesHelper = createAxesHelper();
+
     this.vertexHelper = createVertexHelper(this.cube);
 
     //add to scene
     this.scene.add(
       this.cube,
       this.boxHelper,
-      this.axesHelper,
+
       this.vertexHelper,
       this.lights[0],
       this.lights[1]
     );
 
-    this.loop.updatables.push(this.camera as any, this.cube);
+    this.loop.updatables.push(this.camera as any, this.cube, this.background);
   }
 
+  private setupPostProcessing() {
+    this.postProcessor.addPass(); // RenderPass
+    this.postProcessor.addAfterImage(); // AfterimagePass
+    this.postProcessor.output(); // OutputPass
+  }
+
+  // Method to control afterimage effect
+  public setAfterimageIntensity(intensity: number) {
+    if (this.postProcessor.afterImage) {
+      this.postProcessor.afterImage.uniforms['damp'].value = intensity;
+    }
+  }
   init() {}
+
   //set background colour
   public setBackgroundColor(isDarkMode: boolean) {
+    console.log('called background colour');
     this.background.setBackgroundColor(isDarkMode);
   }
 
@@ -73,6 +98,7 @@ export class World {
   render() {
     this.renderer.render(this.scene, this.camera);
   }
+
   // animated loop
   start() {
     this.loop.start();

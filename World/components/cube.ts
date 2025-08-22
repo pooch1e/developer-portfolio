@@ -3,7 +3,7 @@ const radiansPerSecond = MathUtils.degToRad(30);
 export const createCube = () => {
   const geometry = new BoxGeometry(2, 2, 2);
   const material = new MeshStandardMaterial({ color: 0x049ef4 });
-  material.wireframe = true;
+  // material.wireframe = true;
   material.metalness = 1;
   const cube = new Mesh(geometry, material);
 
