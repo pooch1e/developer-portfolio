@@ -1,21 +1,21 @@
 import { Link, useLocation } from 'react-router-dom';
+
 export default function Header() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
   const headerClasses = isHomePage
-    ? 'p-4 bg-transparent dark:bg-gradient-to-b dark:from-zinc-700 dark:via-zinc-700/50 dark:to-transparent z-40 w-full relative transition-colors duration-300 ease-linear'
-    : 'p-4 bg-white dark:bg-zinc-700 z-40 w-full relative transition-colors duration-300 ease-linear';
+    ? 'p-8 bg-transparent z-40 w-full relative transition-colors duration-300 ease-linear'
+    : 'p-8 bg-white dark:bg-zinc-700 z-40 w-full relative transition-colors duration-300 ease-linear';
 
   return (
     <header className={headerClasses} role="banner">
-      <div className="text mb-2 text-black text-1xl dark:text-white  font-sixtyfour tracking-[-0.3px]">
+      <div className="text mb-2 text-black text-1xl dark:text-white font-sixtyfour tracking-[-0.3px]">
         <h1 className="underline text-2xl">
           <Link to="/" aria-label="Joel Kram - Home page">
             Joel Kram
           </Link>
         </h1>
-
         <p className="text-base" role="doc-subtitle">
           Junior Fullstack Software Developer
         </p>
@@ -30,14 +30,12 @@ export default function Header() {
           className="underline">
           Projects
         </Link>
-
         <Link
           to="/contact"
           aria-label="Get in touch with me"
           className="underline">
           Contact
         </Link>
-
         <div
           role="group"
           aria-label="External profiles"
