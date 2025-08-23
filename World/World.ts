@@ -9,6 +9,7 @@ import { Loop } from '../World/services/Loop';
 import { createBoxHelper } from './components/helpers/boxHelper';
 import { createVertexHelper } from '../World/components/helpers/vertexHelper';
 import { BackgroundColour } from '../World/services/BackgroundColourTheme';
+import { setupCubeInteractions } from '../World/components/helpers/cubeHelper';
 
 import { PostProcesser } from './services/PostProcessing';
 
@@ -25,6 +26,7 @@ export class World {
   private background;
   private loop;
   private postProcessor: PostProcesser;
+  private cubeInteractionCleanup: (() => void) | null = null;
 
   constructor(container: HTMLCanvasElement, isDarkMode: boolean) {
     //canvas ref
@@ -58,6 +60,13 @@ export class World {
     this.boxHelper = createBoxHelper(this.cube);
 
     this.vertexHelper = createVertexHelper(this.cube);
+
+    // Setup cube interactions and store cleanup function
+    this.cubeInteractionCleanup = setupCubeInteractions(
+      this.cube,
+      this.camera,
+      this.renderer
+    );
 
     //add to scene
     this.scene.add(
@@ -108,5 +117,9 @@ export class World {
 
   stop() {
     this.loop.stop();
+    if (this.cubeInteractionCleanup) {
+      this.cubeInteractionCleanup();
+      this.cubeInteractionCleanup = null;
+    }
   }
 }
