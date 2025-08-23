@@ -11,7 +11,7 @@ export const createCube = () => {
   const cube = new Mesh(geometry, material) as unknown as Mesh & TickableMesh;
 
   cube.rotation.set(-0.5, -0.1, 0.8);
-  cube.position.y = -1;
+  cube.position.y = -0.6;
   const radiansPerSecond = MathUtils.degToRad(30);
   // this method will be called once per frame
   cube.tick = (delta: number) => {

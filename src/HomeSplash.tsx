@@ -1,12 +1,11 @@
 // HomeSplash.tsx
 import { useEffect, useRef } from 'react';
-
 import { useTheme } from '../src/providor/ThemeContext.tsx';
 import { World } from '../World/World.ts';
+
 export default function HomeSplash() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const worldRef = useRef<World | null>(null);
-
   const { isDark } = useTheme();
 
   useEffect(() => {
@@ -32,42 +31,21 @@ export default function HomeSplash() {
     }
   }, [isDark]);
 
-  // Initialize once on mount
-  // useEffect(() => {
-  // const animationInstance = new ThreeService();
-
-  //refactored attempt
-  // if (canvasRef.current) {
-  //   const animationInstance = new World(canvasRef.current);
-  // animationInstance.start();
-  // }
-
-  // if (canvasRef.current) {
-  //   animationInstance.init(canvasRef.current, isDark); // Pass initial theme
-  //   animationRef.current = animationInstance;
-  // }
-  // return () => {
-  //   animationRef.current?.dispose();
-  // };
-  // }, []);
-
-  // Handle theme changes
-  // useEffect(() => {
-  // console.log('Theme changed to isDark:', isDark);
-  // console.log('animationRef.current exists:', !!animationRef.current);
-
-  // if (animationRef.current) {
-  // console.log('Calling setBackgroundColor');
-  // Add a small delay to ensure everything is ready
-  // setTimeout(() => {
-  //   animationRef.current!.setBackgroundColor(isDark);
-  // }, 10);
-  //   }
-  // }, [isDark]);
-
   return (
-    <section className="fixed top-0 left-0 w-full h-full z-20">
-      <canvas className="w-full h-full block" ref={canvasRef} />
+    <section className="fixed inset-0 z-20 bg-white dark:bg-zinc-700 transition-colors duration-300 ease-linear">
+      <div className="h-full w-full p-3 box-border">
+        <div className="w-full h-full border-2 border-gray-300 rounded-sm dark:border-gray-700 overflow-hidden transition-colors duration-300 ease-linear">
+          <canvas
+            className="w-full h-full block"
+            ref={canvasRef}
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'block',
+            }}
+          />
+        </div>
+      </div>
     </section>
   );
 }
