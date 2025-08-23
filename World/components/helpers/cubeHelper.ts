@@ -1,5 +1,5 @@
 import { Vector2, Raycaster, Camera, WebGLRenderer } from 'three';
-import { TickableMesh } from '../cube';
+import type { TickableMesh } from '../cube';
 export const setupCubeInteractions = (
   cube: TickableMesh,
   camera: Camera,
