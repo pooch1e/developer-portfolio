@@ -1,4 +1,4 @@
-import { ImgContainer } from './ImgContainer';
+import { ImgContainer } from './ImgContainer.tsx';
 import type { ncNewsProjectType } from '../../data/projects';
 
 export default function ProjectContainerWithProps({

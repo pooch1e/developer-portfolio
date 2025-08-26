@@ -1,4 +1,4 @@
-import ProjectContainerWithProps from './ProjectContainerWithProps';
+import ProjectContainerWithProps from './ProjectContainerWithProps.tsx';
 import { ncNewsProjectFrontEnd } from '../../data/projects.js';
 import { ncNewsProjectBackEnd } from '../../data/projects.js';
 import { sparkTables } from '../../data/projects.js';
