@@ -10,7 +10,7 @@ export interface TickableMesh extends Mesh {
 }
 
 export const createCube = () => {
-  const geometry = new SphereGeometry(1);
+  const geometry = new SphereGeometry(1.2);
   // const material = new MeshStandardMaterial({
   //   color: 0x049ef4,
   //   metalness: 0.7,
@@ -23,7 +23,7 @@ export const createCube = () => {
     fragmentShader: fragmentShader,
     uniforms: {
       uTime: { value: 0.0 },
-      uColor: { value: new Color(0x049ef4) },
+      uColor: { value: new Color(0x0000ff) },
     },
   });
 

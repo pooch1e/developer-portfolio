@@ -73,7 +73,6 @@ export class World {
       this.cube,
       this.boxHelper,
 
-      this.vertexHelper,
       this.lights[0],
       this.lights[1]
     );
