@@ -5,4 +5,7 @@ import glsl from 'vite-plugin-glsl';
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), glsl()],
+  resolve: {
+    extensions: ['.ts', '.js', '.glsl'],
+  },
 });

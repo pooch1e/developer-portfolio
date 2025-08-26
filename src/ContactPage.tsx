@@ -1,5 +1,5 @@
 import resume from '../src/assets/docs/JoelKram_Frontend Dev.pdf';
-import { Headshot } from '../src/threejs/Headshot';
+import { Headshot } from '../src/threejs/Headshot.tsx';
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-700 transition-colors duration-300 ease-linear">

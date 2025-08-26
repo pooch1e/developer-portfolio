@@ -1,10 +1,10 @@
-import Header from './Header';
-import WorkPage from './projectComps/WorkPage';
-import HomeSplash from './HomeSplash';
-import ContactPage from './ContactPage';
+import Header from './Header.tsx';
+import WorkPage from './projectComps/WorkPage.tsx';
+import HomeSplash from './HomeSplash.tsx';
+import ContactPage from './ContactPage.tsx';
 import { Routes, Route } from 'react-router-dom';
-import ThemeToggle from './ThemeButton';
-import { ThemeProvider } from './providor/ThemeContext';
+import ThemeToggle from './ThemeButton.tsx';
+import { ThemeProvider } from './providor/ThemeContext.tsx';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         </ThemeToggle>
       </ThemeProvider>
     </>
-  ); 
+  );
 }
 
 export default App;

@@ -28,6 +28,7 @@ export class Loop {
   start() {
     this.postProcessor.composer.renderer.setAnimationLoop(() => {
       this.tick();
+      
       // render through post processor instead of direct renderer
       this.postProcessor.composer.render();
     });

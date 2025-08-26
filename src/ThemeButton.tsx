@@ -1,5 +1,5 @@
 // components/ThemeToggle.jsx
-import { useTheme } from '../src/providor/ThemeContext';
+import { useTheme } from '../src/providor/ThemeContext.tsx';
 import type { ReactNode } from 'react';
 interface ThemeToggleProps {
   children?: ReactNode;

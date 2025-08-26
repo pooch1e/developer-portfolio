@@ -1,4 +1,4 @@
-import PageContainer from './PageContainer';
+import PageContainer from './PageContainer.tsx';
 export default function WorkPage() {
   return (
     <div>
