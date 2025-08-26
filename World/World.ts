@@ -22,7 +22,7 @@ export class World {
   private cube;
   private lights;
   private boxHelper;
-  private vertexHelper;
+  // private vertexHelper;
   private background;
   private loop;
   private postProcessor: PostProcesser;
