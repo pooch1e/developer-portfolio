@@ -7,7 +7,7 @@ import { createCube } from './components/cube';
 import { createLights } from '../World/components/light';
 import { Loop } from '../World/services/Loop';
 import { createBoxHelper } from './components/helpers/boxHelper';
-import { createVertexHelper } from '../World/components/helpers/vertexHelper';
+
 import { BackgroundColour } from '../World/services/BackgroundColourTheme';
 import { setupCubeInteractions } from '../World/components/helpers/cubeHelper';
 
@@ -59,7 +59,7 @@ export class World {
     //create box + axes helper
     this.boxHelper = createBoxHelper(this.cube);
 
-    this.vertexHelper = createVertexHelper(this.cube);
+    // this.vertexHelper = createVertexHelper(this.cube);
 
     // Setup cube interactions and store cleanup function
     this.cubeInteractionCleanup = setupCubeInteractions(
