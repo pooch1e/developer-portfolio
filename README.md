@@ -46,7 +46,7 @@ This portfolio showcases my development skills through an interactive web experi
 
 ### 3D Graphics & Animation
 - **Three.js** - WebGL 3D graphics library
-- **React Three Fiber** (if applicable) - React renderer for Three.js
+- **Custom Shaders** - GLSL shaders
 
 ### Deployment & Infrastructure
 - **Vercel** - Hosting and deployment platform
