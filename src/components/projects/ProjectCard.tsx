@@ -1,5 +1,6 @@
 import { ImageContainer } from './ImageContainer.tsx';
 import type { ncNewsProjectType } from '../../../data/projects.ts';
+import { TechStack } from './TechStack.tsx';
 
 export default function ProjectCard({
   title,
@@ -22,22 +23,7 @@ export default function ProjectCard({
           {description}
         </p>
         <div className="flex justify-between items-end ">
-          <div className="text-sm text-gray-400 dark:text-white space-y-1">
-            {/* icons */}
-            {technologies.length > 0 && (
-              <div className="flex items-center space-x-4">
-                {technologies.map((tech, index: number) => (
-                  <div key={index} className="flex items-center mt-1 space-x-1">
-                    <img
-                      src={tech.icon}
-                      alt={tech.name}
-                      className="w-10 h-10"></img>
-                    
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <TechStack technologies={technologies}></TechStack>
         </div>
 
         <div className="flex gap-5 mt-50 ">
