@@ -254,13 +254,6 @@ The theme system uses CSS variables and Tailwind's dark mode:
   - [ ] Progressive Web App (PWA) features
   - [ ] Advanced SEO optimizations
 
-## Contact
-
-- **Portfolio**: [your-domain.com](https://your-domain.com)
-- **LinkedIn**: [Your LinkedIn Profile](https://linkedin.com/in/yourprofile)
-- **GitHub**: [Your GitHub Profile](https://github.com/yourusername)
-- **Email**: your-email@domain.com
-
 ---
 
 ## Acknowledgments
@@ -272,7 +265,7 @@ The theme system uses CSS variables and Tailwind's dark mode:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License 
 
 ---
 
