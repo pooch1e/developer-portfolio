@@ -32,7 +32,7 @@ export default function ProjectCard({
                       src={tech.icon}
                       alt={tech.name}
                       className="w-10 h-10"></img>
-                    {/* <span>{tech.name}</span> */}
+                    
                   </div>
                 ))}
               </div>
