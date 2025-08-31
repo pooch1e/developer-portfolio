@@ -1,4 +1,4 @@
-export function ImgContainer({ imageUrl }: { imageUrl: string }) {
+export function ImageContainer({ imageUrl }: { imageUrl: string }) {
   return (
     <div className="w-full h-full ml-1">
       <img

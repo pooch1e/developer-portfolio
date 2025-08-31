@@ -1,9 +1,9 @@
 // HomeSplash.tsx
 import { useEffect, useRef } from 'react';
-import { useTheme } from '../src/providor/ThemeContext.tsx';
-import { World } from '../World/World.ts';
+import { useTheme } from '../provider/ThemeContext.tsx';
+import { World } from '../../World/World.ts';
 
-export default function HomeSplash() {
+export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const worldRef = useRef<World | null>(null);
   const { isDark } = useTheme();
