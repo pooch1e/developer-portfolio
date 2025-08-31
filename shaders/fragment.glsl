@@ -524,7 +524,7 @@ void main() {
   vec2 sortedUv = uv + totalDisplacement;
 
     // Ensure UV coordinates stay in bounds with wrapping
-  sortedUv = fract(sortedUv + 1.0);
+  // sortedUv = fract(sortedUv + 1.0);
 
     // Apply color effects
   vec3 color = channelSeparationSort(sortedUv, baseColor, time);
@@ -540,13 +540,13 @@ void main() {
   color = mix(color, vec3(1.0), streakIntensity);
 
     // Add chromatic aberration-like sorting
-  float aberrationStrength = sin(time * 0.5) * 0.01 + 0.01;
-  color.r = mix(color.r, random(sortedUv + vec2(aberrationStrength, 0.0) + time * 0.1), 0.15);
-  color.b = mix(color.b, random(sortedUv - vec2(aberrationStrength, 0.0) + time * 0.1), 0.15);
+  // float aberrationStrength = sin(time * 0.5) * 0.01 + 0.01;
+  // color.r = mix(color.r, random(sortedUv + vec2(aberrationStrength, 0.0) + time * 0.1), 0.15);
+  // color.b = mix(color.b, random(sortedUv - vec2(aberrationStrength, 0.0) + time * 0.1), 0.15);
 
     // Final color grading with sorting-inspired quantization
-  color = floor(color * 16.0) / 16.0; // Posterization effect
-  color = mix(color, smoothstep(0.0, 1.0, color), 0.7); // Contrast adjustment
+  color = floor(color * 16.0) / 16.0; 
+  color = mix(color, smoothstep(0.0, 1.0, color), 0.7); 
 
   gl_FragColor = vec4(color, 1.0);
 }

@@ -15,7 +15,7 @@ function App() {
         <ThemeToggle>
           <Routes>
             <Route path="/" element={<HomeSplash />} />
-            <Route path="/work" element={<ProjectList />} />
+            <Route path="/projects" element={<ProjectList />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </ThemeToggle>
