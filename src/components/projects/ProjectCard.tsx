@@ -1,7 +1,7 @@
-import { ImgContainer } from './ImgContainer.tsx';
-import type { ncNewsProjectType } from '../../data/projects';
+import { ImageContainer } from './ImageContainer.tsx';
+import type { ncNewsProjectType } from '../../../data/projects.ts';
 
-export default function ProjectContainerWithProps({
+export default function ProjectCard({
   title,
   image,
   description,
@@ -12,7 +12,7 @@ export default function ProjectContainerWithProps({
     <div className=" p-4 grid grid-cols-1 lg:grid-cols-3 gap-12 py-8 border-b-1 transition-colors duration-300 ease-linear dark:bg-zinc-700 ">
       {/* Image */}
       <div>
-        <ImgContainer imageUrl={image} />
+        <ImageContainer imageUrl={image} />
       </div>
       <div className="lg:col-span-2 space-y-8 mt-2 ">
         <h4 className="text mb-2 text-black text-2xl font-['Arial'] dark:text-white tracking-[-0.3px]">
@@ -32,7 +32,7 @@ export default function ProjectContainerWithProps({
                       src={tech.icon}
                       alt={tech.name}
                       className="w-10 h-10"></img>
-                    {/* <span>{tech.name}</span> */}
+                    
                   </div>
                 ))}
               </div>
