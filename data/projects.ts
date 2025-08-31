@@ -11,7 +11,10 @@ import tailwindIcon from '../src/assets/SVG/tailwind-svgrepo-com.svg';
 import drizzleIcon from '../src/assets/SVG/drizzle-drizzling-rain-svgrepo-com.svg';
 import threeDIcon from '../src/assets/SVG/3d-secure-svgrepo-com.svg';
 import typeScriptIcon from '../src/assets/SVG/typescript-svgrepo-com.svg';
+import sequelizeIcon from '../src/assets/SVG/Sequelize.svg';
+import electronIcon from '../src/assets/SVG/Electron.svg';
 
+import kr8 from '../src/assets/kr8_logo.png';
 import civ from '../src/assets/sparkforge.png';
 import ncNewsFrontendImage from '../src/assets/ncnews3.png';
 import ncNewsBackendImage from '../src/assets/ncnewsbackend1.png';
@@ -35,6 +38,33 @@ export interface ProjectType {
   technologies: Technology[];
   links: ProjectLink[];
 }
+
+export const kr8Project: ProjectType = {
+  title: 'kr8 - WIP',
+  image: kr8,
+  description:
+    'Kr8 is an application built for DJ purists who love the experience of digging through vinyl records and album artwork. The idea is: take your digital playlists and make them feel physical again.\n\nThe project is split into three parts:\n- Desktop (Electron + React): Import playlists from Rekordbox or Traktor, tweak track details, and curate your collection.\n- Backend (Express + Sequelize + Postgres): Provides a solid API layer for syncing, storage, and metadata.\n- Mobile (React Native + Expo): Lets you “dig” through your collection on the go, flipping through artwork as if you were crate digging in a record shop.\n\nCreated in collaboration with Simon Busby, this project is still in progress, with an MVP expected within the next month.',
+  technologies: [
+    { name: 'React', icon: reactIcon },
+    { name: 'TailwindCss', icon: tailwindIcon },
+    { name: 'Sequelize', icon: sequelizeIcon },
+    { name: 'Electron', icon: electronIcon },
+  ],
+  links: [
+    {
+      label: 'GitHub - kr8 Server',
+      url: 'https://github.com/bluesky2006/kr8-server',
+    },
+    {
+      label: 'GitHub - kr8 Desktop',
+      url: 'https://github.com/bluesky2006/kr8-desktop',
+    },
+    {
+      label: 'GitHub - kr8 Mobile',
+      url: 'https://github.com/bluesky2006/kr8-mobile',
+    },
+  ],
+};
 
 export const sparkTables: ProjectType = {
   title: 'SparkForge - WIP',
