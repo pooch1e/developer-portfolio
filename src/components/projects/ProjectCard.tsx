@@ -1,6 +1,7 @@
 import { ImageContainer } from './ImageContainer.tsx';
 import type { ncNewsProjectType } from '../../../data/projects.ts';
 import { TechStack } from './TechStack.tsx';
+import { ProjectLinks } from './ProjectLinks.tsx';
 
 export default function ProjectCard({
   title,
@@ -26,18 +27,7 @@ export default function ProjectCard({
           <TechStack technologies={technologies}></TechStack>
         </div>
 
-        <div className="flex gap-5 mt-50 ">
-          {links.map((link, index: number) => (
-            <a
-              key={index}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-md text-black  hover:text-gray-600 dark:text-white transition-colors border-b border-black hover:border-gray-600">
-              {link.label} →
-            </a>
-          ))}
-        </div>
+        <ProjectLinks links={links} />
       </div>
     </div>
   );
