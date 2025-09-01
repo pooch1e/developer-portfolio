@@ -25,7 +25,7 @@ export default function Header() {
         role="navigation"
         aria-label="Main navigation">
         <Link
-          to="/work"
+          to="/projects"
           aria-label="View my projects and work portfolio"
           className="underline">
           Projects
