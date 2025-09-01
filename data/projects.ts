@@ -91,7 +91,7 @@ export const ncNewsProjectFrontEnd: ProjectType = {
   title: 'NC News',
   image: ncNewsFrontendImage,
   description:
-    'A Reddit-style news platform built as part of the Northcoders bootcamp. Users can browse, filter, and sort articles, leave comments, and vote on content. It consumes a custom express API. The project also includes comprehensive integration testing with Jest and Supertest, and is deployed via Render. Please note - it may take a minute for the render server to load',
+    'A Reddit-style news platform built as part of the Northcoders bootcamp. Users can browse, filter, and sort articles, leave comments, and vote on content. It consumes a custom express API. I have recently refactored the whole project to improve component design and styling - utilising Tailwind instead of Bootstrap. This is deployed via Netlify and connects to a Render hosted Database and backend application. Please note - it may take a minute for the render server to load',
   technologies: [
     { name: 'React 18', icon: reactIcon },
     { name: 'Bootstrap 5', icon: bootstrapIcon },
