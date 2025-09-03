@@ -12,10 +12,12 @@ export default function ThemeToggle({ children }: ThemeToggleProps) {
     <>
       <button
         onClick={toggleTheme}
-        className="fixed top-8 right-8 z-50 p-2 rounded-full bg-white/20 dark:bg-zinc-700/20 backdrop-blur-md border border-gray-200/20 dark:border-gray-700/20 hover:bg-white/30 dark:hover:bg-zinc-700/30 dark:text-white transition-all duration-200"
+        className="rotate-90 text-sm fixed top-10 right-0 z-50 backdrop-blur-md dark:text-white transition-all duration-200"
         aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}>
         {isDark ? <p>Light</p> : <p>Dark</p>}
       </button>
+      <div className="rotate-90 fixed top-20 right-0 z-50 h-[12px] w-[12px] border-2 mr-2.5 dark:border-white transition-all duration-200"></div>
+
       <div>{children}</div>
     </>
   );

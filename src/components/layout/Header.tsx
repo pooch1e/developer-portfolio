@@ -5,8 +5,8 @@ export default function Header() {
   const isHomePage = location.pathname === '/';
 
   const headerClasses = isHomePage
-    ? 'p-8 bg-transparent z-40 w-full relative transition-colors duration-300 ease-linear'
-    : 'p-8 bg-white dark:bg-zinc-700 z-40 w-full relative transition-colors duration-300 ease-linear';
+    ? 'p-12 bg-transparent z-40 w-full relative transition-colors duration-300 ease-linear'
+    : 'p-12 bg-white dark:bg-zinc-700 z-40 w-full relative transition-colors duration-300 ease-linear';
 
   return (
     <header className={headerClasses} role="banner">

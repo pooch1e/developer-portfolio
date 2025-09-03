@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <section className="fixed inset-0 z-20 bg-white dark:bg-zinc-700 transition-colors duration-300 ease-linear">
-      <div className="h-full w-full p-3 box-border">
+      <div className="h-full w-full p-8 box-border">
         <div className="w-full h-full border-2 border-gray-300 rounded-sm dark:border-gray-700 overflow-hidden transition-colors duration-300 ease-linear">
           <canvas
             className="w-full h-full block"
