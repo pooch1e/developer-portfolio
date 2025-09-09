@@ -55,6 +55,10 @@ export class World {
     }
 
     this.cube = createCube();
+    const cube1 = createCube();
+    const cube2 = createCube();
+
+    const cubeGroup = new THREE.Group();
 
     //create box + axes helper
     this.boxHelper = createBoxHelper(this.cube);
@@ -67,10 +71,14 @@ export class World {
       this.camera,
       this.renderer
     );
+    //add to cube group
+    cubeGroup.add(this.cube, cube1, cube2);
+    cube1.position.y = 5;
+    cube2.position.y = 7;
 
     //add to scene
     this.scene.add(
-      this.cube,
+      cubeGroup,
       this.boxHelper,
 
       this.lights[0],
