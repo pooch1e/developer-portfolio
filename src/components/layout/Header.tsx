@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 export default function Header() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-
   const headerClasses = isHomePage
     ? 'p-12 bg-transparent z-40 w-full relative transition-colors duration-300 ease-linear'
     : 'p-12 bg-white dark:bg-zinc-700 z-40 w-full relative transition-colors duration-300 ease-linear';
@@ -21,35 +20,38 @@ export default function Header() {
         </p>
       </div>
       <nav
-        className="nav text-[11pt] dark:text-white font-sixtyfour flex flex-col mt-4 gap-4 items-start"
+        className="nav text-4xl dark:text-white font-sixtyfour mt-4"
         role="navigation"
         aria-label="Main navigation">
-        <Link
-          to="/projects"
-          aria-label="View my projects and work portfolio"
-          className="underline">
-          Projects
-        </Link>
-        <Link
-          to="/contact"
-          aria-label="Get in touch with me"
-          className="underline">
-          Contact
-        </Link>
-        <div
-          role="group"
-          aria-label="External profiles"
-          className="flex gap-4 flex-col">
+        <div className="flex justify-start even:justify-end mb-2">
+          <Link
+            to="/projects"
+            aria-label="View my projects and work portfolio"
+            className="underline underline-offset-8">
+            Projects
+          </Link>
+        </div>
+        <div className="flex justify-start even:justify-end mb-2">
+          <Link
+            to="/contact"
+            aria-label="Get in touch with me"
+            className="underline underline-offset-8">
+            Contact
+          </Link>
+        </div>
+        <div className="flex justify-start even:justify-end mb-2">
           <a
             href="https://github.com/pooch1e"
             target="_blank"
-            className="underline w-1">
+            className="underline underline-offset-8">
             Github
           </a>
+        </div>
+        <div className="flex justify-start even:justify-end">
           <a
             href="https://www.linkedin.com/in/joel-kram/"
             target="_blank"
-            className="underline w-1">
+            className="underline underline-offset-8">
             LinkedIn
           </a>
         </div>
