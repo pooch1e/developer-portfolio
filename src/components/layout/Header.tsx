@@ -23,7 +23,7 @@ export default function Header() {
         className="nav text-4xl dark:text-white font-sixtyfour mt-4"
         role="navigation"
         aria-label="Main navigation">
-        <div className="flex justify-start even:justify-end mb-2">
+        <div className="flex justify-start even:justify-end mb-96">
           <Link
             to="/projects"
             aria-label="View my projects and work portfolio"
@@ -31,7 +31,7 @@ export default function Header() {
             Projects
           </Link>
         </div>
-        <div className="flex justify-start even:justify-end mb-2">
+        <div className="flex justify-start even:justify-end  mb-96">
           <Link
             to="/contact"
             aria-label="Get in touch with me"
@@ -39,7 +39,7 @@ export default function Header() {
             Contact
           </Link>
         </div>
-        <div className="flex justify-start even:justify-end mb-2">
+        <div className="flex justify-start even:justify-end  mb-96">
           <a
             href="https://github.com/pooch1e"
             target="_blank"

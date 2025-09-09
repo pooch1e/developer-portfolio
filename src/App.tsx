@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <ThemeProvider>
-        <Header />
+        
         <ThemeToggle>
           <Routes>
             <Route path="/" element={<HomeSplash />} />

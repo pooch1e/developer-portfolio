@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { useTheme } from '../provider/ThemeContext.tsx';
 import { World } from '../../World/World.ts';
+import Header from '../components/layout/Header.tsx';
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -32,20 +33,23 @@ export default function Home() {
   }, [isDark]);
 
   return (
-    <section className="fixed inset-0 z-20 bg-white dark:bg-zinc-700 transition-colors duration-300 ease-linear">
-      <div className="h-full w-full p-8 box-border">
-        <div className="w-full h-full border-2 border-gray-300 rounded-sm dark:border-gray-700 overflow-hidden transition-colors duration-300 ease-linear">
-          <canvas
-            className="w-full h-full block"
-            ref={canvasRef}
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'block',
-            }}
-          />
+    <>
+      <Header />
+      <section className="fixed inset-0 z-20 bg-white dark:bg-zinc-700 transition-colors duration-300 ease-linear">
+        <div className="h-full w-full p-8 box-border">
+          <div className="w-full h-full border-2 border-gray-300 rounded-sm dark:border-gray-700 overflow-hidden transition-colors duration-300 ease-linear">
+            <canvas
+              className="w-full h-full block"
+              ref={canvasRef}
+              style={{
+                width: '100%',
+                height: '100%',
+                display: 'block',
+              }}
+            />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
