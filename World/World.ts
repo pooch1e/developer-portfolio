@@ -6,6 +6,8 @@ import { Resizer } from './services/Resizer';
 import { createCube } from './components/cube';
 import { createLights } from '../World/components/light';
 import { Loop } from '../World/services/Loop';
+import { Scroll } from './services/Scroll';
+
 import { createBoxHelper } from './components/helpers/boxHelper';
 
 import { BackgroundColour } from '../World/services/BackgroundColourTheme';
@@ -19,6 +21,8 @@ export class World {
   private renderer: THREE.WebGLRenderer;
   private container: HTMLCanvasElement;
   private resizer: Resizer | null = null;
+  private scroll: Scroll | null;
+
   private cube;
   private lights;
   private boxHelper;
@@ -36,6 +40,12 @@ export class World {
     this.scene = createScene();
     this.renderer = createRenderer(this.container);
     this.lights = createLights();
+    
+    //instantiate new scroll tracker
+    this.scroll = new Scroll({ cursorX: 0, cursorY: 0 });
+    this.scroll.initScroll(container);
+
+
 
     this.postProcessor = new PostProcesser(
       this.renderer,
