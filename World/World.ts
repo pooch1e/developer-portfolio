@@ -22,6 +22,7 @@ export class World {
   private container: HTMLCanvasElement;
   private resizer: Resizer | null = null;
   private scroll: Scroll | null;
+  private cameraGroup: THREE.Group;
 
   private cube;
   private lights;
@@ -31,22 +32,25 @@ export class World {
   private loop;
   private postProcessor: PostProcesser;
   private cubeInteractionCleanup: (() => void) | null = null;
+  private objectDistance: number = 4;
 
   constructor(container: HTMLCanvasElement, isDarkMode: boolean) {
     //canvas ref
     this.container = container;
     //init variables
-    this.camera = createCamera();
+    this.camera = createCamera(this.objectDistance, container.height);
     this.scene = createScene();
     this.renderer = createRenderer(this.container);
     this.lights = createLights();
-    
+
     //instantiate new scroll tracker
     this.scroll = new Scroll({ cursorX: 0, cursorY: 0 });
     this.scroll.initParralax(container);
-    this.scroll.initScroll(container)
+    this.scroll.initScroll(container);
 
-
+    //create group for camera scroll
+    this.cameraGroup = new THREE.Group();
+    this.cameraGroup.add(this.camera);
 
     this.postProcessor = new PostProcesser(
       this.renderer,
@@ -84,8 +88,9 @@ export class World {
     );
     //add to cube group
     cubeGroup.add(this.cube, cube1, cube2);
-    cube1.position.y = 5;
-    cube2.position.y = 7;
+    this.cube.position.y = this.objectDistance * 0;
+    cube1.position.y = this.objectDistance * 1;
+    cube2.position.y = this.objectDistance * 2;
 
     //add to scene
     this.scene.add(
@@ -111,7 +116,6 @@ export class World {
       this.postProcessor.afterImage.uniforms['damp'].value = intensity;
     }
   }
-  init() {}
 
   getResizer() {
     return this.resizer;
