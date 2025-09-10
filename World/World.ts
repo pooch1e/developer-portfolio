@@ -46,7 +46,7 @@ export class World {
     //instantiate new scroll tracker
     this.scroll = new Scroll({ cursorX: 0, cursorY: 0 });
     this.scroll.initParralax(container);
-    this.scroll.initScroll(container);
+    // this.scroll.initScroll();
 
     //create group for camera scroll
     this.cameraGroup = new THREE.Group();
@@ -88,9 +88,9 @@ export class World {
     );
     //add to cube group
     cubeGroup.add(this.cube, cube1, cube2);
-    this.cube.position.y = this.objectDistance * 0;
-    cube1.position.y = this.objectDistance * 1;
-    cube2.position.y = this.objectDistance * 2;
+    this.cube.position.y = -this.objectDistance * 0;
+    cube1.position.y = -this.objectDistance * 1;
+    cube2.position.y = -this.objectDistance * 2;
 
     //add to scene
     this.scene.add(
