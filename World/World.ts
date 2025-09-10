@@ -43,7 +43,8 @@ export class World {
     
     //instantiate new scroll tracker
     this.scroll = new Scroll({ cursorX: 0, cursorY: 0 });
-    this.scroll.initScroll(container);
+    this.scroll.initParralax(container);
+    this.scroll.initScroll(container)
 
 
 
