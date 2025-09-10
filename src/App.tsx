@@ -1,4 +1,4 @@
-import Header from './components/layout/Header.tsx';
+
 import HomeSplash from './pages/Home.tsx';
 import ContactPage from './pages/Contact.tsx';
 import ProjectList from './components/projects/ProjectList.tsx';

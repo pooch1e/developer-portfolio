@@ -24,7 +24,7 @@ export class World {
   private scroll: Scroll | null;
   private cameraGroup: THREE.Group;
 
-  private cube;
+  private sphere;
   private lights;
   private boxHelper;
   // private vertexHelper;
@@ -38,7 +38,7 @@ export class World {
     //canvas ref
     this.container = container;
     //init variables
-    this.camera = createCamera(this.objectDistance, container.height);
+    this.camera = createCamera(this.objectDistance);
     this.scene = createScene();
     this.renderer = createRenderer(this.container);
     this.lights = createLights();
@@ -69,28 +69,35 @@ export class World {
       this.resizer = new Resizer(this.container, this.camera, this.renderer);
     }
 
-    this.cube = createCube();
+    this.sphere = createCube();
     const cube1 = createCube();
     const cube2 = createCube();
 
     const cubeGroup = new THREE.Group();
 
     //create box + axes helper
-    this.boxHelper = createBoxHelper(this.cube);
+    this.boxHelper = createBoxHelper(this.sphere);
 
-    // this.vertexHelper = createVertexHelper(this.cube);
+    // this.vertexHelper = createVertexHelper(this.sphere);
 
-    // Setup cube interactions and store cleanup function
+    // Setup sphere interactions and store cleanup function
     this.cubeInteractionCleanup = setupCubeInteractions(
-      this.cube,
+      this.sphere,
       this.camera,
       this.renderer
     );
-    //add to cube group
-    cubeGroup.add(this.cube, cube1, cube2);
-    this.cube.position.y = -this.objectDistance * 0;
-    cube1.position.y = -this.objectDistance * 1;
-    cube2.position.y = -this.objectDistance * 2;
+    //add to sphere group
+    cubeGroup.add(this.sphere, cube1, cube2);
+
+    //adjust position on y axis
+
+    cube1.position.y = -this.objectDistance * 2;
+    cube2.position.y = -this.objectDistance * 3.5;
+
+    //adjust position on x
+
+    cube1.position.x = this.objectDistance;
+    cube2.position.x = -this.objectDistance;
 
     //add to scene
     this.scene.add(
@@ -101,7 +108,7 @@ export class World {
       this.lights[1]
     );
 
-    this.loop.updatables.push(this.camera as any, this.cube, this.background);
+    this.loop.updatables.push(this.camera as any, this.sphere, this.background);
   }
 
   private setupPostProcessing() {
