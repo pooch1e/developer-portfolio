@@ -1,10 +1,10 @@
 export function ImageContainer({ imageUrl }: { imageUrl: string }) {
   return (
-    <div className="w-full h-full ml-1">
+    <div className="aspect-[4/3] overflow-hidden rounded-lg  dark:border-gray-600 transition-colors">
       <img
         src={imageUrl}
-        alt="screenshot of nc news website"
-        className="rounded-t-lg object-contain p-4"
+        alt="Project screenshot"
+        className="w-full h-full object-cover"
       />
     </div>
   );
