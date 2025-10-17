@@ -19,6 +19,9 @@ import civ from '../src/assets/sparkforge.png';
 import ncNewsFrontendImage from '../src/assets/ncnews3.png';
 import ncNewsBackendImage from '../src/assets/ncnewsbackend1.png';
 import madgeWebsite from '../src/assets/madgeWebsite.png';
+import gallery from '../src/assets/gallery.png';
+import sun from '../src/assets/sun.png';
+
 
 // Define interfaces for the data structure
 export interface Technology {
@@ -136,11 +139,49 @@ export const madgeSplashPage: ProjectType = {
   ],
 };
 
+export const openCurator: ProjectType = {
+  title: 'OpenGallery',
+  image: gallery,
+  description:
+    'A digital platform for creating personalized virtual art exhibitions from world-renowned museum collections. OpenGallery allows users to search, discover, and curate custom art collections using APIs from Harvard Art Museums, Metropolitan Museum of Art, and Chicago Museum. Built for art lovers, researchers, and students, the platform features smart search across multiple collections, responsive design, and session-persistent favorites. Users can create their own virtual exhibitions and access direct links to original museum pages for each artwork.',
+  technologies: [
+    { name: 'Next.js', icon: nextJsIcon },
+    { name: 'React', icon: reactIcon },
+    { name: 'TypeScript', icon: typeScriptIcon },
+    { name: 'TailwindCss', icon: tailwindIcon },
+    { name: 'Jest', icon: jestIcon },
+  ],
+  links: [
+    { label: 'GitHub', url: 'https://github.com/pooch1e/open-curator' },
+    { label: 'Deployed', url: 'https://www.opencurator.xyz/' },
+  ],
+};export const weatherMe: ProjectType = {
+  title: 'Weather Me',
+  image: sun, 
+  description:
+    'A modern, responsive weather application built with Next.js featuring real-time weather data, intelligent location search, and automatic geolocation detection. Users can search any city worldwide, view current conditions, hourly forecasts, and 7-day outlook. The app features server-side weather fetching for improved performance and SEO, client-side search for responsive interactions, and a clean arcade-style UI built with Tailwind CSS.',
+  technologies: [
+    { name: 'Next.js', icon: nextJsIcon },
+    { name: 'React', icon: reactIcon },
+    { name: 'TypeScript', icon: typeScriptIcon },
+    { name: 'TailwindCss', icon: tailwindIcon },
+    { name: 'Context API', icon: apiIcon },
+  ],
+  links: [
+    { label: 'GitHub', url: 'https://github.com/pooch1e/weather-me' },
+    {
+      label: 'Deployed',
+      url: 'https://weather-k12ll1to3-joel-krams-projects.vercel.app/',
+    },
+  ],
+};
 export const allProjects: ProjectType[] = [
   sparkTables,
   ncNewsProjectFrontEnd,
   ncNewsProjectBackEnd,
   madgeSplashPage,
+  openCurator,
+  weatherMe
 ];
 
 export type ncNewsProjectType = ProjectType;
