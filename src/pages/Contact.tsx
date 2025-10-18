@@ -1,5 +1,5 @@
 import resume from '../assets/docs/JoelKram_Junior Fullstack Developer.pdf';
-import { Headshot } from '../threejs/Headshot.tsx';
+import { Headshot } from '../../World/headshot/Headshot.tsx';
 export default function Contact() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-700 transition-colors duration-300 ease-linear">
