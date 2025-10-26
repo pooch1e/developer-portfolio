@@ -9,26 +9,17 @@ export default function Home() {
   const { isDark } = useTheme();
 
   useEffect(() => {
-    if (canvasRef.current) {
-      const worldInstance = new World(canvasRef.current, isDark);
-      worldRef.current = worldInstance;
-      worldInstance.start();
+    if (!canvasRef.current) {
+      return;
     }
+    const worldInstance = new World(canvasRef.current, isDark);
+    worldRef.current = worldInstance;
+    worldInstance.start();
 
-    // Cleanup function
     return () => {
-      if (worldRef.current) {
-        worldRef.current.stop();
-        worldRef.current = null;
-      }
+      worldRef.current?.stop();
+      worldRef.current = null;
     };
-  }, [isDark]);
-
-  // Handle theme changes after initial mount
-  useEffect(() => {
-    if (worldRef.current) {
-      worldRef.current.setBackgroundColor(isDark);
-    }
   }, [isDark]);
 
   return (
