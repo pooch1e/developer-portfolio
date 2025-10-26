@@ -22,7 +22,6 @@ import madgeWebsite from '../src/assets/madgeWebsite.png';
 import gallery from '../src/assets/gallery.png';
 import sun from '../src/assets/sun.png';
 
-
 // Define interfaces for the data structure
 export interface Technology {
   name: string;
@@ -155,9 +154,10 @@ export const openCurator: ProjectType = {
     { label: 'GitHub', url: 'https://github.com/pooch1e/open-curator' },
     { label: 'Deployed', url: 'https://www.opencurator.xyz/' },
   ],
-};export const weatherMe: ProjectType = {
+};
+export const weatherMe: ProjectType = {
   title: 'Weather Me',
-  image: sun, 
+  image: sun,
   description:
     'A modern, responsive weather application built with Next.js featuring real-time weather data, intelligent location search, and automatic geolocation detection. Users can search any city worldwide, view current conditions, hourly forecasts, and 7-day outlook. The app features server-side weather fetching for improved performance and SEO, client-side search for responsive interactions, and a clean arcade-style UI built with Tailwind CSS.',
   technologies: [
@@ -176,12 +176,12 @@ export const openCurator: ProjectType = {
   ],
 };
 export const allProjects: ProjectType[] = [
+  openCurator,
   sparkTables,
+  weatherMe,
   ncNewsProjectFrontEnd,
   ncNewsProjectBackEnd,
   madgeSplashPage,
-  openCurator,
-  weatherMe
 ];
 
 export type ncNewsProjectType = ProjectType;
