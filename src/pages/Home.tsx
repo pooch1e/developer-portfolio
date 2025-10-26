@@ -29,11 +29,7 @@ export default function Home() {
           <canvas
             className="w-full h-full block"
             ref={canvasRef}
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'block',
-            }}
+            
           />
         </div>
       </div>
