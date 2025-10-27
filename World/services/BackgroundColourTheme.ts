@@ -24,7 +24,7 @@ export class BackgroundColour {
     this.currentIsDarkMode = isDarkMode;
     const targetColor = isDarkMode ? 0x3f3f46 : 0xffffff;
     this.targetBackgroundColor.setHex(targetColor);
-    // console.log('Target color set to:', isDarkMode ? 'dark' : 'light');
+    
   }
 
   public tick() {
