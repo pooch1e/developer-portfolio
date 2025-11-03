@@ -13,6 +13,8 @@ import threeDIcon from '../src/assets/SVG/3d-secure-svgrepo-com.svg';
 import typeScriptIcon from '../src/assets/SVG/typescript-svgrepo-com.svg';
 import sequelizeIcon from '../src/assets/SVG/Sequelize.svg';
 import electronIcon from '../src/assets/SVG/Electron.svg';
+import cssIcon from '../src/assets/SVG/css3-01-svgrepo-com.svg';
+import jsIcon from '../src/assets/SVG/javascript-svgrepo-com.svg';
 
 import kr8 from '../src/assets/kr8_logo.png';
 import civ from '../src/assets/sparkforge.png';
@@ -21,6 +23,7 @@ import ncNewsBackendImage from '../src/assets/ncnewsbackend1.png';
 import madgeWebsite from '../src/assets/madgeWebsite.png';
 import gallery from '../src/assets/gallery.png';
 import sun from '../src/assets/sun.png';
+import balloons from '../src/assets/balloons.png';
 
 // Define interfaces for the data structure
 export interface Technology {
@@ -138,6 +141,21 @@ export const madgeSplashPage: ProjectType = {
   ],
 };
 
+export const trudiBirthdayWebsite: ProjectType = {
+  title: 'Birthday Website',
+  image: balloons,
+  description:
+    'Built vanilla birthday website with HTML, CSS and Javascript. Includes little interactive animations, garish details and messages from friends.',
+  technologies: [
+    { name: 'Javascript', icon: jsIcon },
+    { name: 'CSS', icon: cssIcon },
+  ],
+  links: [
+    { label: 'Github', url: 'https://github.com/pooch1e/trudiBirthdayCard' },
+    { label: 'Deployed', url: 'https://trudibirthday.studio/' },
+  ],
+};
+
 export const openCurator: ProjectType = {
   title: 'OpenGallery',
   image: gallery,
@@ -181,6 +199,7 @@ export const allProjects: ProjectType[] = [
   weatherMe,
   ncNewsProjectFrontEnd,
   ncNewsProjectBackEnd,
+  trudiBirthdayWebsite,
   madgeSplashPage,
 ];
 
