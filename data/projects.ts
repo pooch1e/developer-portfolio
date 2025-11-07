@@ -195,6 +195,7 @@ export const weatherMe: ProjectType = {
 };
 export const allProjects: ProjectType[] = [
   openCurator,
+  kr8Project,
   sparkTables,
   weatherMe,
   ncNewsProjectFrontEnd,
