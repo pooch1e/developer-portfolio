@@ -7,19 +7,17 @@ import { Routes, Route } from 'react-router-dom';
 import ThemeButton from './components/layout/ThemeButton.tsx';
 import { ThemeProvider } from './provider/ThemeContext.tsx';
 
-
 function App() {
   return (
     <>
       <ThemeProvider>
         <Header />
         <ThemeButton />
-          <Routes>
-            <Route path="/" element={<HomeSplash />} />
-            <Route path="/projects" element={<ProjectList />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Routes>
-   
+        <Routes>
+          <Route path="/" element={<HomeSplash />} />
+          <Route path="/projects" element={<ProjectList />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
       </ThemeProvider>
     </>
   );

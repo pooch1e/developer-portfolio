@@ -17,7 +17,7 @@ export default function Header() {
           </Link>
         </h1>
         <p className="text-base" role="doc-subtitle">
-          Junior Fullstack Software Developer
+          Junior Frontend Software Developer
         </p>
       </div>
       <nav

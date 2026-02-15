@@ -13,7 +13,7 @@ export const createCamera = () => {
   camera.position.set(0, 0, 10);
 
   const radius = 10; // distance from center
-  const speed = 1; // radians per second (2π ≈ 6.28 for full rotation)
+  const speed = 0.02; // radians per second - very slow orbit
   let angle = 0;
 
   camera.tick = (delta: number) => {
