@@ -11,7 +11,7 @@ export default function ProjectCard({
   return (
     <section className="flex flex-col md:flex-row gap-6 md:gap-8 p-6 transition-colors duration-300 ease-linear bg-surface border border-border-primary shadow-sm">
       {/* Image Section */}
-      <div className="w-full md:w-2/5 lg:w-1/3 flex-shrink-0 rounded-lg overflow-hidden border border-border-primary">
+      <div className="w-full md:w-2/5 lg:w-1/3 flex-shrink-0 overflow-hidden border border-border-primary">
         <ImageContainer imageUrl={image} />
       </div>
 

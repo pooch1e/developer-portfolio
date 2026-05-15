@@ -43,6 +43,22 @@
     </div>
 
     <script>
+      // Apply correct loader bg before React boots
+      (function() {
+        var saved = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var isDark = saved ? saved === 'dark' : prefersDark;
+        var loader = document.getElementById('html-loader');
+        if (loader) {
+          loader.style.background = isDark ? '#09090b' : '#ffffff';
+          var bar = document.getElementById('html-loader-bar');
+          if (bar) bar.style.background = isDark ? '#fafafa' : '#09090b';
+          var text = loader.querySelector('span');
+          if (text) text.style.color = isDark ? '#71717a' : '#71717a';
+          var track = bar && bar.parentElement;
+          if (track) track.style.background = isDark ? '#27272a' : '#e4e4e7';
+        }
+      })();
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           document.getElementById('html-loader-bar').style.width = '100%';

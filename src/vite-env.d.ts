@@ -1,7 +1,4 @@
-declare module '*.glsl' {
-  const value: string;
-  export default value;
-}
+/// <reference types="vite/client" />
 
 declare module '*.vert' {
   const value: string;
