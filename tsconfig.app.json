@@ -18,5 +18,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "World/headshot"]
+  "include": ["src", "World/headshot", "src/vite-env.d.ts", "shaders"]
 }
