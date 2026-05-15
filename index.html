@@ -8,6 +8,48 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Instant loading screen — visible before React boots -->
+    <div id="html-loader" style="
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: opacity 0.6s ease;
+    ">
+      <div style="
+        width: 200px;
+        height: 2px;
+        background: #e4e4e7;
+      ">
+        <div id="html-loader-bar" style="
+          height: 100%;
+          width: 0%;
+          background: #09090b;
+          transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        "></div>
+      </div>
+      <span style="
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        color: #71717a;
+        font-family: sans-serif;
+      ">loading...</span>
+    </div>
+
+    <script>
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.getElementById('html-loader-bar').style.width = '100%';
+        });
+      });
+    </script>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

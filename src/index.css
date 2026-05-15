@@ -1,12 +1,79 @@
 @import url('https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap');
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Sixtyfour:wght@400&display=swap');
+
+@theme {
+  /* Semantic Colors */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  
+  --color-border-primary: var(--border-primary);
+  --color-border-hover: var(--border-hover);
+  
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+
+  /* Layout & Typography */
+  --font-sixtyfour: 'Sixtyfour', sans-serif;
+  --radius-card: 12px;
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
+@layer base {
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f4f4f5; /* zinc-100 */
+    --surface: #ffffff;
+    --surface-hover: #fafafa; /* zinc-50 */
+    
+    --text-primary: #09090b; /* zinc-950 */
+    --text-secondary: #3f3f46; /* zinc-700 */
+    --text-muted: #71717a; /* zinc-500 */
+    
+    --border-primary: #e4e4e7; /* zinc-200 */
+    --border-hover: #d4d4d8; /* zinc-300 */
+    
+    --accent: #18181b; /* zinc-900 */
+    --accent-hover: #27272a; /* zinc-800 */
+  }
 
+  .dark {
+    --bg-primary: #09090b; /* zinc-950 */
+    --bg-secondary: #18181b; /* zinc-900 */
+    --surface: #27272a; /* zinc-800 */
+    --surface-hover: #3f3f46; /* zinc-700 */
+    
+    --text-primary: #fafafa; /* zinc-50 */
+    --text-secondary: #a1a1aa; /* zinc-400 */
+    --text-muted: #71717a; /* zinc-500 */
+    
+    --border-primary: #3f3f46; /* zinc-700 */
+    --border-hover: #52525b; /* zinc-600 */
+    
+    --accent: #fafafa; /* zinc-50 */
+    --accent-hover: #e4e4e7; /* zinc-200 */
+  }
+}
+
+@keyframes loading-bar {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 .font-sixtyfour {
-  font-family: 'Sixtyfour', sans-serif;
+  font-family: var(--font-sixtyfour);
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;

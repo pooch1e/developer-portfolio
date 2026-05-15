@@ -4,10 +4,10 @@ import {
   ShaderMaterial,
   SphereGeometry,
   TextureLoader,
-} from 'three';
-import fragmentShader from '../../shaders/texture/fragment.glsl';
-import vertexShader from '../../shaders/texture/vertex.glsl';
-import grainTexture from '../../src/assets/textures/grain.webp';
+} from "three";
+import fragmentShader from "../../shaders/texture/fragment.glsl";
+import vertexShader from "../../shaders/texture/vertex.glsl";
+import grainTexture from "../../src/assets/textures/grain.webp";
 
 export interface TickableMesh extends Mesh {
   tick(delta: number): void;
