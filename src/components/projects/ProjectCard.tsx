@@ -1,5 +1,5 @@
-import { ImageContainer } from './ImageContainer.tsx';
-import type { ncNewsProjectType } from '../../../data/projects.ts';
+import { ImageContainer } from './ImageContainer';
+import type { ncNewsProjectType } from '@/data/projects';
 
 export default function ProjectCard({
   title,

@@ -1,5 +1,5 @@
-import ProjectCard from './ProjectCard.tsx';
-import { allProjects } from '../../../data/projects.ts';
+import ProjectCard from './ProjectCard';
+import { allProjects } from '@/data/projects';
 export default function ProjectList() {
   return (
     <main className="min-h-screen bg-white dark:bg-zinc-700 transition-colors duration-300">

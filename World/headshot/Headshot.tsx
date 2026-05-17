@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { HeadshotThreeService } from '../../src/utils/services/headshotThreeService';
+import { HeadshotThreeService } from '@/utils/services/headshotThreeService';
 
 interface HeadshotProps {
   glbPath?: string;

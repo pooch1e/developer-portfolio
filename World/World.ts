@@ -1,17 +1,14 @@
 import * as THREE from 'three';
-import { createCamera } from './components/camera';
-import { createScene } from './components/scene';
-import { createRenderer } from './components/render';
-import { Resizer } from './services/Resizer';
-import { createCube } from './components/cube';
-import { createLights } from '../World/components/light';
-import { Loop } from '../World/services/Loop';
-import { createBoxHelper } from './components/helpers/boxHelper';
-
-import { BackgroundColour } from '../World/services/BackgroundColourTheme';
-import { setupCubeInteractions } from '../World/components/helpers/cubeHelper';
-
-import { PostProcesser } from './services/PostProcessing';
+import {
+  createCamera,
+  createScene,
+  createRenderer,
+  createCube,
+  createLights,
+  createBoxHelper,
+  setupCubeInteractions,
+} from './components';
+import { Resizer, Loop, BackgroundColour, PostProcesser } from './services';
 
 export class World {
   private camera: THREE.PerspectiveCamera | THREE.OrthographicCamera;

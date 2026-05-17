@@ -1,12 +1,8 @@
-import Header from './components/layout/Header.tsx';
-import HomeSplash from './pages/Home.tsx';
-import ContactPage from './pages/Contact.tsx';
-import ProjectList from './components/projects/ProjectList.tsx';
-import LoadingScreen from './components/layout/LoadingScreen.tsx';
-
+import { Header, LoadingScreen, ThemeButton } from './components/layout';
+import { HomeSplash, ContactPage } from './pages';
+import { ProjectList } from './components/projects';
 import { Routes, Route } from 'react-router-dom';
-import ThemeButton from './components/layout/ThemeButton.tsx';
-import { ThemeProvider } from './provider/ThemeContext.tsx';
+import { ThemeProvider } from './provider/ThemeContext';
 
 function App() {
   return (
