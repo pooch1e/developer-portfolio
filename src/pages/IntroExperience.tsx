@@ -1,16 +1,23 @@
-import { useEffect, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { useGLTF, Environment, ContactShadows, PresentationControls, useVideoTexture } from '@react-three/drei';
-import { useVideoScreen } from '@/hooks/useVideoScreen';
-import { useZoomTrigger } from '@/hooks/useZoomTrigger';
-import { useCameraAnimation } from '@/hooks/useCameraAnimation';
+import { useEffect, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import {
+  useGLTF,
+  Environment,
+  ContactShadows,
+  PresentationControls,
+  useVideoTexture,
+  Html,
+} from "@react-three/drei";
+import { useVideoScreen } from "@/hooks/useVideoScreen";
+import { useZoomTrigger } from "@/hooks/useZoomTrigger";
+import { useCameraAnimation } from "@/hooks/useCameraAnimation";
 
-const MODEL_PATH = '/computer/computer_nodeNamed.glb';
-const VIDEO_PATH = '/videos/dev_compressed.mp4';
+const MODEL_PATH = "/computer/computer_nodeNamed.glb";
+const VIDEO_PATH = "/videos/dev_compressed.mp4";
 
 const INITIAL_CAMERA_POS = { x: 0, y: 0, z: 5 };
-const INITIAL_LOOK_AT    = { x: 0, y: 0, z: 0 };
-const INITIAL_FOV        = 45;
+const INITIAL_LOOK_AT = { x: 0, y: 0, z: 0 };
+const INITIAL_FOV = 45;
 
 interface SceneProps {
   onReady: () => void;
@@ -22,20 +29,21 @@ function Scene({ onReady, onIntroComplete }: SceneProps) {
   const videoTexture = useVideoTexture(VIDEO_PATH);
   const [zooming, setZooming] = useState(false);
 
-  const { patchedScene, screenPositionRef } = useVideoScreen(scene, videoTexture);
+  const { patchedScene, screenPositionRef } = useVideoScreen(
+    scene,
+    videoTexture,
+  );
 
   const { position, lookAt, fov, handleClick } = useZoomTrigger(
     INITIAL_CAMERA_POS,
     INITIAL_LOOK_AT,
     INITIAL_FOV,
     screenPositionRef,
-    onIntroComplete
+    onIntroComplete,
   );
 
   useCameraAnimation(position, lookAt, fov);
 
-  // Both assets are resolved by the time Scene renders —
-  // useGLTF and useVideoTexture suspend until ready.
   useEffect(() => {
     onReady();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,9 +56,14 @@ function Scene({ onReady, onIntroComplete }: SceneProps) {
 
   return (
     <>
-      <color args={['#241a1a']} attach="background" />
+      <color args={["#f2f0ef"]} attach="background" />
       <Environment preset="city" />
 
+      <Html wrapperClass="introText" position={[-2.5, 1, 0]}>
+        <h1>Joel Kram</h1>
+        <h2>Software Developer</h2>
+        <h3>Scroll down ⇩</h3>
+      </Html>
 
       {!zooming ? (
         <PresentationControls
@@ -86,12 +99,22 @@ export interface IntroExperienceProps {
   onIntroComplete: () => void;
 }
 
-export default function IntroExperience({ onReady, onIntroComplete }: IntroExperienceProps) {
+export default function IntroExperience({
+  onReady,
+  onIntroComplete,
+}: IntroExperienceProps) {
   return (
     <div className="w-full h-full">
       <Canvas
-        camera={{ position: [INITIAL_CAMERA_POS.x, INITIAL_CAMERA_POS.y, INITIAL_CAMERA_POS.z], fov: INITIAL_FOV }}
-        style={{ width: '100%', height: '100%' }}
+        camera={{
+          position: [
+            INITIAL_CAMERA_POS.x,
+            INITIAL_CAMERA_POS.y,
+            INITIAL_CAMERA_POS.z,
+          ],
+          fov: INITIAL_FOV,
+        }}
+        style={{ width: "100%", height: "100%" }}
       >
         <Scene onReady={onReady} onIntroComplete={onIntroComplete} />
       </Canvas>
