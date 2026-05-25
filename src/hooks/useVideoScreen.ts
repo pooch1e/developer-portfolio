@@ -1,17 +1,19 @@
 import { useMemo, useEffect, useRef } from 'react';
-import { Mesh, MeshStandardMaterial, RepeatWrapping, VideoTexture, Object3D, Vector3 } from 'three';
+import { Mesh, MeshStandardMaterial, RepeatWrapping, VideoTexture, Object3D } from 'three';
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import type { MutableRefObject } from 'react';
 
 interface UseVideoScreenResult {
   patchedScene: Object3D;
-  screenPositionRef: MutableRefObject<Vector3 | null>;
+  /** Ref to the screen mesh itself. Resolve world position at trigger time
+   *  (after matrices are updated) via screenMeshRef.current.getWorldPosition(). */
+  screenMeshRef: MutableRefObject<Mesh | null>;
 }
 
 
 export function useVideoScreen(scene: Object3D, videoTexture: VideoTexture): UseVideoScreenResult {
   const clonedScene = useMemo(() => clone(scene), [scene]);
-  const screenPositionRef = useRef<Vector3 | null>(null);
+  const screenMeshRef = useRef<Mesh | null>(null);
 
   useEffect(() => {
     videoTexture.wrapS = RepeatWrapping;
@@ -23,9 +25,9 @@ export function useVideoScreen(scene: Object3D, videoTexture: VideoTexture): Use
     clonedScene.traverse((child) => {
       if (!(child instanceof Mesh) || child.parent?.name !== 'screen') return;
 
-      const pos = new Vector3();
-      child.getWorldPosition(pos);
-      screenPositionRef.current = pos;
+      // Store the mesh ref — world position is resolved at zoom-trigger time
+      // so it reflects the applied scale/position/rotation transforms.
+      screenMeshRef.current = child;
 
       const materials = Array.isArray(child.material)
         ? child.material
@@ -40,5 +42,5 @@ export function useVideoScreen(scene: Object3D, videoTexture: VideoTexture): Use
     });
   }, [clonedScene, videoTexture]);
 
-  return { patchedScene: clonedScene, screenPositionRef };
+  return { patchedScene: clonedScene, screenMeshRef };
 }

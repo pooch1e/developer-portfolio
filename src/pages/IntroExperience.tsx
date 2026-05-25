@@ -29,7 +29,7 @@ function Scene({ onReady, onIntroComplete }: SceneProps) {
   const videoTexture = useVideoTexture(VIDEO_PATH);
   const [zooming, setZooming] = useState(false);
 
-  const { patchedScene, screenPositionRef } = useVideoScreen(
+  const { patchedScene, screenMeshRef } = useVideoScreen(
     scene,
     videoTexture,
   );
@@ -38,7 +38,7 @@ function Scene({ onReady, onIntroComplete }: SceneProps) {
     INITIAL_CAMERA_POS,
     INITIAL_LOOK_AT,
     INITIAL_FOV,
-    screenPositionRef,
+    screenMeshRef,
     onIntroComplete,
   );
 
@@ -46,8 +46,7 @@ function Scene({ onReady, onIntroComplete }: SceneProps) {
 
   useEffect(() => {
     onReady();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [onReady]);
 
   const handleZoomClick = () => {
     setZooming(true);

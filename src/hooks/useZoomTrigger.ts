@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { Vector3 } from 'three';
+import { Mesh, Vector3 } from 'three';
 import gsap from 'gsap';
 import type { MutableRefObject } from 'react';
 
@@ -29,7 +29,7 @@ export function useZoomTrigger(
   initialPos: { x: number; y: number; z: number },
   initialLookAt: { x: number; y: number; z: number },
   initialFov: number,
-  screenPositionRef: MutableRefObject<Vector3 | null>,
+  screenMeshRef: MutableRefObject<Mesh | null>,
   onComplete: () => void
 ): ZoomRefs {
   const hasTriggered = useRef(false);
@@ -46,11 +46,19 @@ export function useZoomTrigger(
 
   const fov = useRef(initialFov);
 
+  // Holds the gsap.context so all tweens can be killed on unmount
+  const gsapCtxRef = useRef<gsap.Context | null>(null);
+
   const trigger = useCallback(() => {
     if (hasTriggered.current) return;
 
-    const screen = screenPositionRef.current;
-    if (!screen) return; 
+    const mesh = screenMeshRef.current;
+    if (!mesh) return;
+
+    // Resolve world position now — after at least one render frame has run
+    // and Three.js has applied scale/position/rotation from <primitive> props.
+    const screen = new Vector3();
+    mesh.getWorldPosition(screen);
 
     hasTriggered.current = true;
 
@@ -60,19 +68,29 @@ export function useZoomTrigger(
     const toScreen = new Vector3().subVectors(screen, startPos).normalize();
     const approachPos = screen.clone().addScaledVector(toScreen, -SCREEN_APPROACH_OFFSET);
 
-    // Animate camera position toward the approach point
-    gsap.to(px, { current: approachPos.x, duration: ZOOM_DURATION, ease: ZOOM_EASE });
-    gsap.to(py, { current: approachPos.y, duration: ZOOM_DURATION, ease: ZOOM_EASE });
-    gsap.to(pz, { current: approachPos.z, duration: ZOOM_DURATION, ease: ZOOM_EASE });
+    // Group all tweens in a context so they can be killed together on unmount
+    const ctx = gsap.context(() => {
+      // Animate camera position toward the approach point
+      gsap.to(px, { current: approachPos.x, duration: ZOOM_DURATION, ease: ZOOM_EASE });
+      gsap.to(py, { current: approachPos.y, duration: ZOOM_DURATION, ease: ZOOM_EASE });
+      gsap.to(pz, { current: approachPos.z, duration: ZOOM_DURATION, ease: ZOOM_EASE });
 
-    // Animate lookAt toward screen center — creates smooth gaze rotation
-    gsap.to(lx, { current: screen.x, duration: ZOOM_DURATION, ease: ZOOM_EASE });
-    gsap.to(ly, { current: screen.y, duration: ZOOM_DURATION, ease: ZOOM_EASE });
-    gsap.to(lz, { current: screen.z, duration: ZOOM_DURATION, ease: ZOOM_EASE, onComplete });
+      // Animate lookAt toward screen center — creates smooth gaze rotation
+      gsap.to(lx, { current: screen.x, duration: ZOOM_DURATION, ease: ZOOM_EASE });
+      gsap.to(ly, { current: screen.y, duration: ZOOM_DURATION, ease: ZOOM_EASE });
+      gsap.to(lz, { current: screen.z, duration: ZOOM_DURATION, ease: ZOOM_EASE, onComplete });
 
-    // Tighten the lens
-    gsap.to(fov, { current: ZOOM_FOV, duration: ZOOM_DURATION, ease: ZOOM_EASE });
-  }, [initialPos, screenPositionRef, onComplete]);
+      // Tighten the lens
+      gsap.to(fov, { current: ZOOM_FOV, duration: ZOOM_DURATION, ease: ZOOM_EASE });
+    });
+
+    gsapCtxRef.current = ctx;
+  }, [initialPos, screenMeshRef, onComplete]);
+
+  // Kill all tweens if the component unmounts mid-animation
+  useEffect(() => {
+    return () => { gsapCtxRef.current?.revert(); };
+  }, []);
 
   // Passive wheel listener — cleaned up automatically
   useEffect(() => {
