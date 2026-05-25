@@ -6,10 +6,13 @@ import { HomeSplash, ContactPage } from './pages';
 import IntroExperience from './pages/IntroExperience';
 import { ProjectList } from './components/projects';
 
+// Coarse pointer = touchscreen — no wheel event, no WebGL-heavy intro
+const isMobile = window.matchMedia('(pointer: coarse)').matches;
+
 function App() {
-  const [assetsReady, setAssetsReady] = useState(false);
-  const [introComplete, setIntroComplete] = useState(false);
-  const [introDone, setIntroDone] = useState(false);
+  const [assetsReady,   setAssetsReady]   = useState(isMobile);
+  const [introComplete, setIntroComplete] = useState(isMobile);
+  const [introDone,     setIntroDone]     = useState(isMobile);
 
   return (
     <ThemeProvider>
