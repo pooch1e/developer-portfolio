@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap');
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap");
+@import "tailwindcss";
 
 @theme {
   /* Semantic Colors */
@@ -7,19 +7,19 @@
   --color-bg-secondary: var(--bg-secondary);
   --color-surface: var(--surface);
   --color-surface-hover: var(--surface-hover);
-  
+
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
-  
+
   --color-border-primary: var(--border-primary);
   --color-border-hover: var(--border-hover);
-  
+
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
 
   /* Layout & Typography */
-  --font-sixtyfour: 'Sixtyfour', sans-serif;
+  --font-sixtyfour: "Sixtyfour", sans-serif;
   --radius-card: 12px;
 }
 
@@ -31,14 +31,14 @@
     --bg-secondary: #f4f4f5; /* zinc-100 */
     --surface: #ffffff;
     --surface-hover: #fafafa; /* zinc-50 */
-    
+
     --text-primary: #09090b; /* zinc-950 */
     --text-secondary: #3f3f46; /* zinc-700 */
     --text-muted: #71717a; /* zinc-500 */
-    
+
     --border-primary: #e4e4e7; /* zinc-200 */
     --border-hover: #d4d4d8; /* zinc-300 */
-    
+
     --accent: #18181b; /* zinc-900 */
     --accent-hover: #27272a; /* zinc-800 */
   }
@@ -48,14 +48,14 @@
     --bg-secondary: #18181b; /* zinc-900 */
     --surface: #27272a; /* zinc-800 */
     --surface-hover: #3f3f46; /* zinc-700 */
-    
+
     --text-primary: #fafafa; /* zinc-50 */
     --text-secondary: #a1a1aa; /* zinc-400 */
     --text-muted: #71717a; /* zinc-500 */
-    
+
     --border-primary: #3f3f46; /* zinc-700 */
     --border-hover: #52525b; /* zinc-600 */
-    
+
     --accent: #fafafa; /* zinc-50 */
     --accent-hover: #e4e4e7; /* zinc-200 */
   }
@@ -64,7 +64,9 @@
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .font-sixtyfour {
@@ -72,5 +74,31 @@ body {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  font-variation-settings: 'BLED' 0, 'SCAN' 0;
+  font-variation-settings:
+    "BLED" 0,
+    "SCAN" 0;
+}
+
+.introText {
+  min-width: 400px;
+}
+.introText h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2c1a0e;
+  letter-spacing: -0.02em;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+.introText h2 {
+  font-size: 1rem;
+  color: #7a4f2e;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.introText h3 {
+  font-size: 0.75rem;
+  color: #7a4f2e;
+  letter-spacing: 0.1em;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
