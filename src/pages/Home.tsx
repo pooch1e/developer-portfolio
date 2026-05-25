@@ -1,7 +1,7 @@
 // HomeSplash.tsx
 import { useEffect, useRef } from 'react';
 import { useTheme } from '../provider/ThemeContext.tsx';
-import { World } from '../../World/World.ts';
+import { World } from '@world/World';
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
