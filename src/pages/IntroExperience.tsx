@@ -68,8 +68,8 @@ function Scene({ onReady, onIntroComplete }: SceneProps) {
         <PresentationControls
           global
           rotation={[0.2, 0.1, 0]}
-          polar={[-0.4, 0.2]}
-          azimuth={[-0.8, 0.3]}
+          polar={[-0.025, 0.025]}
+          azimuth={[-0.025, 0.125]}
         >
           <primitive
             object={patchedScene}
