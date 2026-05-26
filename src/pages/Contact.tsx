@@ -1,5 +1,5 @@
-import resume from '../assets/docs/JoelKram_Junior Fullstack Developer.pdf';
-import { Headshot } from '../../World/headshot/Headshot.tsx';
+import resume from "../assets/docs/JoelKram_Fullstack Developer_2026.pdf";
+import { Headshot } from "../../World/headshot/Headshot.tsx";
 export default function Contact() {
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-700 transition-colors duration-300 ease-linear">
@@ -26,14 +26,15 @@ export default function Contact() {
           </p>
         </div>
         <div className="flex gap-4 mt-18 ml-1">
-          {' '}
+          {" "}
           <p>London</p>
           <p>joelnskram@gmail.com</p>
           <a
             href={resume}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline">
+            className="underline"
+          >
             View Resume
           </a>
         </div>
