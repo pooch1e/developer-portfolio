@@ -36,6 +36,9 @@ export function useVideoScreen(scene: Object3D, videoTexture: VideoTexture): Use
       materials.forEach((mat) => {
         if (mat instanceof MeshStandardMaterial) {
           mat.map = videoTexture;
+          mat.emissiveMap = videoTexture;
+          mat.emissive.set(0xffffff);
+          mat.emissiveIntensity = 1.0;
           mat.needsUpdate = true;
         }
       });
