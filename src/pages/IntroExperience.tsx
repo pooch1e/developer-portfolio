@@ -8,6 +8,13 @@ import {
   useVideoTexture,
   Html,
 } from "@react-three/drei";
+import {
+  Bloom,
+  DepthOfField,
+  EffectComposer,
+  Noise,
+  Vignette,
+} from "@react-three/postprocessing";
 import { useVideoScreen } from "@/hooks/useVideoScreen";
 import { useZoomTrigger } from "@/hooks/useZoomTrigger";
 import { useCameraAnimation } from "@/hooks/useCameraAnimation";
@@ -29,10 +36,7 @@ function Scene({ onReady, onIntroComplete }: SceneProps) {
   const videoTexture = useVideoTexture(VIDEO_PATH);
   const [zooming, setZooming] = useState(false);
 
-  const { patchedScene, screenMeshRef } = useVideoScreen(
-    scene,
-    videoTexture,
-  );
+  const { patchedScene, screenMeshRef } = useVideoScreen(scene, videoTexture);
 
   const { position, lookAt, fov, handleClick } = useZoomTrigger(
     INITIAL_CAMERA_POS,
@@ -80,12 +84,29 @@ function Scene({ onReady, onIntroComplete }: SceneProps) {
           />
         </PresentationControls>
       ) : (
-        <primitive
-          object={patchedScene}
-          scale={0.5}
-          position={[2.0, -1.5, -2.5]}
-          rotation-y={1}
-        />
+        <>
+          <primitive
+            object={patchedScene}
+            scale={0.5}
+            position={[2.0, -1.5, -2.5]}
+            rotation-y={1}
+          />
+          <EffectComposer>
+            <DepthOfField
+              focusDistance={0}
+              focalLength={0.02}
+              bokehScale={2}
+              height={480}
+            />
+            <Bloom
+              luminanceThreshold={0}
+              luminanceSmoothing={0.9}
+              height={300}
+            />
+            <Noise opacity={0.02} />
+            <Vignette eskil={false} offset={0.1} darkness={1.1} />
+          </EffectComposer>
+        </>
       )}
 
       <ContactShadows position-y={-1.3} opacity={0.4} scale={5} blur={2.4} />
