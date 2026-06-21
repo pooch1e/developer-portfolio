@@ -261,12 +261,10 @@ The theme system uses CSS variables and Tailwind's dark mode:
 - Three.js community for excellent documentation and examples
 - Tailwind CSS for the utility-first approach
 - Vercel for seamless deployment experience
-- Open source contributors who made this project possible
+- Dominic Jomaa for his mentorship 
 
 ## License
 
 This project is licensed under the MIT License 
 
 ---
-
-*Built with ❤️ and lots of ☕*
