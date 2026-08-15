@@ -84,21 +84,21 @@ body {
 }
 .introText h1 {
   font-size: 3rem;
-  font-weight: 700;
-  color: #2c1a0e;
-  letter-spacing: -0.02em;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-weight: 400;
+  color: #09090b;
+  letter-spacing: -0.3px;
+  font-family: var(--font-sixtyfour);
 }
 .introText h2 {
   font-size: 1rem;
-  color: #7a4f2e;
+  color: #3f3f46;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-family: var(--font-sixtyfour);
 }
 .introText h3 {
   font-size: 0.75rem;
-  color: #7a4f2e;
+  color: #3f3f46;
   letter-spacing: 0.1em;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-family: var(--font-sixtyfour);
 }

@@ -9,7 +9,6 @@
   <body>
     <div id="root"></div>
 
-    <!-- Instant loading screen — visible before React boots -->
     <div id="html-loader" style="
       position: fixed;
       inset: 0;
@@ -31,7 +30,7 @@
           height: 100%;
           width: 0%;
           background: #09090b;
-          transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         "></div>
       </div>
       <span style="
@@ -43,7 +42,6 @@
     </div>
 
     <script>
-      // Apply correct loader bg before React boots
       (function() {
         var saved = localStorage.getItem('theme');
         var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -61,7 +59,7 @@
       })();
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          document.getElementById('html-loader-bar').style.width = '100%';
+          document.getElementById('html-loader-bar').style.width = '8%';
         });
       });
     </script>
