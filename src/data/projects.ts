@@ -220,7 +220,7 @@ export const threeJsExperiments: ProjectType = {
   title: "ThreeJs Experiments",
   image: threeJs,
   description:
-    "A creative coding portfolio of interactive 3D experiments and custom WebGL/GLSL shaders, built with React 19 and Three.js. Features 17+ named shader experiments including a particle galaxy, GPGPU flow fields, procedural terrain, holographic materials, particle morphing, and more — each with hand-rolled GLSL implementations. Also includes p5.js sketches with Web Audio API FFT and beat detection. Backed by a Go REST API (Chi router) with JWT session authentication and a PostgreSQL database.",
+    "A full-stack creative portfolio hosting a collection of interactive Three.js scenes and hand-rolled GLSL shaders — procedural terrain, GPU particle flow fields, a particle galaxy, holographic materials, a custom portal shader, and GLTF-driven worlds — built around a layered Experience → World → Objects architecture that lets ~15 independent WebGL scenes coexist in one React app. Backed by a Go REST API (Chi router, raw database/sql) with stateless JWT session auth, an admin dashboard, and a PostgreSQL database. Deployed as three independently managed services: a Vercel frontend, a containerized Go backend on Google Cloud Run, and a Supabase-hosted Postgres instance.",
   technologies: [
     { name: "React", icon: reactIcon },
     { name: "ThreeJs", icon: threejsIcon },
@@ -228,6 +228,10 @@ export const threeJsExperiments: ProjectType = {
   ],
   links: [
     { label: "Github", url: "https://github.com/pooch1e/threeJsPortfolio" },
+    {
+      label: "Deployed",
+      url: "https://three-js-portfolio-hazel.vercel.app",
+    },
   ],
 };
 
