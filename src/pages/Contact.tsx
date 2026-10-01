@@ -1,4 +1,4 @@
-import resume from "../assets/docs/JoelKram_Fullstack Developer_2026.pdf";
+import resume from "../assets/docs/JoelKram_FrontendEngineer_2026.pdf";
 import { Headshot } from "../../World/headshot/Headshot.tsx";
 export default function Contact() {
   return (

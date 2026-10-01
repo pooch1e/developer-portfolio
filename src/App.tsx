@@ -34,8 +34,6 @@ function App() {
         </div>
       )}
 
-      {/* Mounted only after the intro is fully unmounted — prevents dual WebGL contexts.
-          animate-fade-in provides the entrance transition previously handled by opacity state. */}
       {introDone && (
         <div className="animate-fade-in">
           <Header />
