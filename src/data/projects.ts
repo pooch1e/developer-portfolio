@@ -228,6 +228,7 @@ export const threeJsExperiments: ProjectType = {
   ],
   links: [
     { label: "Github", url: "https://github.com/pooch1e/threeJsPortfolio" },
+    {label: "Deployed", url: "https://www.playgroundtest.fyi/"}
   ],
 };
 
