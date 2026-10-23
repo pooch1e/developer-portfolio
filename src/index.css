@@ -1,3 +1,7 @@
+/**
+ * Global styles — Tailwind v4 entry point, semantic colour tokens for light
+ * and dark themes, motion tokens, and the intro overlay's typography.
+ */
 @import url("https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap");
 @import "tailwindcss";
 
@@ -13,6 +17,7 @@
   --color-text-muted: var(--text-muted);
 
   --color-border-primary: var(--border-primary);
+  --color-border-strong: var(--border-strong);
   --color-border-hover: var(--border-hover);
 
   --color-accent: var(--accent);
@@ -37,6 +42,7 @@
     --text-muted: #71717a; /* zinc-500 */
 
     --border-primary: #e4e4e7; /* zinc-200 */
+    --border-strong: #d4d4d8; /* zinc-300 */
     --border-hover: #d4d4d8; /* zinc-300 */
 
     --accent: #18181b; /* zinc-900 */
@@ -44,16 +50,19 @@
   }
 
   .dark {
-    --bg-primary: #09090b; /* zinc-950 */
+    /* Matches the zinc-700 every page and the WebGL clear colour already render. */
+    --bg-primary: #3f3f46; /* zinc-700 */
     --bg-secondary: #18181b; /* zinc-900 */
     --surface: #27272a; /* zinc-800 */
     --surface-hover: #3f3f46; /* zinc-700 */
 
     --text-primary: #fafafa; /* zinc-50 */
-    --text-secondary: #a1a1aa; /* zinc-400 */
-    --text-muted: #71717a; /* zinc-500 */
+    /* Stepped up one shade each so muted labels clear WCAG AA (4.5:1) on --surface. */
+    --text-secondary: #d4d4d8; /* zinc-300 */
+    --text-muted: #a1a1aa; /* zinc-400 */
 
     --border-primary: #3f3f46; /* zinc-700 */
+    --border-strong: #52525b; /* zinc-600 */
     --border-hover: #52525b; /* zinc-600 */
 
     --accent: #fafafa; /* zinc-50 */

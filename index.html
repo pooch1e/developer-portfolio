@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<!--
+  index.html — app shell plus a pre-React loading bar, themed before first
+  paint and driven by LoadingScreen once the bundle runs.
+-->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -47,14 +51,16 @@
         var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         var isDark = saved ? saved === 'dark' : prefersDark;
         var loader = document.getElementById('html-loader');
+        // Hex values mirror --bg-primary / --text-primary / --text-secondary /
+        // --border-strong in src/index.css; CSS isn't loaded yet at this point.
         if (loader) {
-          loader.style.background = isDark ? '#09090b' : '#ffffff';
+          loader.style.background = isDark ? '#3f3f46' : '#ffffff';
           var bar = document.getElementById('html-loader-bar');
           if (bar) bar.style.background = isDark ? '#fafafa' : '#09090b';
           var text = loader.querySelector('span');
-          if (text) text.style.color = isDark ? '#71717a' : '#71717a';
+          if (text) text.style.color = isDark ? '#d4d4d8' : '#71717a';
           var track = bar && bar.parentElement;
-          if (track) track.style.background = isDark ? '#27272a' : '#e4e4e7';
+          if (track) track.style.background = isDark ? '#52525b' : '#e4e4e7';
         }
       })();
       requestAnimationFrame(() => {

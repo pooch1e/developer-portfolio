@@ -1,9 +1,13 @@
+/**
+ * Contact — the /contact page: 3D headshot scan, short bio, location, email,
+ * and a link to the résumé PDF.
+ */
 import resume from "../assets/docs/JoelKram_FrontendEngineer_2026.pdf";
 import { Headshot } from "../../World/headshot/Headshot.tsx";
 export default function Contact() {
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-700 transition-colors duration-300 ease-linear">
-      <section className="max-w-4xl mx-auto px-4 py-8 text-black dark:text-white text-[11pt] font-['Neue'] tracking-[-0.3px]">
+    <div className="min-h-screen bg-bg-primary transition-colors duration-300 ease-linear">
+      <section className="max-w-4xl mx-auto px-4 py-8 text-text-primary text-[11pt] font-['Neue'] tracking-[-0.3px]">
         <div className="flex flex-col lg:flex-row lg:items-start gap-6 mb-8">
           <Headshot />
           <div className="flex gap-4">

@@ -1,3 +1,7 @@
+/**
+ * Header — site title, role subtitle, and primary navigation (internal routes
+ * plus external profile links). Transparent over the home scene, solid elsewhere.
+ */
 import { Link, useLocation } from 'react-router-dom';
 
 export default function Header() {
@@ -6,11 +10,11 @@ export default function Header() {
 
   const headerClasses = isHomePage
     ? 'p-12 bg-transparent z-40 w-full relative transition-colors duration-300 ease-linear'
-    : 'p-12 bg-white dark:bg-zinc-700 z-40 w-full relative transition-colors duration-300 ease-linear';
+    : 'p-12 bg-bg-primary z-40 w-full relative transition-colors duration-300 ease-linear';
 
   return (
     <header className={headerClasses} role="banner">
-      <div className="text mb-2 text-black text-1xl dark:text-white font-sixtyfour tracking-[-0.3px]">
+      <div className="text mb-2 text-text-primary text-1xl font-sixtyfour tracking-[-0.3px]">
         <h1 className="underline text-2xl">
           <Link to="/" aria-label="Joel Kram - Home page">
             Joel Kram
@@ -21,7 +25,7 @@ export default function Header() {
         </p>
       </div>
       <nav
-        className="nav text-[11pt] dark:text-white font-sixtyfour flex flex-col mt-4 gap-4 items-start"
+        className="nav text-[11pt] text-text-primary font-sixtyfour flex flex-col mt-4 gap-4 items-start"
         role="navigation"
         aria-label="Main navigation">
         <Link
