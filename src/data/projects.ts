@@ -20,15 +20,15 @@ import {
   threejsIcon,
 } from "@/assets/SVG";
 
-import kr8 from "@/assets/kr8_logo.jpg";
-import civ from "@/assets/sparkforge.jpg";
+import kr8 from "@/assets/kr8Image.jpg";
+import civ from "@/assets/sparkForgeImage.jpg";
 import ncNewsFrontendImage from "@/assets/ncnews3.jpg";
 import ncNewsBackendImage from "@/assets/ncnewsbackend1.jpg";
 import madgeWebsite from "@/assets/madgeWebsite.jpg";
-import gallery from "@/assets/gallery.jpg";
-import sun from "@/assets/sun.jpg";
+import gallery from "@/assets/OpenGalleryImage.jpg";
+import sun from "@/assets/weatherme.jpg";
 import balloons from "@/assets/balloons.jpg";
-import gopher from "@/assets/gopher.jpg";
+import taskCliImage from "@/assets/taskCli.jpg";
 import threeJs from "@/assets/threejsExperiments.jpg";
 
 // Define interfaces for the data structure
@@ -203,7 +203,7 @@ export const weatherMe: ProjectType = {
 
 export const taskCli: ProjectType = {
   title: "Task-CLI",
-  image: gopher,
+  image: taskCliImage,
   description:
     "A local-first CLI tool for tracking user stories, tasks, and subtasks — powered by LLM story generation. Describe a feature in plain English and task-cli generates a structured user story with acceptance criteria, tasks, and subtasks, stored in a local SQLite database. Supports 5 LLM providers: DeepSeek, OpenAI, Gemini, and free-to-use options via pi or opencode. Ships as a single zero-dependency binary for macOS and Linux.",
   technologies: [{ name: "Golang", icon: gopherIcon }],
