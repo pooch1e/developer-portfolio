@@ -18,18 +18,18 @@ import {
   jsIcon,
   gopherIcon,
   threejsIcon,
-} from '@/assets/SVG';
+} from "@/assets/SVG";
 
-import kr8 from '@/assets/kr8_logo.png';
-import civ from '@/assets/sparkforge.png';
-import ncNewsFrontendImage from '@/assets/ncnews3.png';
-import ncNewsBackendImage from '@/assets/ncnewsbackend1.png';
-import madgeWebsite from '@/assets/madgeWebsite.png';
-import gallery from '@/assets/gallery.png';
-import sun from '@/assets/sun.png';
-import balloons from '@/assets/balloons.png';
-import gopher from '@/assets/gopher.png';
-import threeJs from '@/assets/threjsExperiments.png';
+import kr8 from "@/assets/kr8_logo.jpg";
+import civ from "@/assets/sparkforge.jpg";
+import ncNewsFrontendImage from "@/assets/ncnews3.jpg";
+import ncNewsBackendImage from "@/assets/ncnewsbackend1.jpg";
+import madgeWebsite from "@/assets/madgeWebsite.jpg";
+import gallery from "@/assets/gallery.jpg";
+import sun from "@/assets/sun.jpg";
+import balloons from "@/assets/balloons.jpg";
+import gopher from "@/assets/gopher.jpg";
+import threeJs from "@/assets/threejsExperiments.jpg";
 
 // Define interfaces for the data structure
 export interface Technology {
@@ -54,7 +54,7 @@ export const kr8Project: ProjectType = {
   title: "kr8 - WIP",
   image: kr8,
   description:
-    "Kr8 is an application built for DJ purists who love the experience of digging through vinyl records and album artwork. The idea is: take your digital playlists and make them feel physical again.\n\nThe project is split into three parts:\n- Desktop (Electron + React): Import playlists from Rekordbox or Traktor, tweak track details, and curate your collection.\n- Backend (Express + Sequelize + Postgres): Provides a solid API layer for syncing, storage, and metadata.\n- Mobile (React Native + Expo): Lets you \"dig\" through your collection on the go, flipping through artwork as if you were crate digging in a record shop.\n\nCreated in collaboration with Simon Busby, this project is still in progress, with an MVP expected within the next month.",
+    'Kr8 is an application built for DJ purists who love the experience of digging through vinyl records and album artwork. The idea is: take your digital playlists and make them feel physical again.\n\nThe project is split into three parts:\n- Desktop (Electron + React): Import playlists from Rekordbox or Traktor, tweak track details, and curate your collection.\n- Backend (Express + Sequelize + Postgres): Provides a solid API layer for syncing, storage, and metadata.\n- Mobile (React Native + Expo): Lets you "dig" through your collection on the go, flipping through artwork as if you were crate digging in a record shop.\n\nCreated in collaboration with Simon Busby, this project is still in progress, with an MVP expected within the next month.',
   technologies: [
     { name: "React", icon: reactIcon },
     { name: "TailwindCss", icon: tailwindIcon },
@@ -227,8 +227,8 @@ export const threeJsExperiments: ProjectType = {
     { name: "Golang", icon: gopherIcon },
   ],
   links: [
+    { label: "Deployed", url: "https://www.playgroundtest.fyi/" },
     { label: "Github", url: "https://github.com/pooch1e/threeJsPortfolio" },
-    {label: "Deployed", url: "https://www.playgroundtest.fyi/"}
   ],
 };
 

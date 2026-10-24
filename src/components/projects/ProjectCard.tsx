@@ -17,7 +17,7 @@ export default function ProjectCard({
 
 
       <div className="flex-1 flex flex-col gap-4 pr-6">
-        <h4 className="text-2xl font-semibold text-text-primary tracking-[-0.3px] transition-colors">
+        <h4 className="text-2xl font-departure text-text-primary tracking-[-0.3px] transition-colors">
           {title}
         </h4>
 
@@ -30,7 +30,7 @@ export default function ProjectCard({
 
           {technologies.length > 0 && (
             <div className="sm:col-span-2">
-              <span className="block text-text-muted text-xs uppercase tracking-wider mb-2 font-medium">
+              <span className="block text-text-muted text-xs uppercase tracking-wider mb-2 font-departure">
                 Technologies
               </span>
               <div className="flex flex-wrap items-center gap-3">
@@ -41,7 +41,7 @@ export default function ProjectCard({
                       alt={tech.name}
                       className="w-5 h-5"
                     />
-                    <span className="text-sm text-text-primary font-medium">
+                    <span className="text-sm text-text-primary font-departure">
                       {tech.name}
                     </span>
                   </div>
@@ -53,7 +53,7 @@ export default function ProjectCard({
 
           {links.length > 0 && (
             <div className="sm:col-span-2 mt-2">
-              <span className="block text-text-muted text-xs uppercase tracking-wider mb-2 font-medium">
+              <span className="block text-text-muted text-xs uppercase tracking-wider mb-2 font-departure">
                 Links
               </span>
               <div className="flex flex-wrap gap-4">
@@ -63,7 +63,7 @@ export default function ProjectCard({
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-medium text-text-primary hover:text-accent border-b border-border-primary hover:border-accent pb-0.5 transition-all"
+                    className="text-sm font-departure text-text-primary hover:text-accent border-b border-border-primary hover:border-accent pb-0.5 transition-all"
                   >
                     {link.label} →
                   </a>

@@ -63,9 +63,9 @@ function Scene({ onReady, onIntroComplete }: SceneProps) {
       <Environment preset="city" />
 
       <Html wrapperClass="introText" position={[-2.5, 1, 0]}>
-        <h1>Joel Kram</h1>
+        <h1 className="font-departure text-4xl">Joel Kram</h1>
         <h2>Software Developer</h2>
-        <h3>Scroll down ⇩</h3>
+        <h3>Scroll down</h3>
       </Html>
 
       {!zooming ? (

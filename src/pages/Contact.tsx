@@ -7,7 +7,7 @@ import { Headshot } from "../../World/headshot/Headshot.tsx";
 export default function Contact() {
   return (
     <div className="min-h-screen bg-bg-primary transition-colors duration-300 ease-linear">
-      <section className="max-w-4xl mx-auto px-4 py-8 text-text-primary text-[11pt] font-['Neue'] tracking-[-0.3px]">
+      <section className="max-w-4xl mx-auto px-4 py-8 text-text-primary text-[11pt] font-departure tracking-[-0.3px]">
         <div className="flex flex-col lg:flex-row lg:items-start gap-6 mb-8">
           <Headshot />
           <div className="flex gap-4">
@@ -23,7 +23,7 @@ export default function Contact() {
         <div className="flex ml-1 w-1/2">
           <p>
             I'm a developer with a background in production, customer service,
-            and the arts — so I know how to collaborate, adapt, and stick with a
+            and the arts so I know how to collaborate, adapt, and stick with a
             problem until it's solved. I love building visual experiences,
             playful interfaces, and digital spaces that invite people to
             explore. I'm currently open to freelance and contract work.
