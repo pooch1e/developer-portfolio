@@ -6,6 +6,7 @@ import {
   ContactShadows,
   PresentationControls,
   useVideoTexture,
+  useProgress,
   Html,
 } from "@react-three/drei";
 import {
@@ -116,13 +117,21 @@ function Scene({ onReady, onIntroComplete }: SceneProps) {
 
 export interface IntroExperienceProps {
   onReady: () => void;
+  onProgress: (progress: number) => void;
   onIntroComplete: () => void;
 }
 
 export default function IntroExperience({
   onReady,
+  onProgress,
   onIntroComplete,
 }: IntroExperienceProps) {
+  const { progress } = useProgress();
+
+  useEffect(() => {
+    onProgress(progress);
+  }, [progress, onProgress]);
+
   return (
     <div className="w-full h-full">
       <Canvas

@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
-import { useProgress } from '@react-three/drei';
 
 interface LoadingScreenProps {
   ready?: boolean;
+  progress?: number;
 }
 
 // cap progress until 'ready' event fires
 const MAX_PROGRESS_BEFORE_READY = 92;
 
-export default function LoadingScreen({ ready = false }: LoadingScreenProps) {
-  const { progress } = useProgress();
-
+export default function LoadingScreen({
+  ready = false,
+  progress = 0,
+}: LoadingScreenProps) {
   useEffect(() => {
     const bar = document.getElementById('html-loader-bar');
     if (!bar) return;
