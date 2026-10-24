@@ -25,7 +25,7 @@ import civ from "@/assets/sparkForgeImage.jpg";
 import ncNewsFrontendImage from "@/assets/ncnews3.jpg";
 import ncNewsBackendImage from "@/assets/ncnewsbackend1.jpg";
 import madgeWebsite from "@/assets/madgeWebsite.jpg";
-import gallery from "@/assets/OpenGalleryImage.jpg";
+import gallery from "@/assets/openGalleryImage.jpg";
 import sun from "@/assets/weatherme.jpg";
 import balloons from "@/assets/balloons.jpg";
 import taskCliImage from "@/assets/taskCli.jpg";
