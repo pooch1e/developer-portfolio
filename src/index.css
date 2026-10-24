@@ -5,12 +5,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap");
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Departure Mono";
+  src: url("./assets/fonts/DepartureMono-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   /* Semantic Colors */
   --color-bg-primary: var(--bg-primary);
   --color-bg-secondary: var(--bg-secondary);
   --color-surface: var(--surface);
   --color-surface-hover: var(--surface-hover);
+  --color-highlight-hover: var(--highlight-hover);
 
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
@@ -25,6 +34,7 @@
 
   /* Layout & Typography */
   --font-sixtyfour: "Sixtyfour", sans-serif;
+  --font-departure: "Departure Mono", var(--font-sixtyfour), monospace;
   --radius-card: 12px;
 }
 
@@ -36,6 +46,7 @@
     --bg-secondary: #f4f4f5; /* zinc-100 */
     --surface: #ffffff;
     --surface-hover: #fafafa; /* zinc-50 */
+    --highlight-hover: #cccccc;
 
     --text-primary: #09090b; /* zinc-950 */
     --text-secondary: #3f3f46; /* zinc-700 */
@@ -51,10 +62,11 @@
 
   .dark {
     /* Matches the zinc-700 every page and the WebGL clear colour already render. */
-    --bg-primary: #3f3f46; /* zinc-700 */
+    --bg-primary: #222222; /* soot */
     --bg-secondary: #18181b; /* zinc-900 */
-    --surface: #27272a; /* zinc-800 */
+    --surface: #444444; 
     --surface-hover: #3f3f46; /* zinc-700 */
+    --highlight-hover: #52525b; /* zinc-600 */
 
     --text-primary: #fafafa; /* zinc-50 */
     /* Stepped up one shade each so muted labels clear WCAG AA (4.5:1) on --surface. */
@@ -96,18 +108,18 @@ body {
   font-weight: 400;
   color: #09090b;
   letter-spacing: -0.3px;
-  font-family: var(--font-sixtyfour);
+  font-family: var(--font-departure);
 }
 .introText h2 {
   font-size: 1rem;
   color: #3f3f46;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-family: var(--font-sixtyfour);
+  font-family: var(--font-departure);
 }
 .introText h3 {
   font-size: 0.75rem;
   color: #3f3f46;
   letter-spacing: 0.1em;
-  font-family: var(--font-sixtyfour);
+  font-family: var(--font-departure);
 }
