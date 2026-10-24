@@ -1,0 +1,32 @@
+# Joel Kram
+
+> Portfolio of Joel Kram, a frontend-focused full-stack developer. The site is an interactive React and Three.js experience with a 3D intro, a project showcase and a contact page.
+
+## Pages
+
+- Home (/): Three.js splash scene
+- Projects (/projects): Selected projects with descriptions, tech stacks and links
+- Contact (/contact): Email and social links
+
+## Projects
+
+- [kr8](https://github.com/bluesky2006/kr8-server): Digital crate-digging app for DJs (Electron, Express, Postgres, React Native). Work in progress, built with Simon Busby.
+- [SparkForge](https://github.com/pooch1e/spark-tables): Random prompt tables for creative writing and RPGs (Next.js, Drizzle, Three.js). Work in progress.
+- [NC News](https://nc-news-jkram.netlify.app/): Reddit-style news frontend (React, Tailwind).
+- [NC News API](https://github.com/pooch1e/NC-News-Project): RESTful backend (Node, Express, PostgreSQL).
+- [Artist Website](https://www.madzoo.lol/): Splash page for artist Madge Zhou (React, Tailwind).
+- [Birthday Website](https://trudibirthday.studio/): Vanilla HTML, CSS and JavaScript birthday site.
+- [OpenGallery](https://www.opencurator.xyz/): Virtual exhibitions curated from Harvard, Met and Chicago museum APIs.
+- [Weather Me](https://github.com/pooch1e/weather-me): Next.js weather app with geolocation and forecasts.
+- [Task-CLI](https://github.com/pooch1e/task-cli): Local-first Go CLI that generates user stories and tasks with LLMs.
+- [ThreeJs Experiments](https://www.playgroundtest.fyi/): GLSL shader and WebGL experiments with a Go API.
+
+## Links
+
+- [GitHub](https://github.com/pooch1e)
+- [LinkedIn](https://www.linkedin.com/in/joel-kram/)
+- Email: joelnskram@gmail.com
+
+## Tech
+
+React 19, TypeScript, Vite, Tailwind CSS 4, Three.js, React Three Fiber, GSAP. Hosted on Vercel.
