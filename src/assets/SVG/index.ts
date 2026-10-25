@@ -17,3 +17,6 @@ export { default as cssIcon } from "./css3-01-svgrepo-com.svg";
 export { default as jsIcon } from "./javascript-svgrepo-com.svg";
 export { default as gopherIcon } from "./Go-Logo_Aqua.svg";
 export { default as threejsIcon } from "./Three.js.svg";
+export { default as flaskIcon } from "./flask-svgrepo-com.svg";
+export { default as googleCloudIcon } from "./gcp-svgrepo-com.svg";
+export { default as vercelIcon } from "./vercel-svgrepo-com.svg";

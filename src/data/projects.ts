@@ -18,6 +18,9 @@ import {
   jsIcon,
   gopherIcon,
   threejsIcon,
+  flaskIcon,
+  vercelIcon,
+  googleCloudIcon,
 } from "@/assets/SVG";
 
 import kr8 from "@/assets/kr8Image.jpg";
@@ -30,6 +33,7 @@ import sun from "@/assets/weatherme.jpg";
 import balloons from "@/assets/balloons.jpg";
 import taskCliImage from "@/assets/taskCli.jpg";
 import threeJs from "@/assets/threejsExperiments.jpg";
+import skacubeImage from "@/assets/skacubeImage.jpg";
 
 // Define interfaces for the data structure
 export interface Technology {
@@ -232,7 +236,26 @@ export const threeJsExperiments: ProjectType = {
   ],
 };
 
+export const skaCubeProject: ProjectType = {
+  title: "SkaCube",
+  image: skacubeImage,
+  description:
+    "Skacube is a 3D viewer for a simulated SKA-Low 21 cm lightcone, the kind of data the Square Kilometre Array's low-frequency telescope will produce. I built it to explore how design can make dense radio-astronomy data approachable for people without a STEM background, which is how I came to it myself. A Flask and GraphQL API serves a compressed FITS cube. A Next.js front end renders it in the browser with Three.js and a custom volume shader, with slice views and live readouts. The interface uses a small design system of its own: tokens, light and night themes, colormaps designed for the data, and one retro monospace typeface.The whole thing is containerised and deployed with the web app on Vercel and the API on Google Cloud Run. Deploys run from GitHub Actions through keyless Workload Identity authentication, and each API release is smoke-tested before it takes traffic. I built it with an agentic workflow, and the ADRs and backlog in the repo document the decisions.",
+  technologies: [
+    { name: "React", icon: reactIcon },
+    { name: "NextJs", icon: nextJsIcon },
+    { name: "Flask", icon: flaskIcon },
+    { name: "Vercel", icon: vercelIcon },
+    { name: "GoogleCloud", icon: googleCloudIcon },
+  ],
+  links: [
+    { label: "Deployed", url: "https://skacube-blond.vercel.app/" },
+    { label: "Github", url: "https://github.com/pooch1e/skacube" },
+  ],
+};
+
 export const allProjects: ProjectType[] = [
+  skaCubeProject,
   threeJsExperiments,
   taskCli,
   openCurator,
