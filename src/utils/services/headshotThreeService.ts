@@ -3,6 +3,39 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 type RenderMode = 'normal' | 'wireframe' | 'pointcloud' | 'hybrid';
 
+const SWARM_ENTER_SECONDS = 0.9;
+const SWARM_EXIT_SECONDS = 0.6;
+const SWARM_FOLLOW_RATE = 10;
+
+/**
+ * Patched into PointsMaterial's vertex shader after projection. Works in NDC so
+ * the cursor maps straight onto the canvas regardless of model rotation. Each
+ * point gets a stable random seed from its position: the seed staggers its
+ * start, picks a burst direction, and sets its slot in the cloud around the
+ * cursor.
+ */
+const SWARM_HEADER = /* glsl */ `
+uniform vec2 uMouse;
+uniform float uSwarm;
+float swarmHash(vec3 p) {
+  return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+}
+`;
+
+const SWARM_VERTEX = /* glsl */ `
+{
+  float seed = swarmHash(position);
+  float angle = swarmHash(position + 1.7) * 6.28318;
+  vec2 dir = vec2(cos(angle), sin(angle));
+  float p = clamp((uSwarm - seed * 0.3) / 0.7, 0.0, 1.0);
+  float burst = sin(p * 3.14159) * (0.3 + seed * 0.7);
+  vec2 target = uMouse + dir * sqrt(seed) * 0.22;
+  vec2 ndc = gl_Position.xy / gl_Position.w;
+  ndc = mix(ndc, target, smoothstep(0.35, 1.0, p)) + dir * burst;
+  gl_Position.xy = ndc * gl_Position.w;
+}
+`;
+
 export class HeadshotThreeService {
   camera: THREE.PerspectiveCamera | null = null;
   scene: THREE.Scene | null = null;
@@ -16,6 +49,14 @@ export class HeadshotThreeService {
   manualControl: boolean = false;
 
   renderMode: RenderMode = 'normal';
+  isDarkMode: boolean = false;
+  clock = new THREE.Clock();
+  swarmActive: boolean = false;
+  swarmPointer = new THREE.Vector2();
+  swarmUniforms = {
+    uMouse: { value: new THREE.Vector2() },
+    uSwarm: { value: 0 },
+  };
   pointCloudMaterial: THREE.PointsMaterial | null = null;
   wireframeMaterial: THREE.MeshBasicMaterial | null = null;
   originalMaterials: Map<THREE.Mesh, THREE.Material | THREE.Material[]> =
@@ -63,6 +104,7 @@ export class HeadshotThreeService {
       opacity: 0.8,
       vertexColors: true,
     });
+    this.applyPointTheme(this.pointCloudMaterial);
 
     this.wireframeMaterial = new THREE.MeshBasicMaterial({
       color: 0x00ff88,
@@ -181,7 +223,7 @@ export class HeadshotThreeService {
             mesh.visible = false;
             const points = new THREE.Points(
               geometry,
-              this.pointCloudMaterial!.clone()
+              this.addSwarm(this.pointCloudMaterial!.clone())
             );
             points.position.copy(mesh.position);
             points.rotation.copy(mesh.rotation);
@@ -197,7 +239,7 @@ export class HeadshotThreeService {
 
             const hybridPoints = new THREE.Points(
               geometry,
-              this.pointCloudMaterial!.clone()
+              this.addSwarm(this.pointCloudMaterial!.clone())
             );
             hybridPoints.material.size = 0.01;
             hybridPoints.position.copy(mesh.position);
@@ -233,6 +275,67 @@ export class HeadshotThreeService {
         }
       });
     }
+  }
+
+  /**
+   * The scan's vertex colours are dark and multiply with the material colour,
+   * so dark mode drops them entirely and renders the points flat white.
+   */
+  applyPointTheme(mat: THREE.PointsMaterial): void {
+    mat.vertexColors = !this.isDarkMode;
+    mat.color.setHex(this.isDarkMode ? 0xffffff : 0x00ff88);
+    mat.needsUpdate = true;
+  }
+
+  /**
+   * Material.clone() doesn't carry onBeforeCompile, so every Points material
+   * is patched individually; they all share one uniforms object.
+   */
+  addSwarm(mat: THREE.PointsMaterial): THREE.PointsMaterial {
+    mat.onBeforeCompile = (shader) => {
+      Object.assign(shader.uniforms, this.swarmUniforms);
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', `#include <common>\n${SWARM_HEADER}`)
+        .replace('#include <project_vertex>', `#include <project_vertex>\n${SWARM_VERTEX}`);
+    };
+    return mat;
+  }
+
+  /** Pointer in NDC: -1..1 on both axes, y up. */
+  setSwarmPointer(x: number, y: number): void {
+    this.swarmPointer.set(x, y);
+  }
+
+  setSwarmActive(active: boolean): void {
+    if (active && !this.swarmActive) {
+      this.swarmUniforms.uMouse.value.copy(this.swarmPointer);
+    }
+    this.swarmActive = active;
+  }
+
+  updateSwarm(delta: number): void {
+    const swarm = this.swarmUniforms.uSwarm;
+    const step = delta / (this.swarmActive ? SWARM_ENTER_SECONDS : SWARM_EXIT_SECONDS);
+    swarm.value = THREE.MathUtils.clamp(swarm.value + (this.swarmActive ? step : -step), 0, 1);
+
+    this.swarmUniforms.uMouse.value.lerp(
+      this.swarmPointer,
+      1 - Math.exp(-delta * SWARM_FOLLOW_RATE)
+    );
+  }
+
+  setDarkMode(isDark: boolean): void {
+    this.isDarkMode = isDark;
+
+    if (this.pointCloudMaterial) {
+      this.applyPointTheme(this.pointCloudMaterial);
+    }
+
+    this.model?.traverse((child) => {
+      if ((child as THREE.Points).isPoints) {
+        this.applyPointTheme((child as THREE.Points).material as THREE.PointsMaterial);
+      }
+    });
   }
 
   setWireframeStyle(options: { color?: number; opacity?: number } = {}): void {
@@ -291,6 +394,7 @@ export class HeadshotThreeService {
 
   runAnimation(): void {
     const time = performance.now() * 0.001;
+    this.updateSwarm(Math.min(this.clock.getDelta(), 0.1));
 
     if (this.model && !this.manualControl) {
       this.model.rotation.y = Math.sin(time * 4) * 0.6;
