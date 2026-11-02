@@ -84,6 +84,7 @@
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
+  font-family: var(--font-departure);
 }
 
 /* Theme switches crossfade as one snapshot (see ThemeProvider). */
