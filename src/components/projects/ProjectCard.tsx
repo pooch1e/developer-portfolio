@@ -1,4 +1,5 @@
 import { ImageContainer } from './ImageContainer';
+import { TechChip } from '@/components/ui/TechChip';
 import type { ncNewsProjectType } from '@/data/projects';
 
 export default function ProjectCard({
@@ -34,17 +35,8 @@ export default function ProjectCard({
                 Technologies
               </span>
               <div className="flex flex-wrap items-center gap-3">
-                {technologies.map((tech, index) => (
-                  <div key={index} className="flex items-center gap-2 bg-bg-secondary px-3 py-1.5 rounded-full border border-border-primary">
-                    <img
-                      src={tech.icon}
-                      alt={tech.name}
-                      className="w-5 h-5"
-                    />
-                    <span className="text-sm text-text-primary font-departure">
-                      {tech.name}
-                    </span>
-                  </div>
+                {technologies.map((tech) => (
+                  <TechChip key={tech.name} name={tech.name} icon={tech.icon} />
                 ))}
               </div>
             </div>
