@@ -1,9 +1,19 @@
+/**
+ * ThemeProvider — holds light/dark state, persists it, and crossfades the
+ * whole page between themes with a single view transition (instant swap when
+ * the API is missing or reduced motion is requested).
+ */
 import { createContext, useContext, useState, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 
 const ThemeContext = createContext<{
   isDark: boolean;
   toggleTheme: () => void;
 }>({ isDark: false, toggleTheme: () => {} });
+
+function applyThemeClass(isDark: boolean) {
+  document.documentElement.classList.toggle('dark', isDark);
+}
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [isDark, setIsDark] = useState(() => {
@@ -16,17 +26,24 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   });
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (isDark) {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
+    applyThemeClass(isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }, [isDark]);
 
-  const toggleTheme = () => setIsDark((d) => !d);
+  const toggleTheme = () => {
+    const next = !isDark;
+    const apply = () => {
+      applyThemeClass(next);
+      flushSync(() => setIsDark(next));
+    };
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!document.startViewTransition || reduceMotion) {
+      apply();
+      return;
+    }
+    document.startViewTransition(apply);
+  };
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>

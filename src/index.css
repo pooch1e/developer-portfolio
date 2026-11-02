@@ -59,7 +59,8 @@
   }
 
   .dark {
-    /* Matches the zinc-700 every page and the WebGL clear colour already render. */
+    /* Mirrored by the WebGL clear colour (BackgroundColourTheme.ts) and the
+       pre-CSS loader in index.html — keep all three in sync. */
     --bg-primary: #222222; /* soot */
     --bg-secondary: #18181b; /* zinc-900 */
     --surface: #444444; 
@@ -83,9 +84,19 @@
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+}
+
+/* Theme switches crossfade as one snapshot (see ThemeProvider). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Hover colour transitions would otherwise be captured mid-flight in the new
+   snapshot and visibly finish after the crossfade. */
+:root:active-view-transition * {
+  transition: none !important;
 }
 
 .introText {
