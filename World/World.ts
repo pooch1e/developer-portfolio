@@ -45,7 +45,6 @@ export class World {
 
     //init bg
     this.background = new BackgroundColour(this.renderer, isDarkMode);
-    // this.background.setTransitionDuration(3.0);
 
     if (this.container) {
       this.resizer = new Resizer(this.container, this.camera, this.renderer);
@@ -74,7 +73,7 @@ export class World {
       this.lights[1]
     );
 
-    this.loop.updatables.push(this.camera as any, this.cube, this.background);
+    this.loop.updatables.push(this.camera as any, this.cube);
   }
 
   private setupPostProcessing() {
@@ -97,8 +96,8 @@ export class World {
 
   //set background colour
   public setBackgroundColor(isDarkMode: boolean) {
-    console.log('called background colour');
     this.background.setBackgroundColor(isDarkMode);
+    this.postProcessor.resetAfterimage();
   }
 
   //produce single frame

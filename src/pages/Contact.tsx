@@ -6,7 +6,7 @@ import resume from "../assets/docs/JoelKram_FrontendEngineer_2026.pdf";
 import { Headshot } from "../../World/headshot/Headshot.tsx";
 export default function Contact() {
   return (
-    <div className="min-h-screen bg-bg-primary transition-colors duration-300 ease-linear">
+    <div className="min-h-screen bg-bg-primary">
       <section className="max-w-4xl mx-auto px-4 py-8 text-text-primary text-[11pt] font-departure tracking-[-0.3px]">
         <div className="flex flex-col lg:flex-row lg:items-start gap-6 mb-8">
           <Headshot />

@@ -1,5 +1,6 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useLayoutEffect, useState } from 'react';
 import { HeadshotThreeService } from '@/utils/services/headshotThreeService';
+import { useTheme } from '@/provider/ThemeContext';
 
 interface HeadshotProps {
   glbPath?: string;
@@ -15,10 +16,13 @@ export function Headshot({
     y: 0,
   });
   const [isModelLoaded, setIsModelLoaded] = useState<boolean>(false);
+  const { isDark } = useTheme();
+  const isDarkRef = useRef(isDark);
 
   useEffect(() => {
     if (canvasRef.current) {
       threeServiceRef.current = new HeadshotThreeService();
+      threeServiceRef.current.isDarkMode = isDarkRef.current;
       threeServiceRef.current.init(canvasRef.current, glbPath);
 
       const checkModelLoaded = setInterval(() => {
@@ -35,6 +39,11 @@ export function Headshot({
       threeServiceRef.current?.dispose();
     };
   }, [glbPath]);
+
+  useLayoutEffect(() => {
+    isDarkRef.current = isDark;
+    threeServiceRef.current?.setDarkMode(isDark);
+  }, [isDark]);
 
   useEffect(() => {
     if (threeServiceRef.current?.model) {
@@ -62,10 +71,20 @@ export function Headshot({
     const clampedY = Math.max(-1, Math.min(1, y));
 
     setMousePosition({ x: clampedX, y: clampedY });
+    threeServiceRef.current?.setSwarmPointer(x, -y);
+  };
+
+  const handleMouseEnter = (
+    e: React.MouseEvent<HTMLCanvasElement, MouseEvent>
+  ) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    handleMouseMove(e);
+    threeServiceRef.current?.setSwarmActive(true);
   };
 
   const handleMouseLeave = () => {
     setMousePosition({ x: 0, y: 0 });
+    threeServiceRef.current?.setSwarmActive(false);
   };
 
   return (
@@ -77,6 +96,7 @@ export function Headshot({
         maxWidth: '500px',
         maxHeight: '500px',
       }}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     />

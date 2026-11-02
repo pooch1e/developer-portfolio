@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./provider/ThemeContext";
 import { Header, LoadingScreen, ThemeButton } from "./components/layout";
 import { ProjectList } from "./components/projects";
+import ExperiencePage from "./pages/Experience";
 
 const IntroExperience = lazy(() => import("./pages/IntroExperience"));
 const HomeSplash = lazy(() => import("./pages/Home"));
@@ -52,6 +53,7 @@ function App() {
           <Suspense fallback={<div className="fixed inset-0 bg-bg-primary" />}>
             <Routes>
               <Route path="/" element={<HomeSplash />} />
+              <Route path="/experience" element={<ExperiencePage/>} />
               <Route path="/projects" element={<ProjectList />} />
               <Route path="/contact" element={<ContactPage />} />
             </Routes>

@@ -41,6 +41,19 @@ export class PostProcesser {
     }
   }
 
+  /**
+   * Renders one frame with zero damping so the afterimage history holds only
+   * the current frame — otherwise a theme switch leaves the old background
+   * ghosting out over ~50 frames.
+   */
+  resetAfterimage() {
+    if (!this.afterImage) return;
+    const damp = this.afterImage.damp;
+    this.afterImage.damp = 0;
+    this.composer.render();
+    this.afterImage.damp = damp;
+  }
+
   toggleAfterimage(enabled: boolean) {
     if (this.afterImage) {
       this.afterImage.enabled = enabled;

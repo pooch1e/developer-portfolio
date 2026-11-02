@@ -9,8 +9,8 @@ export default function Header() {
   const isHomePage = location.pathname === "/";
 
   const headerClasses = isHomePage
-    ? "p-12 bg-transparent z-40 w-full relative transition-colors duration-300 ease-linear"
-    : "p-12 bg-bg-primary z-40 w-full relative transition-colors duration-300 ease-linear";
+    ? "p-12 bg-transparent z-40 w-full relative"
+    : "p-12 bg-bg-primary z-40 w-full relative";
 
   return (
     <header className={headerClasses} role="banner">
@@ -29,6 +29,16 @@ export default function Header() {
         role="navigation"
         aria-label="Main navigation"
       >
+        <span className="hover:bg-highlight-hover">
+          {" "}
+          <Link
+            to="/experience"
+            aria-label="View my recent experience"
+            className="underline"
+          >
+            Experience
+          </Link>
+        </span>
         <span className="hover:bg-highlight-hover">
           {" "}
           <Link
