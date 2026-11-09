@@ -424,6 +424,7 @@ export class HeadshotThreeService {
     this.stopLoop();
 
     this.renderer?.dispose();
+    this.renderer = null;
     this.model && this.scene?.remove(this.model);
 
     this.pointCloudMaterial?.dispose();

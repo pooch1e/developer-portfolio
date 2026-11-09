@@ -1,4 +1,5 @@
-import { lazy, Suspense, useState, useCallback } from "react";
+import { lazy, Suspense, useState, useCallback, useEffect } from "react";
+import IntroErrorBoundary from "./components/IntroErrorBoundary";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./provider/ThemeContext";
 import { Header, LoadingScreen, ThemeButton } from "./components/layout";
@@ -10,7 +11,8 @@ const HomeSplash = lazy(() => import("./pages/Home"));
 const ContactPage = lazy(() => import("./pages/Contact"));
 
 // Coarse pointer = touchscreen — no wheel event, no WebGL-heavy intro
-const isMobile = window.matchMedia("(pointer: coarse)").matches;
+const INTRO_LOAD_TIMEOUT_MS = 10000;
+const isMobile =window.matchMedia("(pointer: coarse)").matches;
 
 function App() {
   const [assetsReady, setAssetsReady] = useState(isMobile);
@@ -20,6 +22,17 @@ function App() {
 
   const handleReady = useCallback(() => setAssetsReady(true), []);
   const handleIntroComplete = useCallback(() => setIntroComplete(true), []);
+  const skipIntro = useCallback(() => {
+    setAssetsReady(true);
+    setIntroComplete(true);
+    setIntroDone(true);
+  }, []);
+
+  useEffect(() => {
+    if (assetsReady) return;
+    const timeout = setTimeout(skipIntro, INTRO_LOAD_TIMEOUT_MS);
+    return () => clearTimeout(timeout);
+  }, [assetsReady, skipIntro]);
 
   return (
     <ThemeProvider>
@@ -36,13 +49,16 @@ function App() {
             if (introComplete) setIntroDone(true);
           }}
         >
-          <Suspense fallback={null}>
-            <IntroExperience
-              onReady={handleReady}
-              onProgress={setProgress}
-              onIntroComplete={handleIntroComplete}
-            />
-          </Suspense>
+          <IntroErrorBoundary onError={skipIntro}>
+            <Suspense fallback={null}>
+              <IntroExperience
+                onReady={handleReady}
+                onProgress={setProgress}
+                onIntroComplete={handleIntroComplete}
+                onContextLost={skipIntro}
+              />
+            </Suspense>
+          </IntroErrorBoundary>
         </div>
       )}
 

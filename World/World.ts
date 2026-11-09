@@ -116,5 +116,6 @@ export class World {
       this.cubeInteractionCleanup();
       this.cubeInteractionCleanup = null;
     }
+    this.renderer.dispose();
   }
 }

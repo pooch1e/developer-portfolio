@@ -61,7 +61,7 @@ function Scene({ onReady, onIntroComplete }: SceneProps) {
   return (
     <>
       <color args={["#f2f0ef"]} attach="background" />
-      <Environment preset="city" />
+      <Environment files="/hdri/potsdamer_platz_1k.hdr" />
 
       <Html wrapperClass="introText" position={[-2.5, 1, 0]}>
         <h1 className="font-departure text-4xl">Joel Kram</h1>
@@ -119,12 +119,14 @@ export interface IntroExperienceProps {
   onReady: () => void;
   onProgress: (progress: number) => void;
   onIntroComplete: () => void;
+  onContextLost?: () => void;
 }
 
 export default function IntroExperience({
   onReady,
   onProgress,
   onIntroComplete,
+  onContextLost,
 }: IntroExperienceProps) {
   const { progress } = useProgress();
 
@@ -144,6 +146,12 @@ export default function IntroExperience({
           fov: INITIAL_FOV,
         }}
         style={{ width: "100%", height: "100%" }}
+        onCreated={({ gl }) => {
+          gl.domElement.addEventListener("webglcontextlost", (event) => {
+            event.preventDefault();
+            onContextLost?.();
+          });
+        }}
       >
         <Scene onReady={onReady} onIntroComplete={onIntroComplete} />
       </Canvas>
