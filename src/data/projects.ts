@@ -224,14 +224,14 @@ export const threeJsExperiments: ProjectType = {
   title: "ThreeJs Experiments",
   image: threeJs,
   description:
-    "A creative coding portfolio of interactive 3D experiments and custom WebGL/GLSL shaders, built with React 19 and Three.js. Features 17+ named shader experiments including a particle galaxy, GPGPU flow fields, procedural terrain, holographic materials, particle morphing, and more — each with hand-rolled GLSL implementations. Also includes p5.js sketches with Web Audio API FFT and beat detection. Backed by a Go REST API (Chi router) with JWT session authentication and a PostgreSQL database.",
+    "A creative coding portfolio of interactive 3D experiments and custom WebGL/GLSL shaders, built with React 19 and Three.js following Bruno Simon's course. Features 17+ named shader experiments including a particle galaxy, GPGPU flow fields, procedural terrain, holographic materials, particle morphing, and more, each with hand-rolled GLSL implementations. It has been extended with custom personal art experiments including versions of Ryoji Ikeda visuals, Ascii shaders etc. The project was deployed on Vercel and GCloud with a Go server handling auth and a small admin dashboard. However, I have since moved the project to two Cloudflare workers. The frontend is a static site, and the backend was refactored into a Hono application with a D1 db. This was because I wanted all the deployment in one place for management. I have left the Go application in the repo as an example and you can read about the process in the Readme and /Docs",
   technologies: [
     { name: "React", icon: reactIcon },
     { name: "ThreeJs", icon: threejsIcon },
     { name: "Golang", icon: gopherIcon },
   ],
   links: [
-    { label: "Deployed", url: "https://www.playgroundtest.fyi/" },
+    { label: "Deployed", url: "https://www.arczpng.com" },
     { label: "Github", url: "https://github.com/pooch1e/threeJsPortfolio" },
   ],
 };
